@@ -46,3 +46,7 @@ theme = 'hugo-theme-aftermind'
 使用现行模板结构，不使用旧版 `layouts/_default/` 和 `layouts/partials/`。配置使用 `locale`，模板通过 `site.Language.Locale` 获取语言区域。
 
 来源：[Hugo v0.170.1](https://github.com/gohugoio/hugo/releases/tag/v0.170.1) · [官方主题生成命令](https://gohugo.io/commands/hugo_new_theme/) · [模板查找规则](https://gohugo.io/templates/lookup-order/)
+
+## 开源协议
+
+[MIT License](LICENSE) © 2026 WayJam So
