@@ -130,7 +130,7 @@
 - **人的正文**：中文优先系统宋体／明朝体并回退平台衬线，拉丁文用 Georgia，字号 `16–18px`，行高 `1.82`。标点遵循排版习惯（中文全角省略号 `……`，英文用 `…` 与弯引号 `“` `”`）。
 - **系统语言**：日期、归档序号、静默天数、字数与代码使用系统等宽字体，字号 `12–14px`，强制开启 `font-variant-numeric: tabular-nums`。
 - **间距体系**：采用 `8 / 16 / 24 / 32 / 48 / 64px` 阶梯，分组优先靠对齐与留白。
-- **界面图标与 Favicon**：采用 **Tabler Icons Outline**，按需打包至 `assets/icons/`（`arrow-left`、`arrow-right`、`rss`、`copy`、`check`），通过 `layouts/_partials/icon.html` 统一输出 `1.75` 描边粗细、继承 `currentColor` 与无障碍属性。主导航保持纯文字 + 强调色方点。Favicon 从首页交接簿线描提炼为自适应亮暗配色的 `static/favicon.svg`，并附 `32×32` `static/favicon.ico` 回退。
+- **界面图标与 Favicon**：采用 **Tabler Icons Outline**，按需打包至 `assets/icons/`（`arrow-left`、`arrow-right`、`rss`、`copy`、`check`、`zoom-in`、`chevron-right`），通过 `layouts/_partials/icon.html` 统一输出 `1.75` 描边粗细、继承 `currentColor` 与无障碍属性。主导航保持纯文字 + 强调色方点。Favicon 从首页交接簿线描提炼为自适应亮暗配色的 `static/favicon.svg`，并附 `32×32` `static/favicon.ico` 回退。
 - **首页主视觉与文章配图**：首页主视觉默认使用内联 SVG 停用工位线描（`layouts/_partials/home-plate.html`），零外部图片请求、支持主题色实时切换与无障碍 `role="img"` 说明；文章内封面与配图显式声明 `width`/`height` 防 CLS，折叠下方图片启用 `loading="lazy"`。
 ## 05 UX 动效与微交互设计
 
@@ -147,7 +147,7 @@
 | 动效类别 | 触发时机与表现 | 时长与细节 |
 | --- | --- | --- |
 | **首次进入出场** | 交接簿套印余影落定于 `3.5px, 2.5px`，字标余影落定于 `4px, 3px`。首页断线分两段描出。文章标题下的落笔线从首帧完整显示。 | 首页动效 `260–520ms`，正文与阅读入口首帧可读。 |
-| **主操作微反馈** | 1) **文章条目悬停**：标题克制右移 `3px`（`transform: translateX(3px)`），左侧系统日期点亮为强调色，右侧序号保持钉死不动；首篇入口与归档链接的箭头图标同步轻移 `3px`。<br>2) **代码块复制**：按下微缩 `scale(0.97)`（`80ms`），成功后图标与文字切换为强调色勾号 +「已复制」保持 `1800ms`，并经 `aria-live="polite"` 播报结果。<br>3) **窄屏旁注展开**：点击编号 `[1]` 展开或收起对应旁注并同步 `aria-expanded`。 | 悬停/聚焦 `160ms`；按下 `80ms`。 |
+| **主操作微反馈** | 1) **文章条目悬停**：标题克制右移 `3px`（`transform: translateX(3px)`），左侧系统日期点亮为强调色，右侧序号保持钉死不动；首篇入口与归档链接的箭头图标同步轻移 `3px`。<br>2) **代码块复制**：按下微缩 `scale(0.97)`（`80ms`），成功后图标与文字切换为强调色勾号 +「已复制」保持 `1800ms`，并经 `aria-live="polite"` 播报结果。<br>3) **窄屏旁注展开**：点击编号 `[1]` 展开或收起对应旁注并同步 `aria-expanded`。<br>4) **窄屏目录展开**：右侧箭头随折叠状态旋转 90° 并点亮强调色。<br>5) **独立配图放大**：支持灯箱的封面和独立配图右下角常驻 Tabler 放大镜图标，悬停或聚焦时点亮强调色。 | 悬停/聚焦 `160ms`；按下 `80ms`。 |
 | **跨页视图过渡** | 通过浏览器原生跨文档视图过渡（`@view-transition { navigation: auto; }`）实现柔和的页面切换；列表页与详情页为当前文章标题绑定唯一 `view-transition-name`，形成标题位置接力。 | `260ms`，零额外 JS，不支持的浏览器自动无感退化为普通跳转。 |
 
 ### 3. 两处主题专属巧思
