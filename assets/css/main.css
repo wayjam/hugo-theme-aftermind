@@ -501,16 +501,25 @@ a:hover {
 }
 
 .home-plate-svg {
-  --plate-ink: light-dark(#28292b, #17181d);
-  --plate-wall: light-dark(#61605d, #373841);
-  --plate-edge: light-dark(#a09a8e, #666575);
-  --plate-light: light-dark(#e9d3ae, #af9575);
-  --plate-status: light-dark(#aaa998, #838c84);
-  --plate-paper: light-dark(#f4e5c7, #e2ccb0);
-  --plate-mark: #815345;
+  --plate-ink: light-dark(#252629, #18191f);
+  --plate-wall: light-dark(#535555, #35363f);
+  --plate-edge: light-dark(#888a82, #686c75);
+  --plate-light: light-dark(#dbc097, #a88d6d);
+  --plate-status: light-dark(#c3cfad, #abbc9d);
+  --plate-paper: light-dark(#f4e7ca, #e4cfac);
+  --plate-paper-deep: light-dark(#d4bd96, #bba17d);
+  --plate-mark: #634239;
   display: block;
   width: 100%;
   height: auto;
+}
+
+.home-plate-note:lang(zh) {
+  font-family: "Kaiti SC", KaiTi, STKaiti, var(--font-serif);
+}
+
+.home-plate-note:lang(de) {
+  font-size: 28px;
 }
 
 .home-photo-caption {
