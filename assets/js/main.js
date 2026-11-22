@@ -22,15 +22,164 @@
     }
   }
 
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let activeThemeTransition = null;
+  let themeTransitionSeq = 0;
+  let themeFadeTimer = 0;
+
+  function resolveEffectiveTheme(mode) {
+    return mode === "system" ? (media.matches ? "dark" : "light") : mode;
+  }
+
+  function currentEffectiveTheme() {
+    const attr = root.getAttribute("data-theme");
+    if (attr === "light" || attr === "dark") return attr;
+    return media.matches ? "dark" : "light";
+  }
+
   function applyTheme(mode) {
     if (mode === "light" || mode === "dark") {
       root.setAttribute("data-theme", mode);
     } else {
       root.removeAttribute("data-theme");
     }
-    const effective = mode === "system" ? (media.matches ? "dark" : "light") : mode;
+    const effective = resolveEffectiveTheme(mode);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", THEME_COLORS[effective]);
+  }
+
+  function getSwitchOrigin(triggerEl) {
+    if (triggerEl && typeof triggerEl.getBoundingClientRect === "function") {
+      const rect = triggerEl.getBoundingClientRect();
+      if (rect.width > 0 || rect.height > 0) {
+        return {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+        };
+      }
+    }
+    return { x: Math.max(window.innerWidth - 48, 24), y: 28 };
+  }
+
+  function spawnLampHalo(x, y, toLight) {
+    const halo = document.createElement("div");
+    halo.className = `theme-lamp-halo ${toLight ? "theme-lamp-halo--on" : "theme-lamp-halo--off"}`;
+    halo.setAttribute("aria-hidden", "true");
+    halo.style.setProperty("--lamp-x", `${x}px`);
+    halo.style.setProperty("--lamp-y", `${y}px`);
+    document.body.appendChild(halo);
+    const cleanup = () => halo.remove();
+    halo.addEventListener("animationend", cleanup, { once: true });
+    window.setTimeout(cleanup, 600);
+  }
+
+  function switchTheme(mode, triggerEl) {
+    const prevEffective = currentEffectiveTheme();
+    const nextEffective = resolveEffectiveTheme(mode);
+    setStored(mode);
+    syncThemeButtons(mode);
+
+    if (prevEffective === nextEffective || reducedMotionQuery.matches) {
+      applyTheme(mode);
+      return;
+    }
+
+    if (typeof document.startViewTransition !== "function") {
+      root.classList.add("theme-fading");
+      applyTheme(mode);
+      window.clearTimeout(themeFadeTimer);
+      themeFadeTimer = window.setTimeout(() => root.classList.remove("theme-fading"), 360);
+      return;
+    }
+
+    const seq = ++themeTransitionSeq;
+    if (activeThemeTransition && typeof activeThemeTransition.skipTransition === "function") {
+      try {
+        activeThemeTransition.skipTransition();
+      } catch {
+        // Ignore already-settled transitions
+      }
+    }
+
+    const toLight = nextEffective === "light";
+    const { x, y } = getSwitchOrigin(triggerEl);
+    const maxR = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    root.setAttribute("data-theme-transition", toLight ? "to-light" : "to-dark");
+
+    const transition = document.startViewTransition(() => {
+      applyTheme(mode);
+    });
+    activeThemeTransition = transition;
+
+    transition.ready
+      .then(() => {
+        if (seq !== themeTransitionSeq) return;
+        if (toLight) {
+          root.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${maxR}px at ${x}px ${y}px)`,
+              ],
+              filter: ["brightness(1.06)", "brightness(1)"],
+            },
+            {
+              duration: 500,
+              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+              fill: "both",
+              pseudoElement: "::view-transition-new(root)",
+            }
+          );
+          root.animate(
+            { filter: ["brightness(1)", "brightness(0.92)"] },
+            {
+              duration: 500,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              fill: "both",
+              pseudoElement: "::view-transition-old(root)",
+            }
+          );
+        } else {
+          root.animate(
+            {
+              clipPath: [
+                `circle(${maxR}px at ${x}px ${y}px)`,
+                `circle(0px at ${x}px ${y}px)`,
+              ],
+              filter: ["brightness(1)", "brightness(0.78)"],
+            },
+            {
+              duration: 440,
+              easing: "cubic-bezier(0.32, 0, 0.2, 1)",
+              fill: "both",
+              pseudoElement: "::view-transition-old(root)",
+            }
+          );
+          root.animate(
+            { filter: ["brightness(0.9)", "brightness(1)"] },
+            {
+              duration: 440,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              fill: "both",
+              pseudoElement: "::view-transition-new(root)",
+            }
+          );
+        }
+      })
+      .catch(() => {
+        // Fallback: theme is already applied in update callback
+      });
+
+    transition.finished.finally(() => {
+      if (seq !== themeTransitionSeq) return;
+      activeThemeTransition = null;
+      root.removeAttribute("data-theme-transition");
+      spawnLampHalo(x, y, toLight);
+    });
   }
 
   // Init 3-state theme switcher
@@ -48,10 +197,7 @@
     syncThemeButtons(getStored());
     themeBtns.forEach((btn, idx) => {
       btn.addEventListener("click", () => {
-        const val = btn.dataset.themeBtn;
-        setStored(val);
-        applyTheme(val);
-        syncThemeButtons(val);
+        switchTheme(btn.dataset.themeBtn, btn);
       });
       btn.addEventListener("keydown", (e) => {
         const forward = e.key === "ArrowRight" || e.key === "ArrowDown";

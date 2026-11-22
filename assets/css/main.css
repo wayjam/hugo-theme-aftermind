@@ -10,6 +10,102 @@
   navigation: auto;
 }
 
+/* Light-switch theme transition (scoped only during active theme switch) */
+:root[data-theme-transition]::view-transition,
+:root[data-theme-transition]::view-transition-group(root),
+:root[data-theme-transition]::view-transition-image-pair(root),
+:root[data-theme-transition]::view-transition-old(root),
+:root[data-theme-transition]::view-transition-new(root) {
+  pointer-events: none;
+}
+
+:root[data-theme-transition]::view-transition-old(root),
+:root[data-theme-transition]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+:root[data-theme-transition="to-light"]::view-transition-old(root) {
+  z-index: 1;
+}
+
+:root[data-theme-transition="to-light"]::view-transition-new(root) {
+  z-index: 9999;
+}
+
+:root[data-theme-transition="to-dark"]::view-transition-old(root) {
+  z-index: 9999;
+}
+
+:root[data-theme-transition="to-dark"]::view-transition-new(root) {
+  z-index: 1;
+}
+
+:root.theme-fading,
+:root.theme-fading body,
+:root.theme-fading .site-header,
+:root.theme-fading .site-footer {
+  transition:
+    background-color 320ms var(--ease-out),
+    color 260ms var(--ease-out),
+    border-color 260ms var(--ease-out);
+}
+
+.theme-lamp-halo {
+  position: fixed;
+  left: var(--lamp-x, 50%);
+  top: var(--lamp-y, 28px);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%) scale(0.85);
+  will-change: transform, opacity;
+}
+
+.theme-lamp-halo--off {
+  background: radial-gradient(
+    circle,
+    rgba(212, 149, 106, 0.36) 0%,
+    rgba(212, 149, 106, 0.12) 38%,
+    rgba(212, 149, 106, 0) 72%
+  );
+  animation: lampEmberFade 420ms var(--ease-out) forwards;
+}
+
+.theme-lamp-halo--on {
+  background: radial-gradient(
+    circle,
+    rgba(212, 149, 106, 0.24) 0%,
+    rgba(122, 59, 46, 0.08) 42%,
+    rgba(122, 59, 46, 0) 72%
+  );
+  animation: lampWarmBloom 340ms var(--ease-out) forwards;
+}
+
+@keyframes lampEmberFade {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.42);
+  }
+}
+
+@keyframes lampWarmBloom {
+  0% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+}
+
 :root {
   color-scheme: light;
 
@@ -307,18 +403,34 @@ a:hover {
   cursor: pointer;
   position: relative;
   touch-action: manipulation;
-  transition: color var(--dur-hover) var(--ease-out);
+  transition:
+    color var(--dur-hover) var(--ease-out),
+    transform 100ms var(--ease-out);
+}
+
+.theme-btn .ui-icon {
+  transition:
+    color var(--dur-hover) var(--ease-out),
+    transform 220ms var(--ease-out);
 }
 
 .theme-btn:hover {
   color: var(--fg);
 }
 
+.theme-btn:active {
+  transform: translateY(0.5px) scale(0.95);
+}
+
 .theme-btn.is-active {
   color: var(--fg);
 }
 
-.theme-btn.is-active::after {
+.theme-btn.is-active .ui-icon {
+  color: var(--accent);
+}
+
+.theme-btn::after {
   content: "";
   position: absolute;
   left: 0.375rem;
@@ -326,6 +438,13 @@ a:hover {
   bottom: 0.25rem;
   height: 1px;
   background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms var(--ease-out);
+}
+
+.theme-btn.is-active::after {
+  transform: scaleX(1);
 }
 
 /* Main */
