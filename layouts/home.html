@@ -69,8 +69,8 @@
       {{- end -}}
       {{- $caption := "" -}}
       {{- if not $image -}}
-        {{- $alt = $alt | default (i18n "home_plate_alt" | default "A large, gridded AI profile faces a smaller, warm-toned human profile.") -}}
-        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · MINDS IN IMBALANCE" -}}
+        {{- $alt = $alt | default (i18n "home_plate_alt" | default "A large silicon chip with ordered traces dominates the plate beside a smaller human profile etched in warm ink.") -}}
+        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · SILICON / CARBON" -}}
       {{- end -}}
       {{- if isset $home "caption" -}}
         {{- $caption = $home.caption -}}

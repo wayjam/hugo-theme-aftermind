@@ -1,41 +1,65 @@
 <svg class="home-plate-svg" viewBox="0 0 720 504" width="720" height="504"
      role="img" aria-label="{{ . }}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <path id="home-machine-mind" d="M77 418l34-61V149l24-56 55-36h128l55 32 25 49v44l53 52-36 15v18l-14 9 11 11v22l-54 21v34l56 54Z"/>
-    <clipPath id="home-machine-clip">
-      <use href="#home-machine-mind"/>
-    </clipPath>
-    <pattern id="home-machine-grid" x="111" y="57" width="23" height="23" patternUnits="userSpaceOnUse">
-      <path d="M0 0h23M0 0v23" fill="none" stroke="var(--plate-field)" stroke-width="1.2"/>
+    <path id="home-plate-pins" d="M0 0v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18"/>
+    <pattern id="home-plate-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0v6" stroke="currentColor" stroke-width="1"/>
     </pattern>
-    <pattern id="home-machine-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <path d="M0 0v5" stroke="var(--plate-field)" stroke-width="1"/>
+    <pattern id="home-plate-cells" width="12" height="12" patternUnits="userSpaceOnUse">
+      <rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="var(--plate-metal)" stroke-width=".8"/>
     </pattern>
   </defs>
 
-  <!-- Registration marks and a common baseline, like a two-ink print. -->
+  <!-- Registration and traces define the sheet around the two forms. -->
+  <rect x="24.5" y="26.5" width="671" height="451" fill="none" stroke="var(--rule-faint)"/>
   <g fill="none" stroke="var(--rule)" stroke-width="1">
-    <path d="M41 62V40h22m594 0h22v22M41 442v22h22m594 0h22v-22"/>
-    <path d="M64 418h605"/>
+    <path d="M36 54V38h16m616 0h16v16M36 450v16h16m616 0h16v-16"/>
+    <path d="M49 430h622M49 425v10m383-10v10m239-10v10"/>
+  </g>
+  <g fill="none" stroke="var(--fg-muted)" stroke-opacity=".55" stroke-width="1.2">
+    <path d="M432 151h31l47-47h141m-219 64h40l47-47h132m-219 64h49l47-47h123m-219 64h58l47-47h88"/>
+    <path d="M432 219h62l47-47h65m-174 64h44l18-18h36M432 319h16l23 23h21m-60-6h11l23 23h21"/>
+    <circle cx="651" cy="104" r="2.5"/><circle cx="651" cy="121" r="2.5"/><circle cx="651" cy="138" r="2.5"/>
+    <circle cx="625" cy="155" r="2.5"/><circle cx="606" cy="172" r="2.5"/>
   </g>
 
-  <!-- The machine profile occupies a solid, repeatable matrix. -->
-  <use href="#home-machine-mind" transform="translate(-6 5)" fill="none" stroke="var(--plate-ink)" stroke-opacity=".3" stroke-width="1.5"/>
-  <use href="#home-machine-mind" fill="var(--plate-ink)"/>
-  <g clip-path="url(#home-machine-clip)">
-    <path d="M111 57h286v174H111Z" fill="url(#home-machine-grid)" opacity=".47"/>
-    <path d="M111 80h92v138h-92Z" fill="url(#home-machine-hatch)" opacity=".45"/>
-    <path d="M215 80h138v23H215Zm0 46h115v23H215Zm0 46h92v23h-92Z" fill="var(--plate-field)"/>
-    <path d="M111 230h215l32-32h42m-289 78h187l28-28h42m-257 74h155l32-28h37m-224 74h146l23-24h78" fill="none" stroke="var(--plate-field)" stroke-width="1.25"/>
-    <path d="M366 191h21v5h-21Z" fill="var(--plate-paper)"/>
+  <!-- Silicon mind: package, etched conductors and a dense rectangular die. -->
+  <g fill="none" stroke="var(--plate-metal)" stroke-width="2">
+    <use href="#home-plate-pins" x="142" y="54"/>
+    <use href="#home-plate-pins" x="142" y="390"/>
+    <use href="#home-plate-pins" transform="translate(72 118) rotate(90)"/>
+  </g>
+  <path d="M89 72h320l23 23v271l-25 24H72V89Z" fill="var(--plate-ink)" stroke="var(--plate-metal)" stroke-width="1.4"/>
+  <path d="M94 84h310l16 16v261l-18 17H84V94Z" fill="none" stroke="var(--plate-metal)" stroke-opacity=".45"/>
+  <path d="M96 96h83v17H96Zm230 253h77v17h-77Z" fill="url(#home-plate-hatch)" color="var(--plate-metal)" opacity=".65"/>
+  <path d="M186 117h145l25 25v178l-20 20H146V157Z" fill="var(--plate-die)" stroke="var(--plate-metal)" stroke-width="1.4"/>
+  <path d="M193 128h133l19 19v168l-14 14H157V162Z" fill="none" stroke="var(--plate-metal)" stroke-opacity=".55"/>
+  <g fill="none" stroke="var(--plate-metal)" stroke-width="1.2" opacity=".82">
+    <path d="M187 117V96h51V84m-30 33v-12h48V84m-27 33v-5h45V84M299 84v33m17-33v33m17-33v35"/>
+    <path d="M146 168h-19l-17-17H85m61 33h-26l-17-17H85m61 33h-33l-17-17H85m61 33H84m62 16H84m62 16H84"/>
+    <path d="M146 264h-16l-17 17H84m62-1h-10l-17 17H84m62-1-17 17H84m62-1-17 17H84m62-1-17 17H84"/>
+    <path d="M356 151h28l16-16h20m-64 33h35l16-16h13m-64 33h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64"/>
+    <path d="M166 340v12l-21 20m41-32v14l-18 18m38-32v30m18-30v30m18-30v30m18-30v30m18-30v30m18-30v30"/>
+  </g>
+  <rect x="174" y="176" width="48" height="132" fill="url(#home-plate-cells)"/>
+  <rect x="234" y="176" width="94" height="84" fill="url(#home-plate-cells)"/>
+  <path d="M234 272h94v10h-94Zm0 13h94v10h-94Zm0 13h94v10h-94Z" fill="url(#home-plate-hatch)" color="var(--plate-metal)"/>
+  <path d="M179 157h149m-94 106h94" stroke="var(--plate-metal)" stroke-width="1.4"/>
+  <g fill="var(--plate-metal)">
+    <circle cx="96" cy="129" r="2.6"/><circle cx="96" cy="358" r="2.6"/><circle cx="407" cy="108" r="2.6"/>
+    <rect x="367" y="318" width="17" height="8"/><rect x="389" y="318" width="17" height="8"/>
   </g>
 
-  <!-- The human profile keeps its irregular contour and a trace of warm ink. -->
-  <path d="M537 418l1-15c5-16 7-37 1-56-24 6-45 2-49-13-1-4 1-9 3-14l-6-6 8-8-9-11 5-12c-11-1-19-4-18-10 2-6 18-15 25-29 8-16 8-32 20-47 13-17 31-25 53-24 18 1 37 9 49 24 19 23 22 53 13 76-7 20-24 34-32 53-8 18-8 32 3 51l40 41"
-        fill="var(--accent)" fill-opacity=".1" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M509 247q11-7 23-3m-19 12q7 3 13-2m25-44c20-7 40-3 54 10m-44 4c12-2 24 1 34 7m-10 18c6 6 6 17 1 25-3 6-7 8-10 7-4-2-1-8 2-10"
-        fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity=".76"/>
+  <!-- Carbon mind: one profile with winding contours in the remaining space. -->
+  <path d="M551 418c8-19 12-40 6-58-15 4-32 1-35-8-2-5 3-11 1-15l-6-6 5-6-7-7 2-9c-10-1-17-4-15-9 1-4 11-11 16-19 5-8 6-19 11-30 7-18 28-34 51-36 29-2 51 11 63 33 12 23 10 54-3 74-9 14-25 28-27 47-2 16 9 32 27 49"
+        fill="var(--accent)" fill-opacity=".08" stroke="var(--accent)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round">
+    <path d="M524 283q8-4 17-1m-15 6q5 3 10 0m-12 51q5 2 11 0m62-44c10-11 18 0 12 14-3 6-9 9-12 6-3-2-2-7 2-9"/>
+    <path d="M540 257c10-18 29-28 51-26 20 2 37 16 42 33 5 15 1 30-7 44M547 261c9-14 24-22 42-21 16 1 29 11 35 26 3 8 3 17 0 25M555 264c8-10 18-16 31-15 13 0 23 7 29 19m-51-1c6-7 13-10 22-9 8 1 15 5 21 13m-35 0q12-10 25 1" opacity=".65"/>
+    <path d="M559 368q21 8 40-5m-42 17q20 9 36 0m-39 12q24 8 40-2" opacity=".4"/>
+  </g>
+  <path d="M578 277c7-3 13-2 18 2" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
 
-  <text x="77" y="453" fill="var(--fg)" font-family="var(--font-mono)" font-size="17" font-weight="700" letter-spacing="3" translate="no">AI MIND</text>
-  <text x="538" y="453" fill="var(--accent)" font-family="var(--font-serif)" font-size="19" translate="no">Human mind</text>
+  <text x="49" y="456" fill="var(--fg)" font-family="var(--font-mono)" font-size="19" font-weight="700" letter-spacing="1.8" translate="no">SILICON MIND</text>
+  <text x="671" y="456" fill="var(--accent)" font-family="var(--font-serif)" font-size="22" text-anchor="end" translate="no">Carbon mind</text>
 </svg>
