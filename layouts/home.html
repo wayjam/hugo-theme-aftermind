@@ -12,16 +12,6 @@
 
 <div class="shell">
   <section class="home-hero" aria-labelledby="site-wordmark">
-    <figure class="home-plate-figure">
-      <div class="home-plate-frame">
-        {{ partial "home-plate.html" . }}
-      </div>
-      <figcaption class="home-photo-caption" translate="no">
-        <span>{{ i18n "photo_caption_meta" | default "FIG. 01 · VACATED DESK · UNATTENDED" }}</span>
-        <span>{{ with $lead }}LAST ENTRY {{ .Date.Format "2006.01.02" }}{{ end }}</span>
-      </figcaption>
-    </figure>
-
     <div class="home-hero-side">
       <div class="home-mast">
         <h1 id="site-wordmark" class="wordmark" translate="no">
@@ -70,6 +60,15 @@
         <p class="empty-state">{{ i18n "empty_posts" | default "No entries recorded yet." }}</p>
       {{- end }}
     </div>
+    <figure class="home-plate-figure">
+      <div class="home-plate-frame">
+        {{ partial "home-plate.html" . }}
+      </div>
+      <figcaption class="home-photo-caption" translate="no">
+        <span>{{ i18n "photo_caption_meta" | default "FIG. 01 · VACATED DESK · UNATTENDED" }}</span>
+        <span>{{ with $lead }}LAST ENTRY {{ .Date.Format "2006.01.02" }}{{ end }}</span>
+      </figcaption>
+    </figure>
   </section>
 
   {{- if gt (len $rest) 0 }}

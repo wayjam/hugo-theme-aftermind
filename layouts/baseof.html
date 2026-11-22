@@ -13,7 +13,7 @@
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">{{ i18n "skip_to_content" | default "Skip to content" }}</a>
-  <header class="site-header">
+  <header class="site-header{{ if .IsHome }} site-header--home{{ end }}">
     {{ partial "header.html" . }}
   </header>
   <main id="main-content" class="site-main" tabindex="-1">

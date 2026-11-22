@@ -7,13 +7,13 @@
      aria-label="{{ $alt }}"
      xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <pattern id="plate-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="8" stroke="var(--rule-faint)" stroke-width="1"/>
+    <pattern id="plate-dots" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <circle cx="2" cy="2" r="0.65" fill="var(--rule)" opacity="0.55"/>
     </pattern>
   </defs>
 
   <!-- Outer archival sheet & subtle margin ticks -->
-  <rect x="0.5" y="0.5" width="599" height="419" fill="var(--bg-subtle)" stroke="var(--rule-faint)" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="599" height="419" fill="none" stroke="var(--rule-faint)" stroke-width="1"/>
 
   <!-- Corner registration marks -->
   <g stroke="var(--rule)" stroke-width="1" fill="none">
@@ -24,7 +24,7 @@
   </g>
 
   <!-- Dimension lines: 1600 MM top, 750 MM left -->
-  <g stroke="var(--rule-faint)" stroke-width="1" fill="none">
+  <g stroke="var(--rule)" stroke-width="0.75" fill="none" opacity="0.55">
     <line x1="68" y1="36" x2="532" y2="36"/>
     <line x1="68" y1="31" x2="68" y2="41"/>
     <line x1="532" y1="31" x2="532" y2="41"/>
@@ -46,9 +46,9 @@
 
   <!-- Desk surface (orthographic plan) -->
   <g>
-    <rect x="68" y="58" width="464" height="192" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.25"/>
+    <rect x="68" y="58" width="464" height="192" fill="var(--bg)" stroke="var(--fg-muted)" stroke-width="1.5"/>
     <!-- Inner desk edge bevel -->
-    <rect x="74" y="64" width="452" height="180" fill="none" stroke="var(--rule-faint)" stroke-width="1"/>
+    <rect x="74" y="64" width="452" height="180" fill="none" stroke="var(--rule-faint)" stroke-width="0.75"/>
 
     <!-- Cable grommet -->
     <circle cx="192" cy="78" r="7" fill="none" stroke="var(--rule)" stroke-width="1"/>
@@ -56,10 +56,10 @@
 
     <!-- Vacated monitor footprint (sun-faded dust outline) -->
     <g>
-      <rect x="108" y="94" width="168" height="62" fill="url(#plate-hatch)" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 3"/>
+      <rect x="108" y="94" width="168" height="62" fill="url(#plate-dots)" stroke="var(--rule)" stroke-width="0.75" stroke-dasharray="4 3"/>
       <!-- Monitor stand base ghost -->
-      <rect x="164" y="106" width="56" height="36" fill="var(--bg)" stroke="var(--rule-faint)" stroke-width="1" stroke-dasharray="2 2"/>
-      <line x1="172" y1="124" x2="212" y2="124" stroke="var(--rule-faint)" stroke-width="1"/>
+      <rect x="164" y="106" width="56" height="36" fill="var(--bg)" stroke="var(--rule-faint)" stroke-width="0.75" stroke-dasharray="2 2"/>
+      <line x1="172" y1="124" x2="212" y2="124" stroke="var(--rule-faint)" stroke-width="0.75"/>
       <text x="192" y="170" text-anchor="middle" fill="var(--fg-muted)" font-family="var(--font-mono)" font-size="8.5" letter-spacing="0.08em">DISPLAY REMOVED</text>
     </g>
 
@@ -83,12 +83,15 @@
       <line x1="0" y1="-52" x2="0" y2="52"/>
     </g>
 
+    <!-- Exposed paper edge along the lower and outer sides -->
+    <path d="M-74 51 h150 V-50 l1.5 2 v99.5 l-2 2 h-148 Z" fill="var(--rule)" opacity="0.6"/>
+
     <!-- Main ledger body -->
-    <rect x="-76" y="-52" width="152" height="104" rx="1" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.25"/>
+    <rect x="-76" y="-52" width="152" height="104" rx="1" fill="color-mix(in srgb, var(--bg) 95%, var(--fg))" stroke="var(--fg)" stroke-width="1.65"/>
     <!-- Center spine -->
     <line x1="0" y1="-52" x2="0" y2="52" stroke="var(--fg)" stroke-width="1"/>
-    <line x1="-4" y1="-50" x2="-4" y2="50" stroke="var(--rule-faint)" stroke-width="1"/>
-    <line x1="4" y1="-50" x2="4" y2="50" stroke="var(--rule-faint)" stroke-width="1"/>
+    <line x1="-4" y1="-50" x2="-4" y2="50" stroke="var(--rule-faint)" stroke-width="0.75"/>
+    <line x1="4" y1="-50" x2="4" y2="50" stroke="var(--rule-faint)" stroke-width="0.75"/>
 
     <!-- Left page: ruled system entries -->
     <g stroke="var(--rule)" stroke-width="1">
@@ -115,7 +118,7 @@
   <!-- Vacated Chair (pushed back & angled, top-down architectural plan) -->
   <g transform="translate(248 314) rotate(14)">
     <!-- 5-spoke star base (dashed below seat) -->
-    <g stroke="var(--rule-faint)" stroke-width="1" stroke-dasharray="3 2">
+    <g stroke="var(--rule-faint)" stroke-width="0.75" stroke-dasharray="3 2">
       <line x1="0" y1="0" x2="0" y2="-56"/>
       <line x1="0" y1="0" x2="53" y2="-17"/>
       <line x1="0" y1="0" x2="33" y2="45"/>
@@ -132,16 +135,16 @@
     </g>
 
     <!-- Seat cushion -->
-    <rect x="-44" y="-34" width="88" height="68" rx="14" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.25"/>
+    <rect x="-44" y="-34" width="88" height="68" rx="14" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.75"/>
     <!-- Subtle inner seat contour -->
-    <rect x="-36" y="-26" width="72" height="52" rx="10" fill="none" stroke="var(--rule-faint)" stroke-width="1"/>
+    <rect x="-36" y="-26" width="72" height="52" rx="10" fill="none" stroke="var(--rule)" stroke-width="0.75" opacity="0.6"/>
 
     <!-- Armrests -->
     <rect x="-53" y="-22" width="9" height="44" rx="3" fill="var(--bg-subtle)" stroke="var(--fg-muted)" stroke-width="1"/>
     <rect x="44" y="-22" width="9" height="44" rx="3" fill="var(--bg-subtle)" stroke="var(--fg-muted)" stroke-width="1"/>
 
     <!-- Curved backrest -->
-    <path d="M -46 32 Q 0 54 46 32 L 42 42 Q 0 64 -42 42 Z" fill="var(--bg-subtle)" stroke="var(--fg)" stroke-width="1.25"/>
+    <path d="M -46 32 Q 0 54 46 32 L 42 42 Q 0 64 -42 42 Z" fill="var(--bg-subtle)" stroke="var(--fg)" stroke-width="1.75"/>
   </g>
 
   <!-- Bottom technical legend -->

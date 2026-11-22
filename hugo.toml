@@ -31,13 +31,11 @@ title = 'Aftermind'
     name = '归档'
     pageRef = '/posts'
     weight = 20
-    params = { icon = 'list' }
 
   [[menus.main]]
     name = '标签'
     pageRef = '/tags'
     weight = 30
-    params = { icon = 'tag' }
 
 [markup]
   [markup.goldmark]
