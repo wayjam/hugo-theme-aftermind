@@ -69,8 +69,8 @@
       {{- end -}}
       {{- $caption := "" -}}
       {{- if not $image -}}
-        {{- $alt = $alt | default (i18n "home_plate_alt" | default "A large silicon chip with ordered traces dominates the plate beside a smaller human profile etched in warm ink.") -}}
-        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · SILICON / CARBON" -}}
+        {{- $alt = $alt | default (i18n "home_plate_alt" | default "Seen from a doorway, a row of lit server racks recedes into darkness. Window light falls beside an empty chair and a half-written page.") -}}
+        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · AFTER THE HANDOVER" -}}
       {{- end -}}
       {{- if isset $home "caption" -}}
         {{- $caption = $home.caption -}}

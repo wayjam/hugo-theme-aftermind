@@ -1,65 +1,73 @@
 <svg class="home-plate-svg" viewBox="0 0 720 504" width="720" height="504"
      role="img" aria-label="{{ . }}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <path id="home-plate-pins" d="M0 0v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18m16-18v18"/>
-    <pattern id="home-plate-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <path d="M0 0v6" stroke="currentColor" stroke-width="1"/>
+    <linearGradient id="home-plate-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="var(--plate-wall)"/>
+      <stop offset="1" stop-color="var(--plate-ink)"/>
+    </linearGradient>
+    <linearGradient id="home-plate-light" x1="1" y1="0" x2="0" y2="1">
+      <stop stop-color="var(--plate-light)" stop-opacity=".82"/>
+      <stop offset="1" stop-color="var(--plate-light)" stop-opacity=".23"/>
+    </linearGradient>
+    <pattern id="home-plate-etch" width="4" height="7" patternUnits="userSpaceOnUse">
+      <path d="M0 .5h4" stroke="var(--plate-edge)" stroke-width=".6"/>
     </pattern>
-    <pattern id="home-plate-cells" width="12" height="12" patternUnits="userSpaceOnUse">
-      <rect x="1.5" y="1.5" width="8" height="8" fill="none" stroke="var(--plate-metal)" stroke-width=".8"/>
-    </pattern>
+    <clipPath id="home-plate-racks">
+      <path d="M24 55l380 70v183L24 388Z"/>
+    </clipPath>
+    <g id="home-plate-rack">
+      <path d="M.5 .5h79v219H.5Z" fill="var(--plate-ink)" stroke="var(--plate-edge)" stroke-opacity=".46"/>
+      <path d="M7 15h66v174H7Z" fill="url(#home-plate-etch)" opacity=".42"/>
+      <path d="M7 33h66M7 73h66M7 113h66M7 153h66M7 193h66" stroke="var(--plate-edge)" stroke-opacity=".66" stroke-width=".85"/>
+      <path d="M65 23h5m-5 40h5m-5 40h5m-5 40h5m-5 40h5" stroke="var(--plate-status)" stroke-width="2"/>
+    </g>
   </defs>
 
-  <!-- Registration and traces define the sheet around the two forms. -->
-  <rect x="24.5" y="26.5" width="671" height="451" fill="none" stroke="var(--rule-faint)"/>
-  <g fill="none" stroke="var(--rule)" stroke-width="1">
-    <path d="M36 54V38h16m616 0h16v16M36 450v16h16m616 0h16v-16"/>
-    <path d="M49 430h622M49 425v10m383-10v10m239-10v10"/>
-  </g>
-  <g fill="none" stroke="var(--fg-muted)" stroke-opacity=".55" stroke-width="1.2">
-    <path d="M432 151h31l47-47h141m-219 64h40l47-47h132m-219 64h49l47-47h123m-219 64h58l47-47h88"/>
-    <path d="M432 219h62l47-47h65m-174 64h44l18-18h36M432 319h16l23 23h21m-60-6h11l23 23h21"/>
-    <circle cx="651" cy="104" r="2.5"/><circle cx="651" cy="121" r="2.5"/><circle cx="651" cy="138" r="2.5"/>
-    <circle cx="625" cy="155" r="2.5"/><circle cx="606" cy="172" r="2.5"/>
-  </g>
+  <!-- A doorway leaves the room off-centre, with the eye at seated height. -->
+  <path d="M0 0h720v504H0Z" fill="var(--plate-ink)"/>
+  <path d="M24 35h672l-216 94h-76Z" fill="var(--plate-wall)"/>
+  <path d="M404 125l76 4v169l-76 10Z" fill="var(--plate-ink)"/>
+  <path d="M480 129l216-94v342l-216-79Z" fill="var(--plate-wall)"/>
+  <path d="M404 308l76-10 216 79v127H24V388Z" fill="url(#home-plate-floor)"/>
+  <path d="M480 298 556 504m-113-202-95 202m-117-158-119 158m-10-111 594 13m-672 53 672 4" fill="none" stroke="var(--plate-edge)" stroke-opacity=".21"/>
 
-  <!-- Silicon mind: package, etched conductors and a dense rectangular die. -->
-  <g fill="none" stroke="var(--plate-metal)" stroke-width="2">
-    <use href="#home-plate-pins" x="142" y="54"/>
-    <use href="#home-plate-pins" x="142" y="390"/>
-    <use href="#home-plate-pins" transform="translate(72 118) rotate(90)"/>
+  <g clip-path="url(#home-plate-racks)">
+    <path d="M24 55l380 70v183L24 388Z" fill="var(--plate-ink)"/>
+    <use href="#home-plate-rack" transform="matrix(1.19 .22 0 1.55 26 48)"/>
+    <use href="#home-plate-rack" transform="matrix(1.01 .185 0 1.37 122 66)"/>
+    <use href="#home-plate-rack" transform="matrix(.83 .155 0 1.16 204 81)"/>
+    <use href="#home-plate-rack" transform="matrix(.69 .127 0 1 271 94)"/>
+    <use href="#home-plate-rack" transform="matrix(.53 .098 0 .87 327 104)"/>
+    <use href="#home-plate-rack" transform="matrix(.44 .081 0 .79 370 112)"/>
   </g>
-  <path d="M89 72h320l23 23v271l-25 24H72V89Z" fill="var(--plate-ink)" stroke="var(--plate-metal)" stroke-width="1.4"/>
-  <path d="M94 84h310l16 16v261l-18 17H84V94Z" fill="none" stroke="var(--plate-metal)" stroke-opacity=".45"/>
-  <path d="M96 96h83v17H96Zm230 253h77v17h-77Z" fill="url(#home-plate-hatch)" color="var(--plate-metal)" opacity=".65"/>
-  <path d="M186 117h145l25 25v178l-20 20H146V157Z" fill="var(--plate-die)" stroke="var(--plate-metal)" stroke-width="1.4"/>
-  <path d="M193 128h133l19 19v168l-14 14H157V162Z" fill="none" stroke="var(--plate-metal)" stroke-opacity=".55"/>
-  <g fill="none" stroke="var(--plate-metal)" stroke-width="1.2" opacity=".82">
-    <path d="M187 117V96h51V84m-30 33v-12h48V84m-27 33v-5h45V84M299 84v33m17-33v33m17-33v35"/>
-    <path d="M146 168h-19l-17-17H85m61 33h-26l-17-17H85m61 33h-33l-17-17H85m61 33H84m62 16H84m62 16H84"/>
-    <path d="M146 264h-16l-17 17H84m62-1h-10l-17 17H84m62-1-17 17H84m62-1-17 17H84m62-1-17 17H84"/>
-    <path d="M356 151h28l16-16h20m-64 33h35l16-16h13m-64 33h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64m-64 17h64"/>
-    <path d="M166 340v12l-21 20m41-32v14l-18 18m38-32v30m18-30v30m18-30v30m18-30v30m18-30v30m18-30v30"/>
-  </g>
-  <rect x="174" y="176" width="48" height="132" fill="url(#home-plate-cells)"/>
-  <rect x="234" y="176" width="94" height="84" fill="url(#home-plate-cells)"/>
-  <path d="M234 272h94v10h-94Zm0 13h94v10h-94Zm0 13h94v10h-94Z" fill="url(#home-plate-hatch)" color="var(--plate-metal)"/>
-  <path d="M179 157h149m-94 106h94" stroke="var(--plate-metal)" stroke-width="1.4"/>
-  <g fill="var(--plate-metal)">
-    <circle cx="96" cy="129" r="2.6"/><circle cx="96" cy="358" r="2.6"/><circle cx="407" cy="108" r="2.6"/>
-    <rect x="367" y="318" width="17" height="8"/><rect x="389" y="318" width="17" height="8"/>
-  </g>
+  <path d="M24 55l380 70v183L24 388" fill="none" stroke="var(--plate-edge)" stroke-opacity=".44"/>
+  <path d="M429 148h27v131h-27Z" fill="none" stroke="var(--plate-edge)" stroke-opacity=".39"/>
+  <path d="M434 157h17" stroke="var(--plate-status)" stroke-opacity=".72"/>
 
-  <!-- Carbon mind: one profile with winding contours in the remaining space. -->
-  <path d="M551 418c8-19 12-40 6-58-15 4-32 1-35-8-2-5 3-11 1-15l-6-6 5-6-7-7 2-9c-10-1-17-4-15-9 1-4 11-11 16-19 5-8 6-19 11-30 7-18 28-34 51-36 29-2 51 11 63 33 12 23 10 54-3 74-9 14-25 28-27 47-2 16 9 32 27 49"
-        fill="var(--accent)" fill-opacity=".08" stroke="var(--accent)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
-  <g fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round">
-    <path d="M524 283q8-4 17-1m-15 6q5 3 10 0m-12 51q5 2 11 0m62-44c10-11 18 0 12 14-3 6-9 9-12 6-3-2-2-7 2-9"/>
-    <path d="M540 257c10-18 29-28 51-26 20 2 37 16 42 33 5 15 1 30-7 44M547 261c9-14 24-22 42-21 16 1 29 11 35 26 3 8 3 17 0 25M555 264c8-10 18-16 31-15 13 0 23 7 29 19m-51-1c6-7 13-10 22-9 8 1 15 5 21 13m-35 0q12-10 25 1" opacity=".65"/>
-    <path d="M559 368q21 8 40-5m-42 17q20 9 36 0m-39 12q24 8 40-2" opacity=".4"/>
-  </g>
-  <path d="M578 277c7-3 13-2 18 2" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+  <!-- High window and the projected light on the floor. -->
+  <path d="M591 109l105-46v104l-105 33Z" fill="var(--plate-light)" fill-opacity=".8"/>
+  <path d="M596 113l100-44m-100 44v80m28-94v85m34-100v89m-62-18 100-38" fill="none" stroke="var(--plate-ink)" stroke-width="3"/>
+  <path d="M588 200l108-34 7 6-112 36Z" fill="var(--plate-edge)" fill-opacity=".58"/>
+  <path d="M610 346l86 31v127H284Z" fill="url(#home-plate-light)"/>
+  <path d="M623 350l14 6-250 148h-19Zm49 17 12 5-173 132h-15Z" fill="var(--plate-ink)" fill-opacity=".28"/>
 
-  <text x="49" y="456" fill="var(--fg)" font-family="var(--font-mono)" font-size="19" font-weight="700" letter-spacing="1.8" translate="no">SILICON MIND</text>
-  <text x="671" y="456" fill="var(--accent)" font-family="var(--font-serif)" font-size="22" text-anchor="end" translate="no">Carbon mind</text>
+  <!-- The desk and its one unfinished page sit just inside the light. -->
+  <path d="M614 330l82 3v67l-5-2v-50l-71-5v66l-6 4Z" fill="var(--plate-ink)"/>
+  <path d="M552 294l144 9v37l-112-8Z" fill="var(--plate-wall)"/>
+  <path d="M552 294l144 9v28l-112-8Z" fill="var(--plate-edge)"/>
+  <path d="M584 323l112 8v9l-112-8Z" fill="var(--plate-ink)"/>
+  <path d="M606 304l37 2 14 14-38-2Z" fill="var(--plate-ink)" fill-opacity=".58"/>
+  <path d="M603 302l38 2 13 13-37-2Z" fill="var(--plate-paper)"/>
+  <path d="M613 306l19 1m-16 2 22 1m-19 2 10.5 .5" fill="none" stroke="var(--plate-mark)" stroke-width="1.1" stroke-linecap="round"/>
+
+  <!-- Pulled back from the desk, the chair casts a long foreground shadow. -->
+  <path d="M505 395l32 4 30 23-54 82h-91Z" fill="var(--plate-ink)" fill-opacity=".34"/>
+  <path d="M497 356l-4 54m56-46 1 51m-37-57-4 42m30-41 3 44" fill="none" stroke="var(--plate-ink)" stroke-width="4" stroke-linecap="square"/>
+  <path d="M493 352l43-5 18 12-43 10-18-8Z" fill="var(--plate-ink)"/>
+  <path d="M493 352l43-5 16 11-41 8Z" fill="var(--plate-wall)" stroke="var(--plate-edge)" stroke-opacity=".72"/>
+  <path d="M491 318l34-4 8 7 5 35-8 1-6-25-23 3 6 22-8 1-10-31Z" fill="var(--plate-ink)"/>
+  <path d="M494 319l30-4 5 5-31 5Z" fill="var(--plate-edge)"/>
+
+  <path d="M0 0h24v504H0ZM696 0h24v504h-24ZM24 0h672v35H24Z" fill="var(--plate-ink)"/>
+  <path d="M24 35v453m672-453v453M37 488h646" fill="none" stroke="var(--plate-edge)" stroke-opacity=".34"/>
 </svg>

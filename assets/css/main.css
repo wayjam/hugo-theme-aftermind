@@ -501,9 +501,13 @@ a:hover {
 }
 
 .home-plate-svg {
-  --plate-ink: light-dark(#302f34, #202026);
-  --plate-die: light-dark(#48464e, #373540);
-  --plate-metal: light-dark(#a7a198, #8d8799);
+  --plate-ink: light-dark(#28292b, #17181d);
+  --plate-wall: light-dark(#61605d, #373841);
+  --plate-edge: light-dark(#a09a8e, #666575);
+  --plate-light: light-dark(#e9d3ae, #af9575);
+  --plate-status: light-dark(#aaa998, #838c84);
+  --plate-paper: light-dark(#f4e5c7, #e2ccb0);
+  --plate-mark: #815345;
   display: block;
   width: 100%;
   height: auto;
