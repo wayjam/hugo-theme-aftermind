@@ -17,22 +17,27 @@
 
 - **Hugo `>= 0.146.0`**（标准版即可，无需 Extended 版或 Node.js）。
 
-## 本地开发
+## 本地开发与示例预览
 
-在主题根目录运行：
-
-```sh
-hugo server --disableFastRender
-```
-
-生产构建：
+在主题根目录运行示例站点（`exampleSite/`）：
 
 ```sh
-hugo --minify --cleanDestinationDir
+./run_example.sh
 ```
 
-构建结果位于 `public/`。发布前将 `hugo.toml` 中的 `baseURL` 替换为实际站点地址。
+或手动执行：
 
+```sh
+hugo server --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --disableFastRender
+```
+
+生产构建示例站点：
+
+```sh
+hugo --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --minify --cleanDestinationDir
+```
+
+构建结果位于 `exampleSite/public/`。完整示例配置见 [exampleSite/hugo.toml](exampleSite/hugo.toml)。
 ## 在站点中使用
 
 将本目录放到站点的 `themes/hugo-theme-aftermind/`，并在站点 `hugo.toml` 中配置：
@@ -68,7 +73,7 @@ title = 'Aftermind'
   guessSyntax = true
 ```
 
-主题根目录的 `content/` 为预览示例内容，正式建站时在站点目录编写自己的内容即可。
+完整的示例站点与演示文章见 `exampleSite/` 目录。
 
 ## 分享预览
 
@@ -165,7 +170,8 @@ diagrams = true
 - `archetypes/`：新内容的 front matter 模板。
 - `assets/css/`、`assets/js/`：通过 Hugo Pipes 处理的样式与轻量交互脚本。
 - `assets/icons/`：随主题打包的 Tabler Outline SVG 图标（由 `layouts/_partials/icon.html` 输出）。
-- `content/`：开发预览示例文章。
+- `content/search/`：主题内置的搜索页内容适配器（`_content.gotmpl`），建站时自动挂载，无需手动创建搜索页。
+- `exampleSite/`：完整的示例站点配置、独立页面与演示文章（运行 `./run_example.sh` 即可预览）。
 - `i18n/`：多语言界面文案（`zh-cn.toml`、`zh-tw.toml`、`zh-hant.toml`、`en.toml`、`ja.toml`、`de.toml`）。
 - `layouts/`：现行 Hugo 模板结构（`baseof.html`、`home.html`、`page.html`、`section.html`、`taxonomy.html`、`term.html`、`404.html`、`_partials/`、`_shortcodes/`）。
 - `static/`：自托管字标字体与自适应亮暗 SVG/ICO favicon。

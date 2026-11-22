@@ -1,0 +1,16 @@
+name = 'Aftermind'
+license = 'MIT'
+licenselink = 'https://github.com/wayjam/hugo-theme-aftermind/blob/master/LICENSE'
+description = 'A minimalist, postmodern archival Hugo theme for personal blogs, essays, and technical notes.'
+homepage = 'https://github.com/wayjam/hugo-theme-aftermind'
+tags = ['blog', 'minimal', 'postmodern', 'light', 'dark', 'writing', 'syntax highlighting', 'archives', 'search', 'i18n', 'katex', 'mermaid']
+features = ['blog', 'responsive', 'archives', 'search', 'dark mode', 'i18n', 'table of contents', 'lightbox']
+
+[author]
+  name = 'WayJam So'
+  homepage = 'https://github.com/wayjam'
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = '0.146.0'

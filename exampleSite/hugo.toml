@@ -1,0 +1,64 @@
+baseURL = 'https://example.org/'
+defaultContentLanguage = 'zh-cn'
+languageCode = 'zh-CN'
+hasCJKLanguage = true
+title = 'Aftermind'
+theme = 'hugo-theme-aftermind'
+enableRobotsTXT = true
+
+[params]
+  description = '智能之后 · 写给没有“人”看的东西'
+  homeImageAlt = '停用工位平面图：移除显示器的桌台、摊开的交接簿与退后的空椅。'
+  mainSections = ['posts']
+  # 可选：未设置文章 cover 时的默认分享预览图（支持 assets/、static/ 或完整 HTTPS 地址）
+  # socialImage = 'images/home-desk.webp'
+  # socialImageAlt = 'Aftermind 档案封面'
+
+[params.search]
+  # 可选：'json'（默认，无需额外构建步骤）、'pagefind'（全文检索）、'none'（关闭搜索）
+  provider = 'json'
+
+[params.comments]
+  # 默认关闭。启用后在站点的 layouts/_partials/comments/provider.html 放入评论系统嵌入代码
+  enabled = false
+
+[menus]
+  [[menus.main]]
+    name = '首页'
+    pageRef = '/'
+    weight = 10
+
+  [[menus.main]]
+    name = '归档'
+    pageRef = '/posts'
+    weight = 20
+
+  [[menus.main]]
+    name = '标签'
+    pageRef = '/tags'
+    weight = 30
+
+  [[menus.main]]
+    name = '关于'
+    pageRef = '/about'
+    weight = 40
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)']]
+
+  [markup.highlight]
+    noClasses = false
+    codeFences = true
+    guessSyntax = true
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = '0.146.0'
