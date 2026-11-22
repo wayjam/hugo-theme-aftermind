@@ -1,22 +1,29 @@
 <svg class="home-plate-svg" viewBox="0 0 720 504" width="720" height="504"
      role="img" aria-label="{{ . }}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="home-plate-room" x2="1" y2="1">
+    <linearGradient id="home-plate-room" x2="1" y2=".7">
       <stop stop-color="var(--plate-ink)"/>
       <stop offset="1" stop-color="var(--plate-wall)"/>
     </linearGradient>
     <linearGradient id="home-plate-desk" x2="1" y2=".35">
       <stop stop-color="var(--plate-ink)"/>
-      <stop offset="1" stop-color="var(--plate-edge)"/>
+      <stop offset="1" stop-color="var(--plate-wood)"/>
     </linearGradient>
-    <linearGradient id="home-plate-window-light" x1="1" x2=".1" y2="1">
-      <stop stop-color="var(--plate-light)" stop-opacity=".72"/>
-      <stop offset="1" stop-color="var(--plate-light)" stop-opacity=".08"/>
-    </linearGradient>
-    <linearGradient id="home-plate-paper" x2=".2" y2="1">
+    <radialGradient id="home-plate-window-light" cx=".78" cy=".17" r=".83">
+      <stop stop-color="var(--plate-light)" stop-opacity=".55"/>
+      <stop offset=".53" stop-color="var(--plate-light)" stop-opacity=".23"/>
+      <stop offset="1" stop-color="var(--plate-light)" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="home-plate-paper" x1=".78" y1="0" x2=".25" y2="1">
       <stop stop-color="var(--plate-paper)"/>
       <stop offset="1" stop-color="var(--plate-paper-deep)"/>
     </linearGradient>
+    <pattern id="home-plate-fibres" width="19" height="13" patternUnits="userSpaceOnUse">
+      <path d="M2 3l3-.5m6 7 4 .5m-9 1h2m6-9 2 1" fill="none" stroke="var(--plate-mark)" stroke-width=".4"/>
+    </pattern>
+    <filter id="home-plate-soft-shadow" x="-.15" y="-.15" width="1.3" height="1.3">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
     <pattern id="home-plate-perforation" width="5" height="5" patternUnits="userSpaceOnUse">
       <circle cx="2.5" cy="2.5" r=".8" fill="var(--plate-edge)"/>
     </pattern>
@@ -47,38 +54,45 @@
 
   <!-- The near rack is cropped. The second rack falls back into the room. -->
   <path d="M0 0h720v504H0Z" fill="url(#home-plate-room)"/>
-  <path d="M366 0h13v303h-13ZM0 327l720-97v14L0 346Z" fill="var(--plate-ink)" fill-opacity=".6"/>
-  <use href="#home-plate-rack" transform="matrix(.84 -.09 0 .9 175 54)" opacity=".62"/>
-  <path d="M169 33l27 18v276l-27 26Z" fill="var(--plate-wall)" stroke="var(--plate-edge)" stroke-opacity=".38"/>
-  <use href="#home-plate-rack" transform="matrix(1.07 -.065 0 1.08 -8 44)"/>
+  <path d="M360 0h12v308h-12ZM0 334l720-107v13L0 348Z" fill="var(--plate-ink)" fill-opacity=".42"/>
+  <use href="#home-plate-rack" transform="matrix(.72 -.08 0 .83 139 78)" opacity=".52"/>
+  <path d="M130 48l24 16v272l-24 21Z" fill="var(--plate-wall)" stroke="var(--plate-edge)" stroke-opacity=".24"/>
+  <use href="#home-plate-rack" transform="matrix(1 -.06 0 1.05 -35 57)" opacity=".8"/>
 
-  <!-- Light from an off-frame window reaches the far wall and the desk. -->
-  <path d="M720 32v158l-204 53 116-166Z" fill="var(--plate-light)" fill-opacity=".14"/>
-  <path d="M720 87v17l-166 109 18-24Z" fill="var(--plate-light)" fill-opacity=".12"/>
-  <path d="M181 384l166-128 373-52v300H181Z" fill="url(#home-plate-desk)"/>
-  <path d="M362 266l358-51v289H230Z" fill="url(#home-plate-window-light)"/>
-  <path d="M642 226l15-2-185 280h-18Zm78 40v19L571 504h-14Z" fill="var(--plate-ink)" fill-opacity=".24"/>
-  <path d="M184 384l163-128 373-52" fill="none" stroke="var(--plate-edge)" stroke-opacity=".66" stroke-width="1.5"/>
+  <!-- Window light is strongest on the table and falls off across the room. -->
+  <path d="M360 0h360v320H360Z" fill="url(#home-plate-window-light)" opacity=".28"/>
+  <path d="M154 378l187-126 379-76v328H154Z" fill="url(#home-plate-desk)"/>
+  <path d="M154 378l187-126 379-76v328H154Z" fill="url(#home-plate-window-light)"/>
+  <path d="M154 378l187-126 379-76" fill="none" stroke="var(--plate-edge)" stroke-opacity=".39" stroke-width="1.25"/>
+  <path d="M253 504l467-211m-393 211 393-177m-252 177 252-113" fill="none" stroke="var(--plate-edge)" stroke-opacity=".13"/>
 
   <!-- The crop catches only the shoulder of the chair pulled away from the desk. -->
   <path d="M0 367c42-33 91-36 138-20l64 24c14 6 22 17 25 32l19 101H0Z" fill="var(--plate-ink)"/>
   <path d="M0 382c44-34 91-38 134-23l65 25c9 3 13 10 15 20l17 100" fill="none" stroke="var(--plate-edge)" stroke-opacity=".53" stroke-width="2"/>
   <path d="M0 419c47-24 93-27 142-8l48 19 11 74" fill="none" stroke="var(--plate-edge)" stroke-opacity=".21" stroke-width="1.25"/>
 
-  <!-- Warm paper and blank ruled space carry the unfinished sentence. -->
-  <g transform="translate(358 249) rotate(-9)">
-    <path d="M1 12h270l1 187-31 24H-4Z" fill="var(--plate-ink)" fill-opacity=".36"/>
-    <path d="M-8 3h269v193l-28 23H-12Z" fill="var(--plate-paper-deep)"/>
-    <path d="M0 0h258v188l-27 24H0Z" fill="url(#home-plate-paper)"/>
-    <path d="M258 188h-27v24Z" fill="var(--plate-mark)" fill-opacity=".24"/>
-    <path d="M31 23v163M18 77h219m-219 37h219m-219 37h219m-219 37h196" fill="none" stroke="var(--plate-mark)" stroke-opacity=".3" stroke-width="1"/>
-    <text x="230" y="35" text-anchor="end" fill="var(--plate-mark)" font-family="var(--font-mono)" font-size="16" letter-spacing="1">18:05</text>
-    <text class="home-plate-note" x="44" y="70" fill="var(--plate-mark)" font-family="var(--font-serif)" font-size="31" font-style="italic">{{ i18n "home_plate_note" | default "Tomorrow, I" }}</text>
+  <!-- Most of the sheet is empty. The last strokes stop between rules. -->
+  <g transform="translate(325 231) rotate(-11)">
+    <path d="M0 9h284v203l-24 28H-11Z" fill="var(--plate-ink)" fill-opacity=".61" filter="url(#home-plate-soft-shadow)"/>
+    <path d="M-8 5h280v201l-28 23H-9Z" fill="var(--plate-paper-deep)"/>
+    <path d="M0 1l273-2 1 193-26 30L1 223Z" fill="url(#home-plate-paper)"/>
+    <path d="M0 1l273-2 1 193-26 30L1 223Z" fill="url(#home-plate-fibres)" opacity=".22"/>
+    <path d="M274 192q-16 4-26 3l0 27Z" fill="var(--plate-paper)" fill-opacity=".63"/>
+    <path d="M247 222v-25q17 0 27-5M4 222l244-1" fill="none" stroke="var(--plate-mark)" stroke-opacity=".3"/>
+    <path d="M33 22v179M20 65h229m-229 27h229m-229 27h229m-229 27h229m-229 27h229m-229 27h215" fill="none" stroke="var(--plate-mark)" stroke-opacity=".19"/>
+    <g fill="none" stroke="var(--plate-mark)" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M44 56q9-5 10-11 2 3-4 11 8-5 14-5l-3 5q4 2 13-4 6-4 12-6-7 10-4 11l17-5m9 4q6-3 8-10 3 4-1 10l13-4 2 3 14-6m9 4q8-7 10-5l-4 7 16-5q5 0 3 4l12-4" stroke-width="1.6" opacity=".64"/>
+      <path d="M44 83q9-3 12-10l-1 11 11-5q6-5 9-3l-3 7 14-4m8 3q10-5 13-10l-3 11 11-4q8-5 10-2l-1 5 12-5m8 4q9-5 15-4l-2 6 11-4 6-3 2 5 14-6 8 2" stroke-width="1.45" opacity=".51"/>
+      <path d="M45 110q11-6 13-10 2 2-4 11l14-5 3 3 13-4m9 2q8-1 16-3" stroke-width="1.6" opacity=".7"/>
+    </g>
+    <circle cx="109" cy="104" r="1.5" fill="var(--plate-mark)" opacity=".66"/>
   </g>
-  <g transform="translate(630 338) rotate(25)">
-    <path d="M3 4l9 11v105l-4 5H4l-4-5V15Z" fill="var(--plate-ink)" fill-opacity=".38"/>
-    <path d="M0 0l5 13v105h-10V13Z" fill="var(--plate-ink)"/>
-    <path d="M-3 19v82m-2-11h10" fill="none" stroke="var(--plate-edge)" stroke-width="1.2"/>
-    <path d="M0 0l5 13h-10Z" fill="var(--plate-edge)"/>
+
+  <g transform="translate(640 323) rotate(31)">
+    <path d="M3 4l9 12v111l-4 5H4l-4-5V16Z" fill="var(--plate-ink)" opacity=".53" filter="url(#home-plate-soft-shadow)"/>
+    <path d="M0 0l5 14-1.4 6h-7.2L-5 14Z" fill="var(--plate-edge)"/>
+    <path d="M0 2v11" stroke="var(--plate-ink)" stroke-width=".75"/>
+    <path d="M-4 18h8l2 8v95l-2 5h-8l-2-5V26Z" fill="var(--plate-ink)"/>
+    <path d="M-3 29v87m-2-91h10m-10 82h10" fill="none" stroke="var(--plate-edge)" stroke-opacity=".69" stroke-width="1.1"/>
   </g>
 </svg>

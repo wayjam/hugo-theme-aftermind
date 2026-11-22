@@ -69,7 +69,7 @@
       {{- end -}}
       {{- $caption := "" -}}
       {{- if not $image -}}
-        {{- $alt = $alt | default (i18n "home_plate_alt" | default "Server lights stay on behind a desk. A page marked 18:05 stops at the handwritten words ‘Tomorrow, I’, with blank lines and a pen beside it.") -}}
+        {{- $alt = $alt | default (i18n "home_plate_alt" | default "A pen lies beside a half-written sheet in the light. The last strokes stop midway across the page, and server lights remain on behind the desk.") -}}
         {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · AFTER THE HANDOVER" -}}
       {{- end -}}
       {{- if isset $home "caption" -}}
