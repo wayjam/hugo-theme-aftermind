@@ -1397,6 +1397,48 @@ a:hover {
   padding: 0.12em 0.35em;
 }
 
+.prose kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8125em;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  background-color: var(--bg-subtle);
+  color: var(--fg);
+}
+
+.prose mark {
+  background-color: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--fg);
+  padding: 0.05em 0.25em;
+}
+
+.prose abbr[title] {
+  text-decoration: underline dotted var(--rule);
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+.prose details {
+  margin: var(--s-4) 0;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--rule-faint);
+  background-color: var(--bg-subtle);
+}
+
+.prose details summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--fg);
+}
+
+.prose details[open] summary {
+  margin-bottom: var(--s-2);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule-faint);
+}
+
 /* Archival code block + dual-mode Chroma syntax palette */
 .prose .highlight {
   margin: var(--s-4) 0;

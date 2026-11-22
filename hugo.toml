@@ -4,6 +4,9 @@ languageCode = 'zh-CN'
 hasCJKLanguage = true
 title = 'Aftermind'
 
+[pagination]
+  pagerSize = 20
+
 [params]
   description = '智能之后 · 写给没有“人”看的东西'
   homeImage = 'images/home-desk.webp'

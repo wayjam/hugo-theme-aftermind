@@ -2,7 +2,7 @@
 title = '离线归档与信号校验'
 date = 2026-11-22T09:30:00+08:00
 draft = false
-archiveId = '#005'
+archiveId = '#SIG-01'
 tags = ['技术', '归档']
 summary = '演示文章目录、行内与块级数学公式（KaTeX），以及 Mermaid 流程图渲染。'
 math = true

@@ -6,6 +6,9 @@ title = 'Aftermind'
 theme = 'hugo-theme-aftermind'
 enableRobotsTXT = true
 
+[pagination]
+  pagerSize = 5
+
 [params]
   description = '智能之后 · 写给没有“人”看的东西'
   homeImageAlt = '停用工位平面图：移除显示器的桌台、摊开的交接簿与退后的空椅。'

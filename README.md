@@ -38,6 +38,9 @@ hugo --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --minif
 ```
 
 构建结果位于 `exampleSite/public/`。完整示例配置见 [exampleSite/hugo.toml](exampleSite/hugo.toml)。
+
+示例站的归档每页显示 5 篇文章，打开 `/posts/` 即可体验翻页。示例文章涵盖 Markdown、KaTeX、Mermaid、富文本和代码高亮。
+
 ## 在站点中使用
 
 将本目录放到站点的 `themes/hugo-theme-aftermind/`，并在站点 `hugo.toml` 中配置：
@@ -47,6 +50,9 @@ theme = 'hugo-theme-aftermind'
 defaultContentLanguage = 'zh-cn' # 支持 'zh-cn' / 'zh-tw' (或 'zh-hant') / 'en' / 'ja' / 'de'
 hasCJKLanguage = true
 title = 'Aftermind'
+
+[pagination]
+  pagerSize = 20 # 归档与标签页每页条数
 
 [params]
   description = '智能之后 · 写给没有“人”看的东西'
