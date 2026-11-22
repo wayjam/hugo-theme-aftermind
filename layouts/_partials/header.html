@@ -5,9 +5,9 @@
   <div class="site-controls">
     {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
     <div class="theme-control" role="radiogroup" aria-label="{{ i18n `theme_label` | default `Theme` }}">
-      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="system" aria-label="{{ i18n `theme_system` | default `System` }}">{{ i18n "theme_system_short" | default "Auto" }}</button>
-      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="light" aria-label="{{ i18n `theme_light` | default `Light` }}">{{ i18n "theme_light_short" | default "Light" }}</button>
-      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="dark" aria-label="{{ i18n `theme_dark` | default `Dark` }}">{{ i18n "theme_dark_short" | default "Dark" }}</button>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="system" aria-label="{{ i18n `theme_system` | default `System` }}"><span class="theme-btn-label">{{ i18n "theme_system_short" | default "Auto" }}</span></button>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="light" aria-label="{{ i18n `theme_light` | default `Light` }}"><span class="theme-btn-label">{{ i18n "theme_light_short" | default "Light" }}</span></button>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="dark" aria-label="{{ i18n `theme_dark` | default `Dark` }}"><span class="theme-btn-label">{{ i18n "theme_dark_short" | default "Dark" }}</span></button>
     </div>
   </div>
 </div>

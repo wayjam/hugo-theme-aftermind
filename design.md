@@ -173,7 +173,7 @@
 
 ### 外观切换机制
 
-- 顶栏采用无框 3 态文字单选组（`role="radiogroup"`）。当前项以 `1px` 强调色底线标识，宽屏下与导航之间以细线分隔。
+- 顶栏采用带细框的三段文字单选组（`role="radiogroup"`）。当前项用铁锈红或琥珀色实底标出，键盘焦点显示在按钮边缘。可见控件高 `28px`，每项点击区高 `44px`。
 - 支持点击与键盘方向键（`ArrowLeft` / `ArrowRight` / `ArrowUp` / `ArrowDown`）循环切换，采用 roving `tabindex` 保持 Tab 焦点整洁；`<html>` 随模式同步 `color-scheme: light` / `dark` 与 `<meta name="theme-color">`。
 - 渲染前由内联轻量脚本读取 `localStorage` 中保存的有效值，消除刷新与跨页闪色；存储不可用时当前页切换仍有效；脚本禁用时退回 CSS `prefers-color-scheme`，切换控件仅在脚本可用时显示。切换时焦点留在控件上，不做全页颜色渐变。
 

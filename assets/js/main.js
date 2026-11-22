@@ -188,7 +188,6 @@
     themeBtns.forEach((btn) => {
       const active = btn.dataset.themeBtn === mode;
       btn.setAttribute("aria-checked", active ? "true" : "false");
-      btn.classList.toggle("is-active", active);
       btn.tabIndex = active ? 0 : -1;
     });
   }

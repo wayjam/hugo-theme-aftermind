@@ -358,81 +358,73 @@ a:hover {
   display: inline-block;
 }
 
-/* 3-state frameless theme switcher (visible when JS enabled) */
+/* Appearance selector. The inset track leaves room for full-height targets. */
 .theme-control {
   display: none;
-  align-items: center;
-  gap: 0.125rem;
   position: relative;
-  min-height: 44px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--fg-muted);
+  isolation: isolate;
+  gap: 2px;
+  padding-inline: 2px;
 }
 
 .js .theme-control {
   display: inline-flex;
 }
 
-.site-nav + .theme-control::before {
+.theme-control::before {
   content: "";
   position: absolute;
-  inset-inline-start: -0.5rem;
-  width: 1px;
-  height: 0.875rem;
-  background-color: var(--rule-faint);
+  inset: 8px 0;
+  z-index: -1;
+  border: 1px solid var(--rule);
+  background-color: var(--bg-subtle);
+  pointer-events: none;
 }
 
 .theme-btn {
   appearance: none;
-  -webkit-appearance: none;
-  display: inline-flex;
+  display: grid;
   align-items: center;
-  background: transparent;
-  border: 0;
-  padding: 0.375rem 0.375rem;
   min-inline-size: 2rem;
-  justify-content: center;
-  min-height: 36px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--fg-muted);
+  font: 0.75rem / 1.25 var(--font-mono);
+  white-space: nowrap;
   cursor: pointer;
-  position: relative;
   touch-action: manipulation;
-  transition:
-    color var(--dur-hover) var(--ease-out),
-    transform 100ms var(--ease-out);
 }
 
-.theme-btn:hover {
+.theme-btn-label {
+  display: grid;
+  place-items: center;
+  min-height: 24px;
+  padding-inline: 0.375rem;
+  transition: color var(--dur-hover) var(--ease-out),
+              background-color var(--dur-hover) var(--ease-out);
+}
+
+.theme-btn:hover .theme-btn-label {
   color: var(--fg);
+  background-color: var(--bg);
 }
 
-.theme-btn:active {
-  transform: translateY(0.5px) scale(0.95);
+.theme-btn[aria-checked="true"] .theme-btn-label {
+  color: var(--selection-fg);
+  background-color: var(--selection-bg);
 }
 
-.theme-btn.is-active {
-  color: var(--fg);
+.theme-btn:focus-visible {
+  outline-offset: -2px;
 }
 
-.theme-btn::after {
-  content: "";
-  position: absolute;
-  left: 0.375rem;
-  right: 0.375rem;
-  bottom: 0.25rem;
-  height: 1px;
-  background-color: var(--accent);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 220ms var(--ease-out);
-}
-
-.theme-btn.is-active::after {
-  transform: scaleX(1);
+@media (forced-colors: active) {
+  .theme-btn[aria-checked="true"] .theme-btn-label {
+    outline: 1px solid SelectedItem;
+    outline-offset: -1px;
+  }
 }
 
 /* Main */
@@ -2176,15 +2168,6 @@ a:hover {
   .theme-control {
     margin-inline-start: auto;
   }
-
-  .site-nav + .theme-control::before {
-    content: none;
-  }
-
-  .theme-btn {
-    min-height: 44px;
-  }
-
   .home-hero {
     row-gap: var(--s-3);
   }
