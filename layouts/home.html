@@ -9,9 +9,10 @@
   {{- $rest = after 1 $recent -}}
 {{- end -}}
 {{- $home := site.Params.home | default dict -}}
+{{- $showPlate := ne $home.showplate false -}}
 
 <div class="shell">
-  <section class="home-hero" aria-labelledby="site-wordmark">
+  <section class="home-hero{{ if not $showPlate }} home-hero--text{{ end }}" aria-labelledby="site-wordmark">
     <div class="home-hero-side">
       <div class="home-mast">
         <h1 id="site-wordmark" class="wordmark" translate="no">
@@ -60,15 +61,45 @@
         <p class="empty-state">{{ i18n "empty_posts" | default "No entries recorded yet." }}</p>
       {{- end }}
     </div>
-    <figure class="home-plate-figure">
-      <div class="home-plate-frame">
-        {{ partial "home-plate.html" . }}
-      </div>
-      <figcaption class="home-photo-caption" translate="no">
-        <span>{{ i18n "photo_caption_meta" | default "FIG. 01 · VACATED DESK · UNATTENDED" }}</span>
-        <span>{{ with $lead }}LAST ENTRY {{ .Date.Format "2006.01.02" }}{{ end }}</span>
-      </figcaption>
-    </figure>
+    {{- if $showPlate }}
+      {{- $image := strings.TrimSpace ($home.image | default "") -}}
+      {{- $alt := site.Params.homeImageAlt | default "" -}}
+      {{- if isset $home "imagealt" -}}
+        {{- $alt = $home.imagealt -}}
+      {{- end -}}
+      {{- $caption := "" -}}
+      {{- if not $image -}}
+        {{- $alt = $alt | default (i18n "home_plate_alt" | default "A large, gridded AI profile faces a smaller, warm-toned human profile.") -}}
+        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · MINDS IN IMBALANCE" -}}
+      {{- end -}}
+      {{- if isset $home "caption" -}}
+        {{- $caption = $home.caption -}}
+      {{- end -}}
+      <figure class="home-plate-figure">
+        <div class="home-plate-frame">
+          {{- with $image }}
+            {{- $src := . -}}
+            {{- if not (urls.Parse .).IsAbs -}}
+              {{- $path := strings.TrimPrefix "/" . -}}
+              {{- with resources.Get $path -}}
+                {{- $src = .RelPermalink -}}
+              {{- else -}}
+                {{- $src = relURL $path -}}
+              {{- end -}}
+            {{- end }}
+            <img class="home-plate-image" src="{{ $src }}" alt="{{ $alt }}" width="720" height="504" fetchpriority="high" decoding="async">
+          {{- else }}
+            {{ partial "home-plate.html" $alt }}
+          {{- end }}
+        </div>
+        {{- if or $caption $lead }}
+          <figcaption class="home-photo-caption">
+            {{- with $caption }}<span>{{ . }}</span>{{ end }}
+            {{- with $lead }}<span class="home-photo-date" translate="no">LAST ENTRY <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "2006.01.02" }}</time></span>{{ end }}
+          </figcaption>
+        {{- end }}
+      </figure>
+    {{- end }}
   </section>
 
   {{- if gt (len $rest) 0 }}

@@ -9,9 +9,6 @@ title = 'Aftermind'
 
 [params]
   description = '智能之后 · 写给没有“人”看的东西'
-  homeImage = 'images/home-desk.webp'
-  homeImageMobile = 'images/home-desk-mobile.webp'
-  homeImageAlt = '午后自然侧光下的空工位：桌面右侧摊开一本旧交接簿，旁边是一张微微转向的空办公椅和翻扣的空白工牌。'
   mainSections = ['posts']
 
 [params.footer]
