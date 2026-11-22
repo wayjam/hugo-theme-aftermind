@@ -11,7 +11,7 @@
 - **时间稀疏归档**：归档页按年分组，构建期自动计算相邻文章间隔天数，映射为真实留白高度，并在 `≥ 30` 天静默处绘制垂直端点刻度线。
 - **双材质亮暗模式**：亮色「褪色交接纸」与暗色「熄灯档案室」两套独立色板，支持无框 3 态切换（`自动 / 亮 / 暗`，含键盘方向键与防闪色内联脚本）。
 - **零外部依赖图标与 Favicon**：内联打包 Tabler Icons Outline SVG（`layouts/_partials/icon.html`），并附自适应亮暗模式的交接簿 SVG favicon 与 `.ico` 回退。
-- **原生 CSS 动效与无障碍**：支持原生跨页视图过渡（`@view-transition`）、滚动驱动进度线（`animation-timeline: scroll(root)`）、`prefers-reduced-motion` 完整降级与中英双语 `i18n`。
+- **原生 CSS 动效与无障碍**：支持原生跨页视图过渡（`@view-transition`）、滚动驱动进度线（`animation-timeline: scroll(root)`）、`prefers-reduced-motion` 完整降级与多语言 `i18n`（简体中文、英文、日文、德语）。
 
 ## 环境要求
 
@@ -39,7 +39,7 @@ hugo --minify --cleanDestinationDir
 
 ```toml
 theme = 'hugo-theme-aftermind'
-defaultContentLanguage = 'zh-cn' # 或 'en'
+defaultContentLanguage = 'zh-cn' # 支持 'zh-cn' / 'en' / 'ja' / 'de'
 hasCJKLanguage = true
 title = 'Aftermind'
 
@@ -166,7 +166,7 @@ diagrams = true
 - `assets/css/`、`assets/js/`：通过 Hugo Pipes 处理的样式与轻量交互脚本。
 - `assets/icons/`：随主题打包的 Tabler Outline SVG 图标（由 `layouts/_partials/icon.html` 输出）。
 - `content/`：开发预览示例文章。
-- `i18n/`：中英文界面文案（`zh-cn.toml`、`en.toml`）。
+- `i18n/`：多语言界面文案（`zh-cn.toml`、`en.toml`、`ja.toml`、`de.toml`）。
 - `layouts/`：现行 Hugo 模板结构（`baseof.html`、`home.html`、`page.html`、`section.html`、`taxonomy.html`、`term.html`、`404.html`、`_partials/`、`_shortcodes/`）。
 - `static/`：自托管字标字体与自适应亮暗 SVG/ICO favicon。
 

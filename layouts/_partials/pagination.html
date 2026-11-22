@@ -1,6 +1,6 @@
 {{- $p := . -}}
 {{- if gt $p.TotalPages 1 -}}
-<nav class="pagination" aria-label="Pagination">
+<nav class="pagination" aria-label="{{ i18n `pagination_label` | default `Pagination` }}">
   {{- if $p.HasPrev }}
     <a href="{{ $p.Prev.URL }}" rel="prev">{{ partial "icon.html" (dict "name" "arrow-left" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "pagination_prev" | default "Newer" }}</span></a>
   {{- end }}

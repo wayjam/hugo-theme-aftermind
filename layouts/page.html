@@ -116,7 +116,7 @@
           {{- $prev := .PrevInSection -}}
           {{- $next := .NextInSection -}}
           {{- if or $prev $next }}
-            <nav class="signal-nav" aria-label="Adjacent entries">
+            <nav class="signal-nav" aria-label="{{ i18n `adjacent_entries` | default `Adjacent entries` }}">
               {{- if $prev }}
                 {{- $days := partial "days-between.html" (dict "newer" .Date "older" $prev.Date) -}}
                 {{- if ge $days 1 }}

@@ -2,11 +2,10 @@
 {{- $config := .Site.Params.search | default dict -}}
 {{- $provider := lower ($config.provider | default "json") -}}
 {{- if in (slice "json" "pagefind") $provider -}}
-  {{- $zh := hasPrefix (lower (or .Site.Language.LanguageCode .Site.Language.Lang)) "zh" -}}
   {{- .AddPage (dict
     "path" "."
     "kind" "page"
-    "title" (cond $zh "搜索" "Search")
+    "title" (i18n "search_title" | default "Search")
     "layout" "aftermind-search"
     "outputs" (slice "html")
     "build" (dict "list" "never" "render" "always")
