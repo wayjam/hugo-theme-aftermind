@@ -37,6 +37,7 @@
     const nextBtn = dialog.querySelector("[data-lightbox-next]");
     const closeBtn = dialog.querySelector("[data-lightbox-close]");
     if (!imgEl || !stageEl || !closeBtn) return;
+    const zoomIcon = document.getElementById("tpl-icon-zoom")?.content.firstElementChild;
 
     const candidates = Array.from(
       document.querySelectorAll(".article-cover img, .prose img")
@@ -109,6 +110,8 @@
 
       parent.insertBefore(trigger, img);
       trigger.appendChild(img);
+
+      if (!inline && zoomIcon) trigger.appendChild(zoomIcon.cloneNode(true));
 
       const index = items.length;
       items.push({ img, trigger, alt, caption });

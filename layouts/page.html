@@ -93,7 +93,10 @@
 
       {{- if $showTOC }}
         <details class="article-toc article-toc--inline" data-pagefind-ignore>
-          <summary>{{ partial "icon.html" (dict "name" "list" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "article_toc" }}</span></summary>
+          <summary>
+            <span>{{ i18n "article_toc" }}</span>
+            {{ partial "icon.html" (dict "name" "chevron-right" "class" "ui-icon") }}
+          </summary>
           {{ $toc }}
         </details>
       {{- end }}
