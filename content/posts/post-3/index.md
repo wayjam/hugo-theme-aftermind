@@ -1,12 +1,16 @@
 +++
-title = 'Post 3'
-date = 2023-03-15T11:00:00-07:00
+title = '自动售货机还在找零'
+date = 2026-08-29T16:05:00+08:00
 draft = false
-tags = ['red','green','blue']
+tags = ['城市', '日常']
+summary = '地铁站换乘通道里那台老式售货机已经很少有人停下来了，但投进硬币时，它依然会发出一声很重的机械咔嗒。'
+cover = 'bryce-canyon.jpg'
+coverAlt = '低饱和午后光线下的峡谷岩层，像被时间一层层归档的静默断面。'
+coverCaption = '图：归档附件（无日期标注）'
 +++
 
-Occaecat aliqua consequat laborum ut ex aute aliqua culpa quis irure esse magna dolore quis. Proident fugiat labore eu laboris officia Lorem enim. Ipsum occaecat cillum ut tempor id sint aliqua incididunt nisi incididunt reprehenderit. Voluptate ad minim sint est aute aliquip esse occaecat tempor officia qui sunt. Aute ex ipsum id ut in est velit est laborum incididunt. Aliqua qui id do esse sunt eiusmod id deserunt eu nostrud aute sit ipsum. Deserunt esse cillum Lorem non magna adipisicing mollit amet consequat.
+地铁站换乘通道里那台老式售货机已经很少有人停下来了，但投进硬币时，它依然会发出一声很重的机械咔嗒。
 
-![Bryce Canyon National Park](bryce-canyon.jpg)
+在所有界面都变得无声、无摩擦、替你提前做好决定的年代里，这种笨拙的延迟反而让人觉得踏实。{{< redact "也许我们怀念的不是旧机器" "我们只是怀念那种动作被物理世界接住的感觉" >}}。
 
-Sit excepteur do velit veniam mollit in nostrud laboris incididunt ea. Amet eu cillum ut reprehenderit culpa aliquip labore laborum amet sit sit duis. Laborum id proident nostrud dolore laborum reprehenderit quis mollit nulla amet veniam officia id id. Aliquip in deserunt qui magna duis qui pariatur officia sunt deserunt.
+我拿着那罐常温乌龙茶在站台边坐了二十分钟，看三班无人驾驶的列车准点进站、开门、关门、离去。车厢里很亮，也很空。

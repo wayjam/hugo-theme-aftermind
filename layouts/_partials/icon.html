@@ -1,0 +1,13 @@
+{{- $name := .name -}}
+{{- $class := .class | default "ui-icon" -}}
+{{- $label := .label | default "" -}}
+{{- with resources.Get (printf "icons/%s.svg" $name) -}}
+  {{- $svg := .Content -}}
+  {{- $attrs := printf `<svg class="%s"` $class -}}
+  {{- if $label -}}
+    {{- $attrs = printf `%s role="img" aria-label="%s"` $attrs $label -}}
+  {{- else -}}
+    {{- $attrs = printf `%s aria-hidden="true" focusable="false"` $attrs -}}
+  {{- end -}}
+  {{- replaceRE `<svg\b` $attrs $svg 1 | safeHTML -}}
+{{- end -}}

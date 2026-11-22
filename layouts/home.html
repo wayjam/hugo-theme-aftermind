@@ -1,9 +1,116 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- $pages := where site.RegularPages "Section" "in" $sections -}}
+{{- $recent := first 5 $pages.ByDate.Reverse -}}
+{{- $lead := false -}}
+{{- $rest := slice -}}
+{{- if gt (len $recent) 0 -}}
+  {{- $lead = index $recent 0 -}}
+  {{- $rest = after 1 $recent -}}
+{{- end -}}
+
+<div class="shell">
+  <section class="home-hero" aria-labelledby="site-wordmark">
+    <figure class="home-plate-figure">
+      <div class="home-plate-frame">
+        {{ partial "home-plate.html" . }}
+      </div>
+      <figcaption class="home-photo-caption" translate="no">
+        <span>{{ i18n "photo_caption_meta" | default "FIG. 01 · VACATED DESK · UNATTENDED" }}</span>
+        <span>{{ with $lead }}LAST ENTRY {{ .Date.Format "2006.01.02" }}{{ end }}</span>
+      </figcaption>
+    </figure>
+
+    <div class="home-hero-side">
+      <div class="home-mast">
+        <h1 id="site-wordmark" class="wordmark" translate="no">
+          {{ site.Title }}
+          <span class="wordmark-echo" aria-hidden="true">{{ site.Title }}</span>
+        </h1>
+        {{- with site.Params.description }}
+          <p class="site-tagline">{{ . }}</p>
+        {{- end }}
+        <p class="home-status" translate="no" aria-hidden="true">
+          <span class="status-dot"></span>
+          <span>{{ i18n "archive_status_line" | default "ARCHIVE RUNNING · AUDIENCE: 0" }}</span>
+        </p>
+      </div>
+
+      <div class="broken-rule" aria-hidden="true">
+        <span class="broken-rule-left"></span>
+        <span class="broken-rule-right"></span>
+      </div>
+
+      {{- with $lead }}
+        {{- $leadId := partial "archive-id.html" . -}}
+        <article class="home-lead">
+          <div class="home-lead-meta">
+            <time class="entry-date" datetime="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ .Date.Format "2006-01-02" }}</time>
+            {{- with $leadId }}
+              <span class="home-lead-index" translate="no">{{ . }}</span>
+            {{- end }}
+          </div>
+          <h2 class="home-lead-title">
+            <a href="{{ .RelPermalink }}" style="view-transition-name: post-{{ .File.UniqueID | default `lead` }}">{{ .LinkTitle }}</a>
+          </h2>
+          {{- with .Summary }}
+            <p class="home-lead-summary">{{ . | plainify | truncate 140 }}</p>
+          {{- end }}
+          <a class="home-lead-action" href="{{ .RelPermalink }}">
+            <span>{{ i18n "read_entry" | default "Read entry" }}</span>
+            {{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}
+          </a>
+        </article>
+      {{- else }}
+        <p class="empty-state">{{ i18n "empty_posts" | default "No entries recorded yet." }}</p>
+      {{- end }}
+    </div>
+  </section>
+
+  {{- if gt (len $rest) 0 }}
+    <section class="home-recent" aria-labelledby="recent-heading">
+      <h2 id="recent-heading" class="section-label">{{ i18n "recent_records" | default "Recent Records" }}</h2>
+
+      <ol class="entry-list">
+        {{- range $i, $p := $rest }}
+          {{- $prev := index $recent $i -}}
+          {{- $days := partial "days-between.html" (dict "newer" $prev.Date "older" $p.Date) -}}
+          {{- $archId := partial "archive-id.html" $p -}}
+          <li class="entry-item">
+            <div class="entry-date-col">
+              <time class="entry-date" datetime="{{ $p.Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ $p.Date.Format "2006-01-02" }}</time>
+              {{- if ge $days 7 }}
+                <span class="entry-silence">{{ printf (i18n "silence_days" | default "%d days of silence") $days }}</span>
+              {{- end }}
+            </div>
+            <div class="entry-body">
+              <h3 class="entry-title">
+                <a href="{{ $p.RelPermalink }}" style="view-transition-name: post-{{ $p.File.UniqueID | default (printf `%d` $i) }}">{{ $p.LinkTitle }}</a>
+              </h3>
+            </div>
+            {{- with $archId }}
+              <span class="entry-index" translate="no">{{ . }}</span>
+            {{- end }}
+          </li>
+        {{- end }}
+      </ol>
+
+      {{- with site.GetPage (index $sections 0) }}
+        <div class="home-more">
+          <a class="home-more-link" href="{{ .RelPermalink }}">
+            <span>{{ i18n "all_posts" | default "All Archives" }}</span>
+            {{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}
+          </a>
+        </div>
+      {{- end }}
     </section>
-  {{ end }}
+  {{- end }}
+  {{- if .Content }}
+    <section class="home-essay">
+      <div class="home-essay-inner prose">
+        {{ .Content }}
+      </div>
+    </section>
+  {{- end }}
+</div>
 {{ end }}

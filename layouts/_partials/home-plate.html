@@ -1,0 +1,152 @@
+{{- $alt := site.Params.homeImageAlt | default (i18n "photo_caption_meta" | default "Archival orthographic plan of a vacated workstation") -}}
+<svg class="home-plate-svg"
+     viewBox="0 0 600 420"
+     width="600"
+     height="420"
+     role="img"
+     aria-label="{{ $alt }}"
+     xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="plate-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="var(--rule-faint)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Outer archival sheet & subtle margin ticks -->
+  <rect x="0.5" y="0.5" width="599" height="419" fill="var(--bg-subtle)" stroke="var(--rule-faint)" stroke-width="1"/>
+
+  <!-- Corner registration marks -->
+  <g stroke="var(--rule)" stroke-width="1" fill="none">
+    <path d="M14 26 V14 H26"/>
+    <path d="M574 14 H586 V26"/>
+    <path d="M14 394 V406 H26"/>
+    <path d="M574 406 H586 V394"/>
+  </g>
+
+  <!-- Dimension lines: 1600 MM top, 750 MM left -->
+  <g stroke="var(--rule-faint)" stroke-width="1" fill="none">
+    <line x1="68" y1="36" x2="532" y2="36"/>
+    <line x1="68" y1="31" x2="68" y2="41"/>
+    <line x1="532" y1="31" x2="532" y2="41"/>
+
+    <line x1="42" y1="58" x2="42" y2="250"/>
+    <line x1="37" y1="58" x2="47" y2="58"/>
+    <line x1="37" y1="250" x2="47" y2="250"/>
+
+    <!-- Center axis crosshairs -->
+    <line x1="300" y1="14" x2="300" y2="22"/>
+    <line x1="300" y1="398" x2="300" y2="406"/>
+  </g>
+
+  <g fill="var(--fg-muted)" font-family="var(--font-mono)" font-size="9" letter-spacing="0.08em">
+    <rect x="266" y="29" width="68" height="14" fill="var(--bg-subtle)"/>
+    <text x="300" y="39" text-anchor="middle">1600 MM</text>
+    <text x="26" y="154" text-anchor="middle" transform="rotate(-90 26 154)">750 MM</text>
+  </g>
+
+  <!-- Desk surface (orthographic plan) -->
+  <g>
+    <rect x="68" y="58" width="464" height="192" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.25"/>
+    <!-- Inner desk edge bevel -->
+    <rect x="74" y="64" width="452" height="180" fill="none" stroke="var(--rule-faint)" stroke-width="1"/>
+
+    <!-- Cable grommet -->
+    <circle cx="192" cy="78" r="7" fill="none" stroke="var(--rule)" stroke-width="1"/>
+    <circle cx="192" cy="78" r="2.5" fill="none" stroke="var(--rule-faint)" stroke-width="1"/>
+
+    <!-- Vacated monitor footprint (sun-faded dust outline) -->
+    <g>
+      <rect x="108" y="94" width="168" height="62" fill="url(#plate-hatch)" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 3"/>
+      <!-- Monitor stand base ghost -->
+      <rect x="164" y="106" width="56" height="36" fill="var(--bg)" stroke="var(--rule-faint)" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="172" y1="124" x2="212" y2="124" stroke="var(--rule-faint)" stroke-width="1"/>
+      <text x="192" y="170" text-anchor="middle" fill="var(--fg-muted)" font-family="var(--font-mono)" font-size="8.5" letter-spacing="0.08em">DISPLAY REMOVED</text>
+    </g>
+
+    <!-- Subtle empty coffee ring / coaster trace -->
+    <circle cx="116" cy="204" r="17" fill="none" stroke="var(--rule-faint)" stroke-width="1" stroke-dasharray="6 4"/>
+    <circle cx="116" cy="204" r="13.5" fill="none" stroke="var(--rule-faint)" stroke-width="0.75"/>
+
+    <!-- Turned-over blank ID badge & lanyard -->
+    <g transform="translate(470 206) rotate(11)">
+      <path d="M -8 -16 C -16 -32, 16 -36, 18 -18 C 20 -6, 10 -4, 4 -10" fill="none" stroke="var(--rule)" stroke-width="1"/>
+      <rect x="-13" y="-12" width="26" height="38" rx="2" fill="var(--bg-subtle)" stroke="var(--fg-muted)" stroke-width="1"/>
+      <rect x="-5" y="-8" width="10" height="2" rx="1" fill="var(--rule)"/>
+    </g>
+  </g>
+
+  <!-- Open Handover Ledger (with misregistered afterimage echo) -->
+  <g transform="translate(366 156) rotate(-4)">
+    <!-- Misregistered afterimage echo layer -->
+    <g class="plate-ledger-echo" fill="none" stroke="var(--accent)" stroke-width="1">
+      <rect x="-76" y="-52" width="152" height="104" rx="1"/>
+      <line x1="0" y1="-52" x2="0" y2="52"/>
+    </g>
+
+    <!-- Main ledger body -->
+    <rect x="-76" y="-52" width="152" height="104" rx="1" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.25"/>
+    <!-- Center spine -->
+    <line x1="0" y1="-52" x2="0" y2="52" stroke="var(--fg)" stroke-width="1"/>
+    <line x1="-4" y1="-50" x2="-4" y2="50" stroke="var(--rule-faint)" stroke-width="1"/>
+    <line x1="4" y1="-50" x2="4" y2="50" stroke="var(--rule-faint)" stroke-width="1"/>
+
+    <!-- Left page: ruled system entries -->
+    <g stroke="var(--rule)" stroke-width="1">
+      <line x1="-64" y1="-34" x2="-14" y2="-34"/>
+      <line x1="-64" y1="-22" x2="-20" y2="-22"/>
+      <line x1="-64" y1="-10" x2="-16" y2="-10"/>
+      <line x1="-64" y1="2" x2="-28" y2="2"/>
+      <line x1="-64" y1="14" x2="-18" y2="14"/>
+      <line x1="-64" y1="26" x2="-38" y2="26"/>
+    </g>
+
+    <!-- Right page: sparse unfinished human lines -->
+    <g stroke="var(--fg-muted)" stroke-width="1">
+      <line x1="14" y1="-34" x2="60" y2="-34"/>
+      <line x1="14" y1="-22" x2="48" y2="-22"/>
+      <line x1="14" y1="-10" x2="34" y2="-10"/>
+    </g>
+
+    <!-- Accent redaction mark / bookmark ribbon -->
+    <line x1="14" y1="6" x2="42" y2="6" stroke="var(--accent)" stroke-width="1.25"/>
+    <path d="M 52 52 V 63 L 56.5 59 L 61 63 V 52" fill="var(--accent)"/>
+  </g>
+
+  <!-- Vacated Chair (pushed back & angled, top-down architectural plan) -->
+  <g transform="translate(248 314) rotate(14)">
+    <!-- 5-spoke star base (dashed below seat) -->
+    <g stroke="var(--rule-faint)" stroke-width="1" stroke-dasharray="3 2">
+      <line x1="0" y1="0" x2="0" y2="-56"/>
+      <line x1="0" y1="0" x2="53" y2="-17"/>
+      <line x1="0" y1="0" x2="33" y2="45"/>
+      <line x1="0" y1="0" x2="-33" y2="45"/>
+      <line x1="0" y1="0" x2="-53" y2="-17"/>
+    </g>
+    <!-- Caster nodes -->
+    <g fill="var(--bg-subtle)" stroke="var(--rule)" stroke-width="1">
+      <circle cx="0" cy="-56" r="3"/>
+      <circle cx="53" cy="-17" r="3"/>
+      <circle cx="33" cy="45" r="3"/>
+      <circle cx="-33" cy="45" r="3"/>
+      <circle cx="-53" cy="-17" r="3"/>
+    </g>
+
+    <!-- Seat cushion -->
+    <rect x="-44" y="-34" width="88" height="68" rx="14" fill="var(--bg)" stroke="var(--fg)" stroke-width="1.25"/>
+    <!-- Subtle inner seat contour -->
+    <rect x="-36" y="-26" width="72" height="52" rx="10" fill="none" stroke="var(--rule-faint)" stroke-width="1"/>
+
+    <!-- Armrests -->
+    <rect x="-53" y="-22" width="9" height="44" rx="3" fill="var(--bg-subtle)" stroke="var(--fg-muted)" stroke-width="1"/>
+    <rect x="44" y="-22" width="9" height="44" rx="3" fill="var(--bg-subtle)" stroke="var(--fg-muted)" stroke-width="1"/>
+
+    <!-- Curved backrest -->
+    <path d="M -46 32 Q 0 54 46 32 L 42 42 Q 0 64 -42 42 Z" fill="var(--bg-subtle)" stroke="var(--fg)" stroke-width="1.25"/>
+  </g>
+
+  <!-- Bottom technical legend -->
+  <g fill="var(--fg-muted)" font-family="var(--font-mono)" font-size="8.5" letter-spacing="0.08em">
+    <text x="26" y="394">SECTOR 04-B · PLAN VIEW</text>
+    <text x="574" y="394" text-anchor="end">SCALE 1:20 · OCCUPANCY 0</text>
+  </g>
+</svg>

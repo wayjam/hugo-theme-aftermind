@@ -1,0 +1,12 @@
+{{- $p := . -}}
+{{- if gt $p.TotalPages 1 -}}
+<nav class="pagination" aria-label="Pagination">
+  {{- if $p.HasPrev }}
+    <a href="{{ $p.Prev.URL }}" rel="prev">{{ partial "icon.html" (dict "name" "arrow-left" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "pagination_prev" | default "Newer" }}</span></a>
+  {{- end }}
+  <span>{{ $p.PageNumber }} / {{ $p.TotalPages }}</span>
+  {{- if $p.HasNext }}
+    <a href="{{ $p.Next.URL }}" rel="next"><span>{{ i18n "pagination_next" | default "Older" }}</span>{{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}</a>
+  {{- end }}
+</nav>
+{{- end -}}

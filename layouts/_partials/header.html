@@ -1,2 +1,16 @@
-<h1>{{ site.Title }}</h1>
-{{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+<div class="shell site-header-inner">
+  <a class="site-brand" href="{{ site.Home.RelPermalink }}" translate="no">
+    <span class="site-brand-name">{{ site.Title }}</span>
+  </a>
+  <div class="site-controls">
+    {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+    <span class="site-controls-sep" aria-hidden="true"></span>
+    <div class="theme-control" role="radiogroup" aria-label="{{ i18n `theme_label` | default `Theme` }}">
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="system" aria-label="{{ i18n `theme_system` | default `System` }}">{{ i18n "theme_system_short" | default "Auto" }}</button>
+      <span class="theme-sep" aria-hidden="true">/</span>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="light" aria-label="{{ i18n `theme_light` | default `Light` }}">{{ i18n "theme_light_short" | default "Light" }}</button>
+      <span class="theme-sep" aria-hidden="true">/</span>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="dark" aria-label="{{ i18n `theme_dark` | default `Dark` }}">{{ i18n "theme_dark_short" | default "Dark" }}</button>
+    </div>
+  </div>
+</div>

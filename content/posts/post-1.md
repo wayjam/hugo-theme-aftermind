@@ -1,10 +1,28 @@
 +++
-title = 'Post 1'
-date = 2023-01-15T09:00:00-07:00
+title = '下班铃还响了'
+date = 2026-11-21T18:12:00+08:00
 draft = false
-tags = ['red']
+tags = ['随笔', '日常', '余响']
+summary = '六点零五分，走廊尽头的广播照旧响了两遍。隔壁工位早在去年秋天就清空了，桌面上只剩一层均匀的灰。'
 +++
 
-Tempor proident minim aliquip reprehenderit dolor et ad anim Lorem duis sint eiusmod. Labore ut ea duis dolor. Incididunt consectetur proident qui occaecat incididunt do nisi Lorem. Tempor do laborum elit laboris excepteur eiusmod do. Eiusmod nisi excepteur ut amet pariatur adipisicing Lorem.
+六点零五分，走廊尽头的广播照旧响了两遍。{{< note >}}后来查了大楼物业的排程表，那段提醒录音自 2025 年 10 月后再也没有人改过，系统只管按工作日历准时触发。{{< /note >}}隔壁工位早在去年秋天就清空了，桌面上只剩一层均匀的灰，和一道被阳光晒浅了颜色的显示器底座印。
 
-Occaecat nulla excepteur dolore excepteur duis eiusmod ullamco officia anim in voluptate ea occaecat officia. Cillum sint esse velit ea officia minim fugiat. Elit ea esse id aliquip pariatur cupidatat id duis minim incididunt ea ea. Anim ut duis sunt nisi. Culpa cillum sit voluptate voluptate eiusmod dolor. Enim nisi Lorem ipsum irure est excepteur voluptate eu in enim nisi. Nostrud ipsum Lorem anim sint labore consequat do.
+我把今天写完的一段脚本跑了一遍。其实不需要我写——调度器每十五分钟就会自动生成一份更短、更不会出错的版本。但我还是喜欢自己敲几行，像以前需要提交日报的时候那样，确认今天确实{{< redact "做完了点什么" "在这里待过几个小时" >}}。
+
+```sh
+# 仅在本地归档，不推送至任何外部节点
+hugo --minify --destination ./public
+```
+
+写完这段话之后，我把电脑合上。没人催进度，没人看结果，也没有人会点开这条链接。{{< note >}}大概只有爬虫会在凌晨三点路过一次，把这些字压缩成向量，然后继续去读下一百万个无人的页面。{{< /note >}}
+
+## 留给自己的记录表
+
+| 事项 | 系统状态 | 人的状态 |
+| --- | --- | --- |
+| 日程同步 | 正常（每 5 分钟） | 已取消提醒 |
+| 交接日志 | 自动归档至 `#014` | 手写停在去年十月 |
+| 外部访问 | 未统计 | 不再关心 |
+
+明天如果还下雨，就去楼下买一杯热美式，把窗帘拉高一格。

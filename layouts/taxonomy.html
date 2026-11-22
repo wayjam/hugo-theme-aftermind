@@ -1,7 +1,37 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-  {{ end }}
+<div class="shell">
+  <header class="page-head">
+    <div class="page-head-main">
+      {{- $heading := .Title -}}
+      {{- if and (eq .Data.Plural "tags") (eq (lower .Title) "tags") -}}
+        {{- $heading = i18n "tags_label" | default .Title -}}
+      {{- end -}}
+      <h1>{{ $heading }}</h1>
+      {{- with .Content }}
+        <div class="page-head-desc">{{ . }}</div>
+      {{- end }}
+    </div>
+    {{- if gt (len .Data.Terms) 0 }}
+      <div class="page-head-meta" translate="no">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>{{ printf (i18n "tags_count" | default "%d tags") (len .Data.Terms) }}</span>
+      </div>
+    {{- end }}
+  </header>
+
+  {{- if gt (len .Data.Terms) 0 }}
+    <ul class="term-list">
+      {{- range .Data.Terms.Alphabetical }}
+        <li class="term-item">
+          <a href="{{ .Page.RelPermalink }}">
+            <span>{{ .Page.LinkTitle }}</span>
+            <span class="term-count">{{ .Count }}</span>
+          </a>
+        </li>
+      {{- end }}
+    </ul>
+  {{- else }}
+    <p class="empty-state">{{ i18n "empty_posts" | default "No entries recorded yet." }}</p>
+  {{- end }}
+</div>
 {{ end }}

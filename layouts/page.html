@@ -1,10 +1,130 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
+{{- $archId := partial "archive-id.html" . -}}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- $isPost := in $sections .Section -}}
 
-  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-  {{ $dateHuman := .Date | time.Format ":date_long" }}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+<div class="shell">
+  <div class="article-layout">
+    <aside class="system-rail" aria-label="{{ i18n `index_prefix` | default `INDEX` }}">
+      {{- with $archId }}
+        <div class="system-rail-head" translate="no">
+          <span class="system-rail-kicker">{{ i18n "index_prefix" | default "INDEX" }}</span>
+          <span class="system-rail-id">{{ . }}</span>
+        </div>
+      {{- end }}
 
-  {{ .Content }}
-  {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+      <dl class="system-rail-meta">
+        {{- if not .Date.IsZero }}
+          <div class="system-rail-row">
+            <dt>{{ i18n "meta_date" | default "Recorded" }}</dt>
+            <dd>
+              <time datetime="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ .Date.Format "2006-01-02" }}</time>
+            </dd>
+          </div>
+        {{- end }}
+        {{- if gt .WordCount 0 }}
+          <div class="system-rail-row">
+            <dt>{{ i18n "meta_length" | default "Length" }}</dt>
+            <dd>{{ printf (i18n "words_unit" | default "%d words") .WordCount }} · {{ printf (i18n "read_time" | default "%d min read") .ReadingTime }}</dd>
+          </div>
+        {{- end }}
+      </dl>
+
+      {{- with .GetTerms "tags" }}
+        <div class="system-rail-tags-wrap">
+          <div class="system-rail-label">{{ i18n "tags_label" | default "Tags" }}</div>
+          <ul class="system-rail-tags">
+            {{- range . }}
+              <li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>
+            {{- end }}
+          </ul>
+        </div>
+      {{- end }}
+
+      <div class="system-rail-foot">
+        {{- if $isPost }}
+          <p class="system-rail-note">
+            <span class="system-rail-dot" aria-hidden="true"></span>
+            <span>{{ i18n "archive_local_note" | default "One-way archive · Unread" }}</span>
+          </p>
+        {{- end }}
+
+        <div class="paper-ruler-wrap" aria-hidden="true">
+          <div class="paper-ruler">
+            <span class="paper-ruler-fill"></span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <article class="article-main">
+      <header class="article-header">
+        <h1 class="article-title" style="view-transition-name: post-{{ .File.UniqueID | default `single` }}">{{ .Title }}</h1>
+        <div class="article-title-rule" aria-hidden="true"></div>
+      </header>
+
+      {{- with .Params.cover }}
+        {{- with $.Resources.GetMatch . }}
+          <figure class="article-cover">
+            <img src="{{ .RelPermalink }}"
+                 alt="{{ $.Params.coverAlt | default $.Title }}"
+                 width="{{ .Width }}"
+                 height="{{ .Height }}"
+                 fetchpriority="high"
+                 decoding="async">
+            {{- with $.Params.coverCaption }}
+              <figcaption>{{ . }}</figcaption>
+            {{- end }}
+          </figure>
+        {{- end }}
+      {{- end }}
+
+      <div class="prose">
+        {{ .Content }}
+      </div>
+
+      <footer class="article-footer">
+        {{- with .GetTerms "tags" }}
+          <div class="article-tags-inline">
+            <span>{{ i18n "tags_label" | default "Tags" }}:</span>
+            {{- range . }}
+              <a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+            {{- end }}
+          </div>
+        {{- end }}
+
+        {{- if $isPost }}
+          {{- $prev := .PrevInSection -}}
+          {{- $next := .NextInSection -}}
+          {{- if or $prev $next }}
+            <nav class="signal-nav" aria-label="Adjacent entries">
+              {{- if $prev }}
+                {{- $days := partial "days-between.html" (dict "newer" .Date "older" $prev.Date) -}}
+                {{- if ge $days 1 }}
+                  <div class="signal-gap"><span>{{ printf (i18n "silence_after" | default "After %d days of silence") $days }}</span></div>
+                {{- end }}
+              {{- end }}
+              <div class="signal-links">
+                {{- with $prev }}
+                  <a class="signal-link signal-link--prev" href="{{ .RelPermalink }}" rel="prev">
+                    <span class="signal-dir">{{ partial "icon.html" (dict "name" "arrow-left" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "prev_post" | default "Previous" }}</span></span>
+                    <span class="signal-title">{{ .LinkTitle }}</span>
+                  </a>
+                {{- else }}
+                  <span></span>
+                {{- end }}
+                {{- with $next }}
+                  <a class="signal-link signal-link--next" href="{{ .RelPermalink }}" rel="next">
+                    <span class="signal-dir"><span>{{ i18n "next_post" | default "Next" }}</span>{{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}</span>
+                    <span class="signal-title">{{ .LinkTitle }}</span>
+                  </a>
+                {{- end }}
+              </div>
+            </nav>
+          {{- end }}
+        {{- end }}
+      </footer>
+    </article>
+  </div>
+</div>
 {{ end }}

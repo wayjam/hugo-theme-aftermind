@@ -1,10 +1,65 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
-  {{ end }}
+{{- $paginator := .Paginate .Pages.ByDate.Reverse 20 -}}
+<div class="shell">
+  <header class="page-head">
+    <div class="page-head-main">
+      <h1>{{ .Title }}</h1>
+      {{- with .Content }}
+        <div class="page-head-desc">{{ . }}</div>
+      {{- end }}
+    </div>
+    {{- if gt (len .Pages) 0 }}
+      <div class="page-head-meta" translate="no">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>{{ printf (i18n "entries_count" | default "%d entries") (len .Pages) }}</span>
+      </div>
+    {{- end }}
+  </header>
+
+  {{- if gt (len $paginator.Pages) 0 }}
+    {{- range $paginator.Pages.GroupByDate "2006" }}
+      <section class="archive-year-group" aria-labelledby="year-{{ .Key }}">
+        <div class="archive-year-head">
+          <h2 id="year-{{ .Key }}" class="archive-year">{{ .Key }}</h2>
+          <span class="archive-year-count">{{ printf (i18n "entries_count" | default "%d entries") (len .Pages) }}</span>
+        </div>
+        <ol class="archive-list">
+          {{- $groupPages := .Pages -}}
+          {{- range $i, $p := $groupPages }}
+            {{- if gt $i 0 }}
+              {{- $prev := index $groupPages (sub $i 1) -}}
+              {{- $days := partial "days-between.html" (dict "newer" $prev.Date "older" $p.Date) -}}
+              {{- $tier := "sm" -}}
+              {{- if gt $days 90 }}{{ $tier = "xl" }}
+              {{- else if gt $days 30 }}{{ $tier = "lg" }}
+              {{- else if ge $days 7 }}{{ $tier = "md" }}
+              {{- end -}}
+              <li class="archive-gap archive-gap--{{ $tier }}" aria-hidden="true">
+                {{- if ge $days 30 }}
+                  <span class="archive-gap-tick">
+                    <span class="archive-gap-line"></span>
+                    <span>{{ printf (i18n "silence_days" | default "%d days of silence") $days }}</span>
+                  </span>
+                {{- end }}
+              </li>
+            {{- end }}
+            {{- $archId := partial "archive-id.html" $p -}}
+            <li class="archive-row">
+              <time class="archive-row-date" datetime="{{ $p.Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ $p.Date.Format "2006-01-02" }}</time>
+              <h3 class="archive-row-title">
+                <a href="{{ $p.RelPermalink }}" style="view-transition-name: post-{{ $p.File.UniqueID | default (printf `a%d` $i) }}">{{ $p.LinkTitle }}</a>
+              </h3>
+              {{- with $archId }}
+                <span class="archive-row-id" translate="no">{{ . }}</span>
+              {{- end }}
+            </li>
+          {{- end }}
+        </ol>
+      </section>
+    {{- end }}
+    {{ partial "pagination.html" $paginator }}
+  {{- else }}
+    <p class="empty-state">{{ i18n "empty_posts" | default "No entries recorded yet." }}</p>
+  {{- end }}
+</div>
 {{ end }}

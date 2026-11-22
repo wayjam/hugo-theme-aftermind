@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .bg { fill: #E9E6DD; }
+    .ink { stroke: #282822; }
+    .rule { stroke: #9A9383; }
+    .accent { fill: #7A3B2E; stroke: #7A3B2E; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #24232B; }
+      .ink { stroke: #E2DFD7; }
+      .rule { stroke: #646170; }
+      .accent { fill: #D4956A; stroke: #D4956A; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="4"/>
+  <!-- Misregistered ledger afterimage -->
+  <rect class="accent" x="7" y="9" width="20" height="15" rx="1" fill="none" stroke-width="1.25" opacity="0.55"/>
+  <!-- Main open handover ledger -->
+  <rect class="bg ink" x="5.5" y="7.5" width="20" height="15" rx="1" stroke-width="1.75"/>
+  <line class="ink" x1="15.5" y1="7.5" x2="15.5" y2="22.5" stroke-width="1.5"/>
+  <!-- Left ruled lines -->
+  <line class="rule" x1="8.5" y1="11.5" x2="13" y2="11.5" stroke-width="1.5" stroke-linecap="round"/>
+  <line class="rule" x1="8.5" y1="15" x2="13" y2="15" stroke-width="1.5" stroke-linecap="round"/>
+  <line class="rule" x1="8.5" y1="18.5" x2="12" y2="18.5" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Right unfinished line + accent bookmark -->
+  <line class="rule" x1="18" y1="11.5" x2="22.5" y2="11.5" stroke-width="1.5" stroke-linecap="round"/>
+  <line class="accent" x1="18" y1="15" x2="21.5" y2="15" stroke-width="1.75" stroke-linecap="round" fill="none"/>
+  <path class="accent" d="M21 22.5 V26.5 L22.25 25.25 L23.5 26.5 V22.5 Z" stroke="none"/>
+</svg>

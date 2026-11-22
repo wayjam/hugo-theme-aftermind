@@ -1,0 +1,4 @@
+{{- /* Returns whole days between two Hugo time values (newer - older) */ -}}
+{{- $diff := sub .newer.Unix .older.Unix -}}
+{{- if lt $diff 0 }}{{ $diff = mul $diff -1 }}{{ end -}}
+{{- return (div $diff 86400) -}}

@@ -1,10 +1,13 @@
 +++
-title = 'Post 2'
-date = 2023-02-15T10:00:00-07:00
+title = '没有人来接班'
+date = 2026-11-05T21:40:00+08:00
 draft = false
-tags = ['red','green']
+tags = ['随笔', '余响']
+summary = '交接簿翻到第一百一十二页，后面全是空白的表格。我把旧工牌摘下来放在纸面上，发现挂绳边缘已经磨毛了。'
 +++
 
-Anim eiusmod irure incididunt sint cupidatat. Incididunt irure irure irure nisi ipsum do ut quis fugiat consectetur proident cupidatat incididunt cillum. Dolore voluptate occaecat qui mollit laborum ullamco et. Ipsum laboris officia anim laboris culpa eiusmod ex magna ex cupidatat anim ipsum aute. Mollit aliquip occaecat qui sunt velit ut cupidatat reprehenderit enim sunt laborum. Velit veniam in officia nulla adipisicing ut duis officia.
+交接簿翻到第一百一十二页，后面全是空白的表格。我把旧工牌摘下来放在纸面上，发现挂绳边缘已经磨毛了。
 
-Exercitation voluptate irure in irure tempor mollit Lorem nostrud ad officia. Velit id fugiat occaecat do tempor. Sit officia Lorem aliquip eu deserunt consectetur. Aute proident deserunt in nulla aliquip dolore ipsum Lorem ut cupidatat consectetur sit sint laborum. Esse cupidatat sit sint sunt tempor exercitation deserunt. Labore dolor duis laborum est do nisi ut veniam dolor et nostrud nostrud.
+以前总觉得，工作结束的时候应该有一场体面的交接：把密码、排期、注意事项一条条念给下一个人听，对方点头记下，然后你就可以安心离开。{{< note >}}实际上接管这一切的东西不需要听你念，它在半秒钟内读完了过去五年的全部邮件。{{< /note >}}
+
+现在时间多得用不完。我开始把一些无关紧要的观察记在这里——比如今天电梯里的镜面多了一道划痕，或者便利店的关东煮换了汤底。这些文字没有受众，也没有 KPI，写它们只是为了证明，在算法持续输出完美答案的缝隙里，还有人在缓慢地、带着错别字地自娱自乐。

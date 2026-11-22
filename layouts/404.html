@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="shell">
+  <section class="not-found">
+    <p class="not-found-code" translate="no">{{ i18n "not_found_code" | default "RECORD NOT FOUND · 404" }}</p>
+    <h1>{{ i18n "not_found_title" | default "Record Not Found" }}</h1>
+    <p>{{ i18n "not_found_desc" | default "No archival entry matches this address." }}</p>
+    <div class="not-found-actions">
+      <a href="{{ site.Home.RelPermalink }}">{{ partial "icon.html" (dict "name" "arrow-left" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "back_home" | default "Return Home" }}</span></a>
+      {{- $sections := site.Params.mainSections | default (slice "posts") -}}
+      {{- with site.GetPage (index $sections 0) }}
+        <a href="{{ .RelPermalink }}"><span>{{ i18n "all_posts" | default "All Archives" }}</span>{{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}</a>
+      {{- end }}
+    </div>
+  </section>
+</div>
+{{ end }}

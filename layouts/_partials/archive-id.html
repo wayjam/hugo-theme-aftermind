@@ -1,0 +1,16 @@
+{{- /* Returns archival index ID like #001 for a regular page */ -}}
+{{- $page := . -}}
+{{- $id := "" -}}
+{{- with $page.Params.archiveId -}}
+  {{- $id = printf "%v" . -}}
+{{- else -}}
+  {{- $sections := site.Params.mainSections | default (slice "posts") -}}
+  {{- $all := where site.RegularPages "Section" "in" $sections -}}
+  {{- $asc := $all.ByDate -}}
+  {{- range $idx, $p := $asc -}}
+    {{- if eq $p.RelPermalink $page.RelPermalink -}}
+      {{- $id = printf "#%03d" (add $idx 1) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $id -}}
