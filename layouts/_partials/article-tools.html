@@ -1,0 +1,110 @@
+{{- $hasMath := .Params.math | default false -}}
+{{- $hasDiagrams := .Params.diagrams | default false -}}
+{{- $openLabel := i18n "lightbox_open" | default "Inspect image" -}}
+{{- $viewerLabel := i18n "lightbox_label" | default "Image viewer" -}}
+{{- $closeLabel := i18n "lightbox_close" | default "Close image viewer" -}}
+{{- $prevLabel := i18n "lightbox_prev" | default "Previous image" -}}
+{{- $nextLabel := i18n "lightbox_next" | default "Next image" -}}
+{{- $diagramLabel := i18n "diagram_label" | default "Mermaid diagram" -}}
+{{- $diagramFailed := i18n "diagram_failed" | default "Diagram unavailable — showing source" -}}
+
+{{- with resources.Get "css/article-tools.css" }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- else }}
+    {{- with . | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+<dialog id="article-lightbox"
+        class="article-lightbox"
+        aria-modal="true"
+        aria-labelledby="article-lightbox-title"
+        aria-describedby="article-lightbox-caption"
+        data-math="{{ cond $hasMath `true` `false` }}"
+        data-diagrams="{{ cond $hasDiagrams `true` `false` }}"
+        data-open-label="{{ $openLabel }}"
+        data-viewer-label="{{ $viewerLabel }}"
+        data-close-label="{{ $closeLabel }}"
+        data-prev-label="{{ $prevLabel }}"
+        data-next-label="{{ $nextLabel }}"
+        data-diagram-label="{{ $diagramLabel }}"
+        data-diagram-failed="{{ $diagramFailed }}">
+  <div class="article-lightbox-frame">
+    <div class="article-lightbox-bar">
+      <div class="article-lightbox-heading">
+        <span id="article-lightbox-title" class="article-lightbox-title">{{ $viewerLabel }}</span>
+        <span class="article-lightbox-counter" data-lightbox-counter translate="no" hidden></span>
+      </div>
+      <div class="article-lightbox-actions">
+        <button type="button"
+                class="article-lightbox-btn"
+                data-lightbox-prev
+                aria-label="{{ $prevLabel }}"
+                hidden>
+          {{ partial "icon.html" (dict "name" "arrow-left" "class" "ui-icon") }}
+        </button>
+        <button type="button"
+                class="article-lightbox-btn"
+                data-lightbox-next
+                aria-label="{{ $nextLabel }}"
+                hidden>
+          {{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon") }}
+        </button>
+        <button type="button"
+                class="article-lightbox-btn article-lightbox-close"
+                data-lightbox-close
+                aria-label="{{ $closeLabel }}">
+          {{ partial "icon.html" (dict "name" "x" "class" "ui-icon") }}
+        </button>
+      </div>
+    </div>
+    <div class="article-lightbox-stage" data-lightbox-stage>
+      <img class="article-lightbox-img" data-lightbox-img alt="" decoding="async">
+    </div>
+    <div class="article-lightbox-meta" data-lightbox-meta hidden>
+      <p id="article-lightbox-caption" class="article-lightbox-caption" data-lightbox-caption></p>
+      <p class="article-lightbox-alt" data-lightbox-alt hidden></p>
+    </div>
+  </div>
+</dialog>
+
+{{- if $hasMath }}
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/katex.min.css"
+        integrity="sha384-WwGtaC6ywCHxA5cstpj/3+xIZvTez8dq2IcBQaXRkenHZ7FVVq1ZROtURwfbtTlG"
+        crossorigin="anonymous">
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/katex.min.js"
+          integrity="sha384-a1WQdjRj162i159OYq041X6I4K8NenkrI09LlPmiHg0YOb7CR+wJOraXwK9abpnE"
+          crossorigin="anonymous"></script>
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/contrib/auto-render.min.js"
+          integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz"
+          crossorigin="anonymous"></script>
+{{- end }}
+
+{{- if $hasDiagrams }}
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js"
+          integrity="sha256-WB7X10vZBI0OOpE2OSfXLvIpQtdyJUayf3zCnjU5Drg="
+          crossorigin="anonymous"></script>
+{{- end }}
+
+{{- with resources.Get "js/article-tools.js" }}
+  {{- $opts := dict
+    "minify" (cond hugo.IsDevelopment false true)
+    "sourceMap" (cond hugo.IsDevelopment "linked" "none")
+  }}
+  {{- with . | js.Build $opts }}
+    {{- if hugo.IsDevelopment }}
+      <script src="{{ .RelPermalink }}" defer></script>
+    {{- else }}
+      {{- with . | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}

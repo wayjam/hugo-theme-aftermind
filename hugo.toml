@@ -11,6 +11,9 @@ title = 'Aftermind'
   homeImageAlt = '午后自然侧光下的空工位：桌面右侧摊开一本旧交接簿，旁边是一张微微转向的空办公椅和翻扣的空白工牌。'
   mainSections = ['posts']
 
+[params.search]
+  provider = 'json'
+
 [menus]
   [[menus.main]]
     name = '首页'
@@ -31,6 +34,11 @@ title = 'Aftermind'
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)']]
 
   [markup.highlight]
     noClasses = false

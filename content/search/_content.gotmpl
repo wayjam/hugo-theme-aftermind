@@ -1,0 +1,17 @@
+{{- .EnableAllLanguages -}}
+{{- $config := .Site.Params.search | default dict -}}
+{{- $provider := lower ($config.provider | default "json") -}}
+{{- if in (slice "json" "pagefind") $provider -}}
+  {{- $zh := hasPrefix (lower (or .Site.Language.LanguageCode .Site.Language.Lang)) "zh" -}}
+  {{- .AddPage (dict
+    "path" "."
+    "kind" "page"
+    "title" (cond $zh "搜索" "Search")
+    "layout" "aftermind-search"
+    "outputs" (slice "html")
+    "build" (dict "list" "never" "render" "always")
+    "params" (dict "aftermindSearchPage" true)
+  ) -}}
+{{- else if ne $provider "none" -}}
+  {{- errorf "Aftermind search: set params.search.provider to json, pagefind, or none (got %q)" $provider -}}
+{{- end -}}

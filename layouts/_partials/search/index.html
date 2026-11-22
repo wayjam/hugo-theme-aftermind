@@ -1,0 +1,20 @@
+{{- $entries := first 0 (slice (dict)) -}}
+{{- $sections := .Site.Params.mainSections | default (slice "posts") -}}
+{{- range (where .Site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+  {{- if partial "search/eligible.html" . -}}
+    {{- $tags := first 0 (slice "") -}}
+    {{- range .GetTerms "tags" -}}
+      {{- $tags = $tags | append (.LinkTitle | htmlUnescape) -}}
+    {{- end -}}
+    {{- $entries = $entries | append (dict
+      "archiveId" (partial "archive-id.html" .)
+      "date" (.Date.Format "2006-01-02")
+      "summary" (.Summary | plainify | htmlUnescape | strings.TrimSpace)
+      "tags" $tags
+      "title" (.Title | htmlUnescape)
+      "url" (.OutputFormats.Get "html").RelPermalink
+    ) -}}
+  {{- end -}}
+{{- end -}}
+{{- $path := printf "search-index/%s.json" .Site.Language.Lang -}}
+{{- return (resources.FromString $path ($entries | jsonify)) -}}

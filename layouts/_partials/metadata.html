@@ -1,0 +1,69 @@
+{{- $page := .page -}}
+{{- $canonical := $page.Permalink -}}
+{{- with .pager -}}
+  {{- if gt .PageNumber 1 -}}
+    {{- $canonical = .URL | absURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $trimSpace := `^[\s\p{Zs}]+|[\s\p{Zs}]+$` -}}
+{{- $description := or
+  ($page.Description | plainify | htmlUnescape | replaceRE $trimSpace "")
+  ($page.Summary | plainify | htmlUnescape | replaceRE $trimSpace "")
+  ($page.Site.Params.description | default "" | plainify | htmlUnescape | replaceRE $trimSpace "")
+  | replaceRE `[\s\p{Zs}]+` " " -}}
+{{- with $description }}
+<meta name="description" content="{{ . }}">
+{{- end -}}
+
+{{- if and $canonical (ne $page.Kind "404") -}}
+  {{- $image := "" -}}
+  {{- $imageAlt := "" -}}
+  {{- if $page.IsPage -}}
+    {{- with $page.Params.cover -}}
+      {{- with $page.Resources.GetMatch . -}}
+        {{- if eq .ResourceType "image" -}}
+          {{- $image = .Permalink -}}
+          {{- $imageAlt = $page.Params.coverAlt | default "" -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $image -}}
+    {{- with $page.Site.Params.socialImage | default "" | replaceRE $trimSpace "" -}}
+      {{- $path := . -}}
+      {{- if strings.HasPrefix $path "//" -}}
+        {{- $image = printf "%s:%s" (urls.Parse $page.Site.BaseURL).Scheme $path -}}
+      {{- else if findRE `(?i)^https?://` $path -}}
+        {{- $image = $path -}}
+      {{- else -}}
+        {{- with resources.Get (replaceRE `^/` "" $path) -}}
+          {{- $image = .Permalink -}}
+        {{- else -}}
+          {{- $image = $path | absURL -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $imageAlt = $page.Site.Params.socialImageAlt | default "" -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $title := cond $page.IsHome $page.Site.Title $page.Title }}
+<link rel="canonical" href="{{ $canonical }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:site_name" content="{{ $page.Site.Title }}">
+<meta property="og:type" content="{{ cond $page.IsPage "article" "website" }}">
+<meta property="og:title" content="{{ $title }}">
+<meta name="twitter:card" content="{{ cond (ne $image "") "summary_large_image" "summary" }}">
+<meta name="twitter:title" content="{{ $title }}">
+  {{- with $description }}
+<meta property="og:description" content="{{ . }}">
+<meta name="twitter:description" content="{{ . }}">
+  {{- end -}}
+  {{- with $image }}
+<meta property="og:image" content="{{ . }}">
+<meta name="twitter:image" content="{{ . }}">
+    {{- with $imageAlt | replaceRE $trimSpace "" }}
+<meta property="og:image:alt" content="{{ . }}">
+<meta name="twitter:image:alt" content="{{ . }}">
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

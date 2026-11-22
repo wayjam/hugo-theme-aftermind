@@ -2,6 +2,11 @@
 {{- $archId := partial "archive-id.html" . -}}
 {{- $sections := site.Params.mainSections | default (slice "posts") -}}
 {{- $isPost := in $sections .Section -}}
+{{- $toc := .TableOfContents -}}
+{{- $showTOC := and (ne .Params.toc false) (ge (len (findRE `<li>` $toc 2)) 2) -}}
+{{- $toc = replace $toc `id="TableOfContents"` (printf `aria-label="%s"` (i18n `article_toc` | htmlEscape)) | safeHTML -}}
+{{- $search := site.Params.search | default dict -}}
+{{- $indexArticle := and (eq (lower ($search.provider | default `json`)) `pagefind`) (partial `search/eligible.html` .) -}}
 
 <div class="shell">
   <div class="article-layout">
@@ -41,6 +46,13 @@
         </div>
       {{- end }}
 
+      {{- if $showTOC }}
+        <div class="article-toc article-toc--rail">
+          <p class="system-rail-label">{{ i18n "article_toc" }}</p>
+          {{ $toc }}
+        </div>
+      {{- end }}
+
       <div class="system-rail-foot">
         {{- if $isPost }}
           <p class="system-rail-note">
@@ -57,7 +69,7 @@
       </div>
     </aside>
 
-    <article class="article-main">
+    <article class="article-main"{{ if $indexArticle }} data-pagefind-body{{ end }}>
       <header class="article-header">
         <h1 class="article-title" style="view-transition-name: post-{{ .File.UniqueID | default `single` }}">{{ .Title }}</h1>
         <div class="article-title-rule" aria-hidden="true"></div>
@@ -79,11 +91,18 @@
         {{- end }}
       {{- end }}
 
+      {{- if $showTOC }}
+        <details class="article-toc article-toc--inline" data-pagefind-ignore>
+          <summary>{{ i18n "article_toc" }}</summary>
+          {{ $toc }}
+        </details>
+      {{- end }}
+
       <div class="prose">
         {{ .Content }}
       </div>
 
-      <footer class="article-footer">
+      <footer class="article-footer" data-pagefind-ignore>
         {{- with .GetTerms "tags" }}
           <div class="article-tags-inline">
             <span>{{ i18n "tags_label" | default "Tags" }}:</span>
@@ -124,7 +143,18 @@
           {{- end }}
         {{- end }}
       </footer>
+      {{- if and $isPost (ne .Params.comments false) }}
+        {{- with site.Params.comments }}
+          {{- if and (eq .enabled true) (templates.Exists "_partials/comments/provider.html") }}
+            <section class="article-comments" aria-labelledby="article-comments-title" data-pagefind-ignore>
+              <h2 id="article-comments-title">{{ i18n "article_comments" }}</h2>
+              {{ partial "comments/provider.html" $ }}
+            </section>
+          {{- end }}
+        {{- end }}
+      {{- end }}
     </article>
   </div>
 </div>
+{{ partial "article-tools.html" . }}
 {{ end }}

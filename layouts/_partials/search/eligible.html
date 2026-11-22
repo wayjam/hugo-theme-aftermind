@@ -1,0 +1,12 @@
+{{- $sections := .Site.Params.mainSections | default (slice "posts") -}}
+{{- $build := or .Params._build .Params.build | default dict -}}
+{{- return (and
+  .IsPage
+  (in $sections .Section)
+  (not .Draft)
+  (not .Params.aftermindSearchPage)
+  (not .Params.searchHidden)
+  (ne (string .Params.search) "false")
+  (eq ($build.render | default "always") "always")
+  (.OutputFormats.Get "html")
+) -}}

@@ -1,10 +1,23 @@
 {{- $page := .page }}
 {{- $menuID := .menuID }}
-{{- with index site.Menus $menuID }}
+{{- $entries := index site.Menus $menuID }}
+{{- $search := false }}
+{{- if eq $menuID "main" }}
+  {{- with site.GetPage "/search" }}
+    {{- if and .Params.aftermindSearchPage .RelPermalink }}
+      {{- $search = . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- if or $entries $search }}
   <nav class="site-nav" aria-label="{{ i18n `nav_label` | default `Main navigation` }}">
     <ul>
-      {{- range . }}
+      {{- range $entries }}
         {{- $active := $page.IsMenuCurrent .Menu . }}
+        {{- if and $search (eq .URL $search.RelPermalink) }}
+          {{- $active = eq $page.Path $search.Path }}
+          {{- $search = false }}
+        {{- end }}
         {{- $ancestor := $page.HasMenuCurrent .Menu . }}
         <li>
           <a href="{{ .URL }}"
@@ -13,6 +26,9 @@
             {{- end -}}
           >{{ .Name }}</a>
         </li>
+      {{- end }}
+      {{- with $search }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq $page.Path .Path }} aria-current="page"{{ end }}>{{ i18n "search_title" | default .Title }}</a></li>
       {{- end }}
     </ul>
   </nav>

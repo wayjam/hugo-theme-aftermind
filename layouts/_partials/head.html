@@ -2,9 +2,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#E9E6DD">
 <title>{{ if .IsHome }}{{ site.Title }}{{ with site.Params.description }} — {{ . }}{{ end }}{{ else }}{{ printf "%s — %s" .Title site.Title }}{{ end }}</title>
-{{- with or .Description site.Params.description }}
-<meta name="description" content="{{ . | plainify | htmlEscape }}">
-{{- end }}
 <link rel="icon" href="{{ `favicon.svg` | relURL }}" type="image/svg+xml">
 <link rel="alternate icon" href="{{ `favicon.ico` | relURL }}" sizes="any">
 <link rel="preload" href="{{ `fonts/barlow-condensed-700.woff2` | relURL }}" as="font" type="font/woff2" crossorigin>

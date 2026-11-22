@@ -1,0 +1,54 @@
+{{ define "main" }}
+  {{- $zh := hasPrefix (lower (or .Site.Language.LanguageCode .Site.Language.Lang)) "zh" -}}
+  {{- $search := site.Params.search | default dict -}}
+  {{- $pagefind := eq (lower ($search.provider | default "json")) "pagefind" -}}
+  {{- $hint := i18n "search_hint" | default (cond $zh "输入标题、摘要关键词、标签或归档编号。" "Enter a title, summary keyword, tag, or archive ID.") -}}
+  {{- if $pagefind -}}
+    {{- $hint = i18n "search_pagefind_hint" | default (cond $zh "搜索标题、正文、摘要、标签或归档编号。" "Search titles, article text, summaries, tags, or archive IDs.") -}}
+  {{- end -}}
+  {{- $index := partial "search/index.html" . -}}
+  {{- $stylesheet := resources.Get "css/search.css" -}}
+  {{- $script := resources.Get "js/search.js" -}}
+  {{- if not hugo.IsDevelopment -}}
+    {{- $stylesheet = $stylesheet | minify | fingerprint -}}
+    {{- $script = $script | minify | fingerprint -}}
+  {{- end -}}
+  <link rel="stylesheet" href="{{ $stylesheet.RelPermalink }}"{{ with $stylesheet.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }}>
+  <script type="module" src="{{ $script.RelPermalink }}"{{ with $script.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }}></script>
+  <div class="shell search-page" data-search
+    data-index-url="{{ $index.RelPermalink }}"
+    {{- if $pagefind }} data-pagefind-url="{{ relURL `pagefind/pagefind.js` }}"{{ end }}
+    data-loading="{{ i18n `search_loading` | default (cond $zh `正在搜索…` `Searching…`) }}"
+    data-empty="{{ i18n `search_empty` | default (cond $zh `没有匹配的记录。请试试其他关键词。` `No matching records. Try another search term.`) }}"
+    data-no-entries="{{ i18n `search_no_entries` | default (cond $zh `还没有可搜索的记录。` `There are no searchable records yet.`) }}"
+    data-error="{{ i18n `search_error` | default (cond $zh `无法加载搜索索引。请重试，或浏览归档。` `The search index could not load. Try again or browse the archives.`) }}"
+    data-result-count="{{ i18n `search_result_count` | default (cond $zh `显示 {count} 条记录` `{count} shown`) }}"
+    data-pagefind-fallback="{{ i18n `search_pagefind_fallback` | default (cond $zh `全文搜索暂不可用。仍可搜索标题、摘要、标签和归档编号。` `Full-text search is unavailable. You can still search titles, summaries, tags, and archive IDs.`) }}">
+    <header class="page-head">
+      <h1>{{ i18n "search_title" | default .Title }}</h1>
+    </header>
+    <div class="search-body">
+      <form class="search-form" role="search" action="{{ .RelPermalink }}" method="get" hidden>
+        <label for="search-query">{{ i18n "search_query" | default (cond $zh "搜索归档" "Search the archives") }}</label>
+        <div class="search-controls">
+          <input id="search-query" name="q" type="search" aria-describedby="search-hint" autocomplete="off">
+          <button type="submit">{{ i18n "search_title" | default .Title }}</button>
+        </div>
+        <p class="search-hint" id="search-hint">{{ $hint }}</p>
+      </form>
+      <p class="search-status" data-search-unavailable>{{ i18n "search_requires_js" | default (cond $zh "搜索需要 JavaScript。你也可以直接浏览归档。" "Search requires JavaScript. You can still browse the archives.") }}</p>
+      <p class="search-status" data-search-notice role="status" hidden></p>
+      <p class="search-status" data-search-status role="status"></p>
+      <ol class="search-results" aria-label="{{ i18n `search_results` | default (cond $zh `搜索结果` `Search results`) }}"></ol>
+      <button class="search-more" type="button" hidden>{{ i18n "search_more" | default (cond $zh "显示更多结果" "Show more results") }}</button>
+      {{- $browse := site.Home -}}
+      {{- range site.Params.mainSections | default (slice "posts") -}}
+        {{- with site.GetPage . -}}
+          {{- $browse = . -}}
+          {{- break -}}
+        {{- end -}}
+      {{- end }}
+      <p class="search-browse"><a href="{{ $browse.RelPermalink }}">{{ if $browse.IsHome }}{{ i18n "back_home" | default "Return Home" }}{{ else }}{{ i18n "all_posts" | default "Browse archives" }}{{ end }}</a></p>
+    </div>
+  </div>
+{{ end }}

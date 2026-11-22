@@ -70,6 +70,60 @@ title = 'Aftermind'
 
 主题根目录的 `content/` 为预览示例内容，正式建站时在站点目录编写自己的内容即可。
 
+## 分享预览
+
+主题输出 canonical、Open Graph 和 Twitter Card 元数据。文章的 `cover` 优先用作分享图。可在站点配置中设置通用图片及替代文字：
+
+```toml
+[params]
+  socialImage = 'images/share.jpg'
+  socialImageAlt = 'Aftermind 档案封面'
+```
+
+`socialImage` 可以指向 `assets/` 或 `static/` 下的站点相对路径，也可以填写完整的 HTTPS 地址。
+
+## 站内搜索
+
+主题默认提供搜索入口。Hugo 在构建时生成当前语言的文章索引，可搜索标题、摘要、标签和归档编号。可在文章 Front Matter 中设置 `searchHidden = true` 或 `search = false`，将该文章从两种索引中排除。
+
+```toml
+[params.search]
+  provider = 'json' # 'pagefind' 为正文检索，'none' 为关闭搜索
+```
+
+使用 Pagefind 时，搜索还会匹配正文并显示命中片段。在 Hugo **构建完成后**生成索引，并将生成的 `pagefind/` 随站点一起发布：
+
+```sh
+hugo --minify
+npx --yes pagefind@1.6.0 --site public --root-selector 'html[data-aftermind-pagefind]'
+```
+
+可以用 Pagefind 命令行二进制替代 `npx`。中文正文检索请使用 Pagefind Extended 版，`npx` 默认使用该版本。未生成 Pagefind 索引时，搜索页会提示，并继续支持标题、摘要、标签和编号查询。普通 `hugo server` 可直接预览 JSON 模式，全文搜索需预览生成后的静态站点。
+
+## 图片、公式与图表
+
+文章封面和正文中未加链接的图片可用键盘或鼠标打开大图。已链接到其他地址的图片保留作者指定的跳转。
+
+在文章 Front Matter 中独立启用公式和图表：
+
+```toml
+math = true
+diagrams = true
+```
+
+- **公式**：行内使用 `\(a_b + c_d\)`，块级使用 `\[ ... \]` 或 `$$ ... $$`。
+- **图表**：使用标为 `mermaid` 的 Markdown 代码围栏。渲染失败会保留源码。
+
+启用后，页面分别从 jsDelivr 加载固定版本的 KaTeX 和 Mermaid。将 Aftermind 安装为主题时，请在**站点**的 `hugo.toml` 中加入以下 Goldmark 配置，让 Hugo 保留行内与块级 TeX 定界符：
+
+```toml
+[markup.goldmark.extensions.passthrough]
+  enable = true
+  [markup.goldmark.extensions.passthrough.delimiters]
+    block = [['\[', '\]'], ['$$', '$$']]
+    inline = [['\(', '\)']]
+```
+
 ## 短代码与文章字段
 
 ### 旁注留痕 `note`
@@ -92,6 +146,19 @@ title = 'Aftermind'
 
 - `archiveId`：自定义归档编号（如 `"#014"`）；不填时按发布顺序自动生成 `#001`、`#002`…
 - `cover` / `coverAlt` / `coverCaption`：Page Bundle 内的文章封面图片路径、替代文本与图注。
+- `toc = false`：为单篇关闭目录。默认在有至少两个目录条目时显示，宽屏置于左侧档案栏，窄屏置于正文前并默认折叠。
+- `comments = false`：站点启用评论后，为单篇关闭评论。
+
+## 第三方评论
+
+评论默认关闭。要接入评论系统，在站点配置中启用评论，并在**站点**的 `layouts/_partials/comments/provider.html` 放入服务商提供的嵌入代码：
+
+```toml
+[params.comments]
+  enabled = true
+```
+
+主题在 `mainSections` 中的文章底部调用该 partial，参数为当前文章，可通过 `{{ .Permalink }}` 取得文章地址，也可通过 `{{ site.Params.comments }}` 读取服务专用配置。移除 partial 或关闭开关即可停用。供应商的站点标识、页面映射和亮暗模式同步均可在该 partial 中配置。
 
 ## 目录约定
 

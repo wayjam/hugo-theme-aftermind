@@ -1,0 +1,16 @@
+{{- if .Page.Params.diagrams -}}
+{{- $diagramLabel := i18n "diagram_label" | default "Mermaid diagram" -}}
+<figure class="article-diagram" data-mermaid-block>
+  <div class="code-block article-diagram-source" data-mermaid-source-wrap>
+    <div class="code-block-bar">
+      <span translate="no">MERMAID</span>
+    </div>
+    <pre class="article-diagram-pre"><code class="language-mermaid" data-mermaid-source>{{ .Inner }}</code></pre>
+  </div>
+  <div class="article-diagram-stage" data-mermaid-stage role="group" aria-label="{{ $diagramLabel }}" hidden></div>
+  <p class="article-diagram-status" data-mermaid-status role="status" hidden></p>
+</figure>
+{{- else -}}
+{{- $result := transform.HighlightCodeBlock . -}}
+{{- $result.Wrapped -}}
+{{- end -}}

@@ -1,5 +1,9 @@
+{{ define "metadata" }}
+  {{ partial "metadata.html" (dict "page" . "pager" (partial "archive-pager.html" .)) }}
+{{ end }}
+
 {{ define "main" }}
-{{- $paginator := .Paginate .Pages.ByDate.Reverse 20 -}}
+{{- $paginator := partial "archive-pager.html" . -}}
 <div class="shell">
   <header class="page-head">
     <div class="page-head-main">
