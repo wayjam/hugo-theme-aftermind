@@ -62,3 +62,4 @@ search_pagefind_fallback = "全文搜索暂不可用。仍可搜索标题、摘�
 search_requires_js = "搜索需要 JavaScript。你也可以直接浏览归档。"
 search_results = "搜索结果"
 search_more = "显示更多结果"
+back_to_top = "返回顶部"

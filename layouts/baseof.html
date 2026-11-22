@@ -11,7 +11,7 @@
   {{ partial "head.html" . }}
   {{ block "metadata" . }}{{ partial "metadata.html" (dict "page" .) }}{{ end }}
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#main-content">{{ i18n "skip_to_content" | default "Skip to content" }}</a>
   <header class="site-header">
     {{ partial "header.html" . }}

@@ -24,11 +24,11 @@
             {{- if $active }} aria-current="page"
             {{- else if $ancestor }} aria-current="true"
             {{- end -}}
-          >{{ .Name }}</a>
+          >{{- with .Params.icon }}{{ partial "icon.html" (dict "name" . "class" "ui-icon ui-icon--sm") }}{{ end }}<span>{{ .Name }}</span></a>
         </li>
       {{- end }}
       {{- with $search }}
-        <li><a href="{{ .RelPermalink }}"{{ if eq $page.Path .Path }} aria-current="page"{{ end }}>{{ i18n "search_title" | default .Title }}</a></li>
+        <li><a href="{{ .RelPermalink }}"{{ if eq $page.Path .Path }} aria-current="page"{{ end }}>{{ partial "icon.html" (dict "name" "search" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "search_title" | default .Title }}</span></a></li>
       {{- end }}
     </ul>
   </nav>

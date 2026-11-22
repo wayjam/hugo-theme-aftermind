@@ -62,3 +62,4 @@ search_pagefind_fallback = "Full-text search is unavailable. You can still searc
 search_requires_js = "Search requires JavaScript. You can still browse the archives."
 search_results = "Search results"
 search_more = "Show more results"
+back_to_top = "Top"

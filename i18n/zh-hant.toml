@@ -62,3 +62,4 @@ search_pagefind_fallback = "全文搜尋暫時無法使用。仍可搜尋標題�
 search_requires_js = "搜尋功能需要 JavaScript。您也可以直接瀏覽歸檔。"
 search_results = "搜尋結果"
 search_more = "顯示更多結果"
+back_to_top = "返回頂部"

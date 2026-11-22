@@ -1,10 +1,34 @@
+{{- $footer := site.Params.footer | default dict -}}
+{{- $showCredit := true -}}
+{{- if isset $footer "showthemecredit" -}}
+  {{- $showCredit = $footer.showThemeCredit -}}
+{{- end -}}
 <div class="shell site-footer-inner">
-  <p class="site-footer-meta">
-    <span translate="no">{{ site.Title }}</span> · {{ i18n "footer_note" | default "Text and time only" }}
-  </p>
-  <div class="site-footer-links">
-    {{- with site.Home.OutputFormats.Get "rss" }}
-      <a class="footer-rss-link" href="{{ .RelPermalink }}">{{ partial "icon.html" (dict "name" "rss" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "rss_label" | default "RSS Feed" }}</span></a>
+  <div class="site-footer-col">
+    {{- if isset $footer "text" }}
+      {{- with $footer.text }}
+        <div class="site-footer-meta">{{ . | markdownify }}</div>
+      {{- end }}
+    {{- else }}
+      <p class="site-footer-meta">
+        <span translate="no">{{ site.Title }}</span> · {{ i18n "footer_note" | default "Text and time only" }}
+      </p>
     {{- end }}
+    {{- if $showCredit }}
+      <p class="site-footer-colophon" translate="no">
+        Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/wayjam/hugo-theme-aftermind" target="_blank" rel="noopener noreferrer">Aftermind</a>
+      </p>
+    {{- end }}
+  </div>
+  <div class="site-footer-links">
+    {{- with $footer.github }}
+      <a class="footer-icon-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "icon.html" (dict "name" "brand-github" "class" "ui-icon ui-icon--sm") }}<span translate="no">GitHub</span></a>
+    {{- end }}
+    {{- with site.Home.OutputFormats.Get "rss" }}
+      <a class="footer-icon-link footer-rss-link" href="{{ .RelPermalink }}">{{ partial "icon.html" (dict "name" "rss" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "rss_label" | default "RSS Feed" }}</span></a>
+    {{- end }}
+    <a class="footer-icon-link" href="#top">{{ partial "icon.html" (dict "name" "arrow-up" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "back_to_top" | default "Top" }}</span></a>
   </div>
 </div>

@@ -17,6 +17,18 @@ enableRobotsTXT = true
   # socialImage = 'images/home-desk.webp'
   # socialImageAlt = 'Aftermind 档案封面'
 
+[params.home]
+  # 首页标语文案（不填时默认回退到 params.description；设为空字符串 "" 可隐藏）
+  subtitle = '智能之后 · 写给没有“人”看的东西'
+
+[params.footer]
+  # 页脚自定义文案（支持行内 Markdown；不填时使用默认多语言文案）
+  text = '© 2026 Aftermind · 智能之后 · 仅保留文字与时间'
+  # 可选：页脚 GitHub 图标链接（留空则不显示）
+  github = 'https://github.com/wayjam/hugo-theme-aftermind'
+  # 是否显示 "Powered by Hugo · Aftermind" 署名（默认 true）
+  showThemeCredit = true
+
 [params.search]
   # 可选：'json'（默认，无需额外构建步骤）、'pagefind'（全文检索）、'none'（关闭搜索）
   provider = 'json'
@@ -35,11 +47,13 @@ enableRobotsTXT = true
     name = '归档'
     pageRef = '/posts'
     weight = 20
+    params = { icon = 'list' }
 
   [[menus.main]]
     name = '标签'
     pageRef = '/tags'
     weight = 30
+    params = { icon = 'tag' }
 
   [[menus.main]]
     name = '关于'

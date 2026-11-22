@@ -59,6 +59,14 @@ title = 'Aftermind'
   homeImageAlt = '停用工位平面图：移除显示器的桌台、摊开的交接簿与退后的空椅。'
   mainSections = ['posts']
 
+[params.home]
+  subtitle = '智能之后 · 写给没有“人”看的东西' # 首页副标题（默认回退到 description，设为空字符串可隐藏）
+
+[params.footer]
+  text = '© 2026 Aftermind · 仅保留文字与时间' # 省略时使用多语言默认文案，留空可隐藏
+  github = 'https://github.com/wayjam/hugo-theme-aftermind' # 可选：页脚 GitHub 链接
+  showThemeCredit = true                           # 是否显示 Hugo · Aftermind 署名
+
 [menus]
   [[menus.main]]
     name = '首页'
@@ -68,10 +76,12 @@ title = 'Aftermind'
     name = '归档'
     pageRef = '/posts'
     weight = 20
+    params = { icon = 'list' }
   [[menus.main]]
     name = '标签'
     pageRef = '/tags'
     weight = 30
+    params = { icon = 'tag' }
 
 [markup.highlight]
   noClasses = false
@@ -80,6 +90,8 @@ title = 'Aftermind'
 ```
 
 完整的示例站点与演示文章见 `exampleSite/` 目录。
+
+菜单项可通过 `params.icon` 引用 `assets/icons/` 中的 SVG 文件名，无需填写 `.svg` 后缀。
 
 ## 分享预览
 

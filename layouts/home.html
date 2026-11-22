@@ -8,6 +8,7 @@
   {{- $lead = index $recent 0 -}}
   {{- $rest = after 1 $recent -}}
 {{- end -}}
+{{- $home := site.Params.home | default dict -}}
 
 <div class="shell">
   <section class="home-hero" aria-labelledby="site-wordmark">
@@ -27,7 +28,11 @@
           {{ site.Title }}
           <span class="wordmark-echo" aria-hidden="true">{{ site.Title }}</span>
         </h1>
-        {{- with site.Params.description }}
+        {{- $tagline := site.Params.description | default "" -}}
+        {{- if isset $home "subtitle" -}}
+          {{- $tagline = $home.subtitle -}}
+        {{- end -}}
+        {{- with $tagline }}
           <p class="site-tagline">{{ . }}</p>
         {{- end }}
         <p class="home-status" translate="no" aria-hidden="true">

@@ -62,3 +62,4 @@ search_pagefind_fallback = "全文検索は現在利用できません。タイ�
 search_requires_js = "検索には JavaScript が必要です。アーカイブ一覧から直接閲覧することもできます。"
 search_results = "検索結果"
 search_more = "さらに結果を表示"
+back_to_top = "先頭へ"

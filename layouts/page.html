@@ -21,7 +21,7 @@
       <dl class="system-rail-meta">
         {{- if not .Date.IsZero }}
           <div class="system-rail-row">
-            <dt>{{ i18n "meta_date" | default "Recorded" }}</dt>
+            <dt>{{ partial "icon.html" (dict "name" "calendar" "class" "ui-icon ui-icon--xs") }}<span>{{ i18n "meta_date" | default "Recorded" }}</span></dt>
             <dd>
               <time datetime="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ .Date.Format "2006-01-02" }}</time>
             </dd>
@@ -29,7 +29,7 @@
         {{- end }}
         {{- if gt .WordCount 0 }}
           <div class="system-rail-row">
-            <dt>{{ i18n "meta_length" | default "Length" }}</dt>
+            <dt>{{ partial "icon.html" (dict "name" "clock" "class" "ui-icon ui-icon--xs") }}<span>{{ i18n "meta_length" | default "Length" }}</span></dt>
             <dd>{{ printf (i18n "words_unit" | default "%d words") .WordCount }} · {{ printf (i18n "read_time" | default "%d min read") .ReadingTime }}</dd>
           </div>
         {{- end }}
@@ -37,7 +37,7 @@
 
       {{- with .GetTerms "tags" }}
         <div class="system-rail-tags-wrap">
-          <div class="system-rail-label">{{ i18n "tags_label" | default "Tags" }}</div>
+          <div class="system-rail-label">{{ partial "icon.html" (dict "name" "tag" "class" "ui-icon ui-icon--xs") }}<span>{{ i18n "tags_label" | default "Tags" }}</span></div>
           <ul class="system-rail-tags">
             {{- range . }}
               <li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>
@@ -48,7 +48,7 @@
 
       {{- if $showTOC }}
         <div class="article-toc article-toc--rail">
-          <p class="system-rail-label">{{ i18n "article_toc" }}</p>
+          <p class="system-rail-label">{{ partial "icon.html" (dict "name" "list" "class" "ui-icon ui-icon--xs") }}<span>{{ i18n "article_toc" }}</span></p>
           {{ $toc }}
         </div>
       {{- end }}
@@ -93,7 +93,7 @@
 
       {{- if $showTOC }}
         <details class="article-toc article-toc--inline" data-pagefind-ignore>
-          <summary>{{ i18n "article_toc" }}</summary>
+          <summary>{{ partial "icon.html" (dict "name" "list" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "article_toc" }}</span></summary>
           {{ $toc }}
         </details>
       {{- end }}

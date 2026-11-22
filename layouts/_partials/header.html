@@ -6,11 +6,11 @@
     {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
     <span class="site-controls-sep" aria-hidden="true"></span>
     <div class="theme-control" role="radiogroup" aria-label="{{ i18n `theme_label` | default `Theme` }}">
-      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="system" aria-label="{{ i18n `theme_system` | default `System` }}">{{ i18n "theme_system_short" | default "Auto" }}</button>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="system" aria-label="{{ i18n `theme_system` | default `System` }}">{{ partial "icon.html" (dict "name" "device-desktop" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "theme_system_short" | default "Auto" }}</span></button>
       <span class="theme-sep" aria-hidden="true">/</span>
-      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="light" aria-label="{{ i18n `theme_light` | default `Light` }}">{{ i18n "theme_light_short" | default "Light" }}</button>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="light" aria-label="{{ i18n `theme_light` | default `Light` }}">{{ partial "icon.html" (dict "name" "sun" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "theme_light_short" | default "Light" }}</span></button>
       <span class="theme-sep" aria-hidden="true">/</span>
-      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="dark" aria-label="{{ i18n `theme_dark` | default `Dark` }}">{{ i18n "theme_dark_short" | default "Dark" }}</button>
+      <button type="button" class="theme-btn" role="radio" aria-checked="false" data-theme-btn="dark" aria-label="{{ i18n `theme_dark` | default `Dark` }}">{{ partial "icon.html" (dict "name" "moon" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "theme_dark_short" | default "Dark" }}</span></button>
     </div>
   </div>
 </div>

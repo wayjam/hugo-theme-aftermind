@@ -62,3 +62,4 @@ search_pagefind_fallback = "Die Volltextsuche ist derzeit nicht verfügbar. Tite
 search_requires_js = "Für die Suche ist JavaScript erforderlich. Das Archiv lässt sich auch direkt durchstöbern."
 search_results = "Suchergebnisse"
 search_more = "Weitere Ergebnisse anzeigen"
+back_to_top = "Nach oben"

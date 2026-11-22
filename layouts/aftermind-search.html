@@ -31,7 +31,7 @@
         <label for="search-query">{{ i18n "search_query" | default "Search the archives" }}</label>
         <div class="search-controls">
           <input id="search-query" name="q" type="search" aria-describedby="search-hint" autocomplete="off">
-          <button type="submit">{{ i18n "search_title" | default .Title }}</button>
+          <button type="submit">{{ partial "icon.html" (dict "name" "search" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "search_title" | default .Title }}</span></button>
         </div>
         <p class="search-hint" id="search-hint">{{ $hint }}</p>
       </form>
