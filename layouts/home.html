@@ -63,20 +63,28 @@
     </div>
     {{- if $showPlate }}
       {{- $image := strings.TrimSpace ($home.image | default "") -}}
+      {{- $hasCustomAlt := or (isset site.Params "homeimagealt") (isset $home "imagealt") -}}
       {{- $alt := site.Params.homeImageAlt | default "" -}}
       {{- if isset $home "imagealt" -}}
         {{- $alt = $home.imagealt -}}
       {{- end -}}
-      {{- $caption := "" -}}
-      {{- if not $image -}}
-        {{- $alt = $alt | default (i18n "home_plate_alt" | default "A pen lies beside a half-written sheet in the light. The last strokes stop midway across the page, and server lights remain on behind the desk.") -}}
-        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · AFTER THE HANDOVER" -}}
+      {{- $lightAlt := $alt -}}
+      {{- $darkAlt := $alt -}}
+      {{- if and (not $image) (not $hasCustomAlt) -}}
+        {{- $lightAlt = i18n "home_plate_alt" | default "Continuous tractor-feed logs pile up uncollected beneath an archival terminal, while a brass paperweight holds down a half-redacted handwritten slip in the afternoon light." -}}
+        {{- $darkAlt = i18n "home_plate_alt_dark" | default "Across a dark facade of unattended server bays, a single recessed alcove glows with an amber desk lamp over an open book and an empty chair." -}}
       {{- end -}}
-      {{- if isset $home "caption" -}}
+      {{- $hasCustomCaption := isset $home "caption" -}}
+      {{- $caption := "" -}}
+      {{- $captionDark := "" -}}
+      {{- if $hasCustomCaption -}}
         {{- $caption = $home.caption -}}
+      {{- else if not $image -}}
+        {{- $caption = i18n "photo_caption_meta" | default "FIG. 01 · UNCOLLECTED TELEMETRY FEED" -}}
+        {{- $captionDark = i18n "photo_caption_meta_dark" | default "FIG. 02 · SECTOR 04 · ALCOVE LIGHT STILL ON" -}}
       {{- end -}}
       <figure class="home-plate-figure">
-        <div class="home-plate-frame">
+        <div class="home-plate-frame{{ if not $image }} home-plate-frame--builtin{{ end }}">
           {{- with $image }}
             {{- $src := . -}}
             {{- if not (urls.Parse .).IsAbs -}}
@@ -89,12 +97,17 @@
             {{- end }}
             <img class="home-plate-image" src="{{ $src }}" alt="{{ $alt }}" width="720" height="504" fetchpriority="high" decoding="async">
           {{- else }}
-            {{ partial "home-plate.html" $alt }}
+            {{ partial "home-plate.html" (dict "lightAlt" $lightAlt "darkAlt" $darkAlt) }}
           {{- end }}
         </div>
-        {{- if or $caption $lead }}
+        {{- if or $caption $captionDark $lead }}
           <figcaption class="home-photo-caption">
-            {{- with $caption }}<span>{{ . }}</span>{{ end }}
+            {{- if $captionDark }}
+              <span class="home-photo-caption-light">{{ $caption }}</span>
+              <span class="home-photo-caption-dark">{{ $captionDark }}</span>
+            {{- else if $caption }}
+              <span>{{ $caption }}</span>
+            {{- end }}
             {{- with $lead }}<span class="home-photo-date" translate="no">LAST ENTRY <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "2006.01.02" }}</time></span>{{ end }}
           </figcaption>
         {{- end }}

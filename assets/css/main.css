@@ -489,6 +489,16 @@ a:hover {
   aspect-ratio: 10 / 7;
   background-color: var(--bg-subtle);
   background-image: var(--paper-grain);
+  overflow: hidden;
+}
+
+.home-plate-frame--builtin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper-grain);
+  opacity: 0.62;
+  pointer-events: none;
 }
 
 .home-plate-image {
@@ -501,18 +511,75 @@ a:hover {
 }
 
 .home-plate-svg {
-  --plate-ink: light-dark(#252629, #18191f);
-  --plate-wall: light-dark(#464b4c, #333740);
-  --plate-edge: light-dark(#858781, #686e77);
-  --plate-wood: light-dark(#676052, #4b423a);
-  --plate-light: light-dark(#e0c59f, #c5a27b);
-  --plate-status: light-dark(#c4d0ac, #adbd9d);
-  --plate-paper: light-dark(#f6ebd4, #eadcc0);
-  --plate-paper-deep: light-dark(#cebb99, #bba280);
-  --plate-mark: #634239;
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Light Plate: The Uncollected Feed (Warm Collotype / Mezzotint Print) */
+.home-plate-svg--light {
+  --p-void: #1F2023;
+  --p-chassis: #3A3D42;
+  --p-surface-deep: #4C473F;
+  --p-surface: #6B6255;
+  --p-rim: #9A9589;
+  --p-sun: #EBD4B3;
+  --p-paper: #F6EEDC;
+  --p-paper-mid: #E3D4B8;
+  --p-paper-shadow: #C4B08E;
+  --p-ink: #2A2925;
+  --p-mark: #5C443B;
+  --p-rust: #7A3B2E;
+  --p-ember: #B85B3F;
+  --p-status: #B8C7A6;
+  --p-brass: #9C7E54;
+  --p-brass-hi: #E2C99F;
+}
+
+/* Dark Plate: Solitary Alcove in the Monolith (Nocturnal Archive & Darkroom Amber) */
+.home-plate-svg--dark {
+  --p-void: #131319;
+  --p-chassis: #252631;
+  --p-facade-hi: #313340;
+  --p-bay: #1B1C24;
+  --p-rim: #706D7C;
+  --p-paper: #ECE0C8;
+  --p-mark: #5E4339;
+  --p-ember: #DA9362;
+  --p-status: #9EB294;
+  display: none;
+}
+
+.home-photo-caption-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .home-plate-svg--light,
+  :root:not([data-theme="light"]) .home-photo-caption-light {
+    display: none;
+  }
+
+  :root:not([data-theme="light"]) .home-plate-svg--dark {
+    display: block;
+  }
+
+  :root:not([data-theme="light"]) .home-photo-caption-dark {
+    display: inline;
+  }
+}
+
+:root[data-theme="dark"] .home-plate-svg--light,
+:root[data-theme="dark"] .home-photo-caption-light {
+  display: none;
+}
+
+:root[data-theme="dark"] .home-plate-svg--dark {
+  display: block;
+}
+
+:root[data-theme="dark"] .home-photo-caption-dark {
+  display: inline;
 }
 
 .home-photo-caption {
