@@ -14,7 +14,7 @@
     {{- if gt (len .Data.Terms) 0 }}
       <div class="page-head-meta" translate="no">
         <span class="status-dot" aria-hidden="true"></span>
-        <span>{{ printf (i18n "tags_count" | default "%d tags") (len .Data.Terms) }}</span>
+        <span>{{ partial "count-i18n.html" (dict "key" "tags_count" "count" (len .Data.Terms) "fallback" "%d tags") }}</span>
       </div>
     {{- end }}
   </header>

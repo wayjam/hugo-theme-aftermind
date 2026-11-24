@@ -1,0 +1,13 @@
+{{- /* Formats an i18n count string supporting both Hugo plural tables ({{ .Count }}) and flat printf ("%d") patterns. */ -}}
+{{- $key := .key -}}
+{{- $count := int .count -}}
+{{- $fallback := .fallback | default "" -}}
+{{- $text := i18n $key $count -}}
+{{- if not $text -}}
+  {{- $text = $fallback -}}
+{{- end -}}
+{{- $out := $text -}}
+{{- if strings.Contains $text "%" -}}
+  {{- $out = printf $text $count -}}
+{{- end -}}
+{{- return $out -}}

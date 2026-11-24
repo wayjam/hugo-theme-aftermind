@@ -39,7 +39,7 @@ hugo --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --minif
 
 构建结果位于 `exampleSite/public/`。完整示例配置见 [exampleSite/hugo.toml](exampleSite/hugo.toml)。
 
-示例站的归档每页显示 5 篇文章，打开 `/posts/` 即可体验翻页。示例文章涵盖 Markdown、KaTeX、Mermaid、富文本和代码高亮。
+示例站的归档每页显示 5 篇文章，打开 `/posts/` 即可体验翻页。示例文章涵盖中文随笔、英文长读、Markdown、KaTeX、Mermaid、富文本和代码高亮。
 
 ## 在站点中使用
 
@@ -88,7 +88,7 @@ title = 'Aftermind'
 
 完整的示例站点与演示文章见 `exampleSite/` 目录。
 
-菜单项可通过 `params.icon` 引用 `assets/icons/` 中的 SVG 文件名，无需填写 `.svg` 后缀。
+菜单项可通过 `params.icon` 引用 `assets/icons/` 中的 SVG 文件名，无需填写 `.svg` 后缀；主题默认根配置亦支持通过 `params.i18n` 为内置菜单项自动匹配当前站点语言。
 
 ## 首页图面
 

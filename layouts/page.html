@@ -30,7 +30,7 @@
         {{- if gt .WordCount 0 }}
           <div class="system-rail-row">
             <dt>{{ i18n "meta_length" | default "Length" }}</dt>
-            <dd>{{ printf (i18n "words_unit" | default "%d words") .WordCount }} · {{ printf (i18n "read_time" | default "%d min read") .ReadingTime }}</dd>
+            <dd>{{ partial "count-i18n.html" (dict "key" "words_unit" "count" .WordCount "fallback" "%d words") }} · {{ partial "count-i18n.html" (dict "key" "read_time" "count" .ReadingTime "fallback" "%d min read") }}</dd>
           </div>
         {{- end }}
       </dl>
@@ -123,7 +123,7 @@
               {{- if $prev }}
                 {{- $days := partial "days-between.html" (dict "newer" .Date "older" $prev.Date) -}}
                 {{- if ge $days 1 }}
-                  <div class="signal-gap"><span>{{ printf (i18n "silence_after" | default "After %d days of silence") $days }}</span></div>
+                  <div class="signal-gap"><span>{{ partial "count-i18n.html" (dict "key" "silence_after" "count" $days "fallback" "After %d days of silence") }}</span></div>
                 {{- end }}
               {{- end }}
               <div class="signal-links">

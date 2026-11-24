@@ -1,5 +1,8 @@
 skip_to_content = "Zum Inhalt springen"
 nav_label = "Hauptnavigation"
+nav_home = "Startseite"
+nav_archives = "Archiv"
+nav_tags = "Schlagwörter"
 theme_label = "Erscheinungsbild"
 theme_system = "System"
 theme_light = "Hell"
@@ -11,13 +14,13 @@ recent_records = "Neueste Einträge"
 read_entry = "Eintrag lesen"
 all_posts = "Alle Archive"
 empty_posts = "Noch keine Einträge vorhanden."
-entries_count = "%d Einträge"
-tags_count = "%d Schlagwörter"
-silence_days = "%d Tage Stille"
-silence_after = "Nach %d Tagen Stille"
+entries_count = { one = "1 Eintrag", other = "{{ .Count }} Einträge" }
+tags_count = { one = "1 Schlagwort", other = "{{ .Count }} Schlagwörter" }
+silence_days = { one = "1 Tag Stille", other = "{{ .Count }} Tage Stille" }
+silence_after = { one = "Nach 1 Tag Stille", other = "Nach {{ .Count }} Tagen Stille" }
 index_prefix = "INDEX"
-words_unit = "%d Wörter"
-read_time = "ca. %d Min."
+words_unit = { one = "1 Wort", other = "{{ .Count }} Wörter" }
+read_time = { one = "ca. 1 Min.", other = "ca. {{ .Count }} Min." }
 tags_label = "Schlagwörter"
 meta_date = "Aufgezeichnet"
 meta_length = "Umfang"
@@ -42,6 +45,7 @@ photo_caption_meta_dark = "FIG. 02 · EINZELNES LICHT IM ARCHIVBLOCK"
 home_plate_alt = "Endloses Protokollpapier stapelt sich unabgeholt unter einem Archivterminal, während ein Messingbriefbeschwerer im Nachmittagslicht ein halb korrigiertes Notizblatt hält."
 home_plate_alt_dark = "In einer dunklen Fassade autonom laufender Serverkammern leuchtet nur eine einzelne Nische warm auf – eine Schreibtischlampe über einem offenen Heft vor einem leeren Stuhl."
 archive_status_line = "ARCHIVE RUNNING · AUDIENCE: 0"
+last_entry_label = "LAST ENTRY"
 pagination_next = "Älter"
 article_toc = "Inhaltsverzeichnis"
 article_comments = "Kommentare"

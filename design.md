@@ -97,7 +97,7 @@
 
 - **站名字标**：Barlow Condensed 700，首屏默认 `clamp(2.75rem, 5vw, 4.5rem)`。通过 `<link rel="preload" as="font">` 预加载并设 `font-display: swap`，加载失败回退系统无衬线粗体；中文站名直接使用系统无衬线粗体。站名、代码与标识符标注 `translate="no"` 防止误译。
 - **标题与导航**：系统无衬线。文章主标题 `clamp(2rem, 3.8vw, 3.125rem)`，标题下方设 `36px × 2px` 强调色落笔短线；标题使用 `text-wrap: balance` 避免末行孤字，正文段落使用 `text-wrap: pretty`。
-- **人的正文**：中文优先系统宋体／明朝体并回退平台衬线，拉丁文用 Georgia，字号 `16–18px`，行高 `1.82`。标点遵循排版习惯（中文全角省略号 `……`，英文用 `…` 与弯引号 `“` `”`）。
+- **人的正文**：拉丁文优先自托管 `IBM Plex Serif`（Regular / Italic / SemiBold，回退 Georgia），中文优先系统宋体／明朝体并回退平台衬线；字号 `16–18px`，行高 `1.82`。标点遵循排版习惯（中文全角省略号 `……`，英文用 `…` 与弯引号 `“` `”`）。
 - **系统语言**：日期、归档序号、静默天数、字数与代码使用系统等宽字体，字号 `12–14px`，强制开启 `font-variant-numeric: tabular-nums`。
 - **间距体系**：采用 `8 / 16 / 24 / 32 / 48 / 64px` 阶梯，分组优先靠对齐与留白。
 - **界面图标与 Favicon**。Tabler 线框图标由 `layouts/_partials/icon.html` 输出，继承 `currentColor`，以 `1.75` 的描边显示。主导航使用文字与当前项方点。Favicon 沿用交接簿图形，支持亮暗配色。
@@ -165,7 +165,7 @@
 | `layouts/page.html` | 三轨文章页（系统轨档案牌 + 横向走纸进度线 + 正文 + 带引线旁注轨）、文章封面、带静默天数的上一篇／下一篇序列。 |
 | `layouts/_shortcodes/` | `note.html`（旁注留痕，桌面右轨联动／窄屏点击展开）、`redact.html`（涂改留痕）。 |
 | `layouts/section.html`、`taxonomy.html`、`term.html`、`404.html` | 带时间稀疏间距与端点刻度的归档页、标签总览、单标签列表与 404 状态页。 |
-| `assets/css/`、`assets/icons/`、`assets/js/`、`i18n/`、`static/` | 双模式 CSS 变量、材质工艺与动效样式、Tabler Outline SVG 图标、轻量外观切换／代码复制／旁注联动脚本、中英文文案、自托管 Barlow Condensed 字标字体与自适应亮暗 SVG favicon。 |
+| `assets/css/`、`assets/icons/`、`assets/js/`、`i18n/`、`static/` | 双模式 CSS 变量、材质工艺与动效样式、Tabler Outline SVG 图标、轻量外观切换／代码复制／旁注联动脚本、多语言文案、自托管 Barlow Condensed 字标与 IBM Plex Serif 正文字体、自适应亮暗 SVG favicon。 |
 
 - **内容约定**。默认读取 `mainSections`，兼容 `posts` 示例栏目。`params.home` 可设置 `showPlate`、`image`、`imageAlt` 与 `caption`。文章可设置 `cover`、`coverCaption`、`coverAlt`、`archiveId`。
 - **静态构建**。归档间隔、静默天数、阅读时长与归档序号在 Hugo 构建期算出。图标和默认首页 SVG 随模板内联。

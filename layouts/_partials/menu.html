@@ -19,12 +19,22 @@
           {{- $search = false }}
         {{- end }}
         {{- $ancestor := $page.HasMenuCurrent .Menu . }}
+        {{- $label := .Name -}}
+        {{- with .Params.i18n -}}
+          {{- $translated := i18n . -}}
+          {{- if $translated -}}
+            {{- $label = $translated -}}
+          {{- end -}}
+        {{- end -}}
+        {{- if not $label -}}
+          {{- $label = .Identifier | title -}}
+        {{- end -}}
         <li>
           <a href="{{ .URL }}"
             {{- if $active }} aria-current="page"
             {{- else if $ancestor }} aria-current="true"
             {{- end -}}
-          >{{- with .Params.icon }}{{ partial "icon.html" (dict "name" . "class" "ui-icon ui-icon--sm") }}{{ end }}<span>{{ .Name }}</span></a>
+          >{{- with .Params.icon }}{{ partial "icon.html" (dict "name" . "class" "ui-icon ui-icon--sm") }}{{ end }}<span>{{ $label }}</span></a>
         </li>
       {{- end }}
       {{- with $search }}

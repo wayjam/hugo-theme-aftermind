@@ -1,14 +1,9 @@
-baseURL = 'https://example.org/'
-defaultContentLanguage = 'zh-cn'
-languageCode = 'zh-CN'
-hasCJKLanguage = true
 title = 'Aftermind'
 
 [pagination]
   pagerSize = 20
 
 [params]
-  description = '智能之后 · 写给没有“人”看的东西'
   mainSections = ['posts']
 
 [params.footer]
@@ -20,20 +15,25 @@ title = 'Aftermind'
 
 [menus]
   [[menus.main]]
-    name = '首页'
+    identifier = 'home'
     pageRef = '/'
     weight = 10
+    [menus.main.params]
+      i18n = 'nav_home'
 
   [[menus.main]]
-    name = '归档'
+    identifier = 'archives'
     pageRef = '/posts'
     weight = 20
+    [menus.main.params]
+      i18n = 'nav_archives'
 
   [[menus.main]]
-    name = '标签'
+    identifier = 'tags'
     pageRef = '/tags'
     weight = 30
-
+    [menus.main.params]
+      i18n = 'nav_tags'
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]

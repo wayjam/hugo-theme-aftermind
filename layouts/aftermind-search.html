@@ -37,7 +37,7 @@
       {{- if gt $eligibleCount 0 }}
         <div class="page-head-meta" translate="no">
           <span class="status-dot" aria-hidden="true"></span>
-          <span>{{ printf (i18n "entries_count" | default "%d entries") $eligibleCount }}</span>
+          <span>{{ partial "count-i18n.html" (dict "key" "entries_count" "count" $eligibleCount "fallback" "%d entries") }}</span>
         </div>
       {{- end }}
     </header>

@@ -108,7 +108,7 @@
             {{- else if $caption }}
               <span>{{ $caption }}</span>
             {{- end }}
-            {{- with $lead }}<span class="home-photo-date" translate="no">LAST ENTRY <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "2006.01.02" }}</time></span>{{ end }}
+            {{- with $lead }}<span class="home-photo-date" translate="no">{{ i18n "last_entry_label" | default "LAST ENTRY" }} <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "2006.01.02" }}</time></span>{{ end }}
           </figcaption>
         {{- end }}
       </figure>
@@ -128,7 +128,7 @@
             <div class="entry-date-col">
               <time class="entry-date" datetime="{{ $p.Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ $p.Date.Format "2006-01-02" }}</time>
               {{- if ge $days 7 }}
-                <span class="entry-silence">{{ printf (i18n "silence_days" | default "%d days of silence") $days }}</span>
+                <span class="entry-silence">{{ partial "count-i18n.html" (dict "key" "silence_days" "count" $days "fallback" "%d days of silence") }}</span>
               {{- end }}
             </div>
             <div class="entry-body">

@@ -5,6 +5,7 @@
 <link rel="icon" href="{{ `favicon.svg` | relURL }}" type="image/svg+xml">
 <link rel="alternate icon" href="{{ `favicon.ico` | relURL }}" sizes="any">
 <link rel="preload" href="{{ `fonts/barlow-condensed-700.woff2` | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ `fonts/ibm-plex-serif-400.woff2` | relURL }}" as="font" type="font/woff2" crossorigin>
 {{- with .OutputFormats.Get "rss" }}
   {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
 {{- end }}

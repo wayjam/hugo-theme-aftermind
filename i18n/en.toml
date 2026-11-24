@@ -1,5 +1,8 @@
 skip_to_content = "Skip to content"
 nav_label = "Main navigation"
+nav_home = "Home"
+nav_archives = "Archives"
+nav_tags = "Tags"
 theme_label = "Theme"
 theme_system = "System"
 theme_light = "Light"
@@ -11,13 +14,13 @@ recent_records = "Recent Records"
 read_entry = "Read entry"
 all_posts = "All Archives"
 empty_posts = "No entries recorded yet."
-entries_count = "%d entries"
-tags_count = "%d tags"
-silence_days = "%d days of silence"
-silence_after = "After %d days of silence"
+entries_count = { one = "1 entry", other = "{{ .Count }} entries" }
+tags_count = { one = "1 tag", other = "{{ .Count }} tags" }
+silence_days = { one = "1 day of silence", other = "{{ .Count }} days of silence" }
+silence_after = { one = "After 1 day of silence", other = "After {{ .Count }} days of silence" }
 index_prefix = "INDEX"
-words_unit = "%d words"
-read_time = "%d min read"
+words_unit = { one = "1 word", other = "{{ .Count }} words" }
+read_time = { one = "1 min read", other = "{{ .Count }} min read" }
 tags_label = "Tags"
 meta_date = "Recorded"
 meta_length = "Length"
@@ -42,6 +45,7 @@ photo_caption_meta_dark = "FIG. 02 · SECTOR 04 · ALCOVE LIGHT STILL ON"
 home_plate_alt = "Continuous tractor-feed logs pile up uncollected beneath an archival terminal, while a brass paperweight holds down a half-redacted handwritten slip in the afternoon light."
 home_plate_alt_dark = "Across a dark facade of unattended server bays, a single recessed alcove glows with an amber desk lamp over an open book and an empty chair."
 archive_status_line = "ARCHIVE RUNNING · AUDIENCE: 0"
+last_entry_label = "LAST ENTRY"
 pagination_next = "Older"
 article_toc = "Contents"
 article_comments = "Comments"

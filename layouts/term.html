@@ -15,7 +15,7 @@
     {{- if gt (len .Pages) 0 }}
       <div class="page-head-meta" translate="no">
         <span class="status-dot" aria-hidden="true"></span>
-        <span>{{ printf (i18n "entries_count" | default "%d entries") (len .Pages) }}</span>
+        <span>{{ partial "count-i18n.html" (dict "key" "entries_count" "count" (len .Pages) "fallback" "%d entries") }}</span>
       </div>
     {{- end }}
   </header>
@@ -25,7 +25,7 @@
       <section class="archive-year-group" aria-labelledby="term-year-{{ .Key }}">
         <div class="archive-year-head">
           <h2 id="term-year-{{ .Key }}" class="archive-year">{{ .Key }}</h2>
-          <span class="archive-year-count">{{ printf (i18n "entries_count" | default "%d entries") (len .Pages) }}</span>
+          <span class="archive-year-count">{{ partial "count-i18n.html" (dict "key" "entries_count" "count" (len .Pages) "fallback" "%d entries") }}</span>
         </div>
         <ol class="archive-list">
           {{- $groupPages := .Pages -}}
@@ -42,7 +42,7 @@
                 {{- if ge $days 30 }}
                   <span class="archive-gap-tick">
                     <span class="archive-gap-line"></span>
-                    <span>{{ printf (i18n "silence_days" | default "%d days of silence") $days }}</span>
+                    <span>{{ partial "count-i18n.html" (dict "key" "silence_days" "count" $days "fallback" "%d days of silence") }}</span>
                   </span>
                 {{- end }}
               </li>
