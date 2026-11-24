@@ -1,82 +1,83 @@
 # Aftermind
 
-> 系统继续按时归档。工作被接管之后，人把没人读的文字留在这里。
+> The system still archives on schedule. After the work was taken over, people left unread words here.
 
-面向个人博客、随笔与技术札记的 Hugo 主题。围绕「停用交接档案里的人类余响」设计，以等宽系统记录与衬线人类正文的双声道并置呈现内容，无需 Hugo Extended 版或 Node.js 运行时。
+A minimalist, postmodern archival Hugo theme for personal blogs, essays, and technical notes. Built around the idea of *human echoes inside a decommissioned handover archive*, Aftermind juxtaposes tabular monospace system records with serif human prose — requiring neither Hugo Extended nor Node.js.
 
-## 特性
+English | [简体中文](README.zh-cn.md)
 
-- **可配置首页图面**。默认并排展示档案室 SVG、余影字标和首篇记录。支持自定义图片或 SVG，也可关闭图面。
-- **三轨文章页**：桌面端（`≥ 1200 px`）为左轨粘性系统档案牌（编号、日期、篇幅、标签、横向走纸进度线）+ 中轨受控行宽衬线正文 + 右轨带引线旁注；窄屏自动收束为单栏内联。
-- **时间稀疏归档**：归档页按年分组，构建期自动计算相邻文章间隔天数，映射为真实留白高度，并在 `≥ 30` 天静默处绘制垂直端点刻度线。
-- **双材质亮暗模式**：亮色交接纸与暗色档案室共用静态纸纹贴图，支持三段式外观切换（`自动 / 亮 / 暗`，含键盘方向键与防闪色内联脚本）。
-- **零外部依赖图标与 Favicon**：内联打包 Tabler Icons Outline SVG（`layouts/_partials/icon.html`），并附自适应亮暗模式的交接簿 SVG favicon 与 `.ico` 回退。
-- **原生 CSS 动效与无障碍**：支持原生跨页视图过渡（`@view-transition`）、滚动驱动进度线（`animation-timeline: scroll(root)`）、`prefers-reduced-motion` 完整降级与多语言 `i18n`（简体中文、繁体中文、英文、日文、德语）。
+## Features
 
-## 环境要求
+- **Configurable Homepage Plate**: Pairs theme-aware archival SVG illustrations (*Uncollected Telemetry Feed* in light mode, *Alcove Light Still On* in dark mode) with an afterimage wordmark and the latest record. Supports custom images/SVGs (`10:7`) or text-only layout (`showPlate = false`).
+- **Three-Track Article Layout**: On desktop (`≥ 1200 px`), a sticky left system rail (archive ID, date, length, tags, TOC, scroll-driven paper ruler), a controlled-measure (`66ch`) serif column, and a right rail for margin notes with hairline leaders; collapses cleanly on narrower screens.
+- **Time-Sparse Archives**: Groups entries by year and computes calendar days between consecutive posts at build time, turning silence into proportional vertical spacing and marking gaps `≥ 30` days with vertical tick lines.
+- **Dual-Surface Light & Dark Modes**: Faded handover paper (`#E9E6DD`) and slate darkroom (`#24232B`) share a static paper-grain texture, controlled by a three-state segmented switch (`Auto / Light / Dark`) with keyboard navigation, anti-flash inline init, and optical light-switch transition.
+- **Zero-Dependency Icons & Adaptive Favicon**: Inline Tabler Icons Outline SVGs (`layouts/_partials/icon.html`) plus a theme-adaptive handover ledger SVG favicon with `.ico` fallback.
+- **Built-in Client Search**: Ships with zero-build JSON metadata search (`provider = 'json'`), optional full-text Pagefind integration (`provider = 'pagefind'`), or `'none'`.
+- **Native CSS Motion & i18n**: Supports `@view-transition`, scroll-driven progress rules, full `prefers-reduced-motion` support, and 6 built-in locales (`en`, `zh-cn`, `zh-tw`, `zh-hant`, `ja`, `de`).
 
-- **Hugo `>= 0.146.0`**（标准版即可，无需 Extended 版或 Node.js）。
+## Requirements
 
-## 本地开发与示例预览
+- **Hugo `>= 0.146.0`** (standard edition is sufficient; Hugo Extended and Node.js are not required).
 
-在主题根目录运行示例站点（`exampleSite/`）：
+## Quick Preview (`exampleSite`)
+
+Run the bundled example site from the theme root:
 
 ```sh
 ./run_example.sh
 ```
 
-或手动执行：
+Or manually:
 
 ```sh
 hugo server --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --disableFastRender
 ```
 
-生产构建示例站点：
+Production build:
 
 ```sh
 hugo --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --minify --cleanDestinationDir
 ```
 
-构建结果位于 `exampleSite/public/`。完整示例配置见 [exampleSite/hugo.toml](exampleSite/hugo.toml)。
+Output goes to `exampleSite/public/`. See [exampleSite/hugo.toml](exampleSite/hugo.toml) for a complete reference configuration.
 
-示例站的归档每页显示 5 篇文章，打开 `/posts/` 即可体验翻页。示例文章涵盖中文随笔、英文长读、Markdown、KaTeX、Mermaid、富文本和代码高亮。
+## Installation & Configuration
 
-## 在站点中使用
-
-将本目录放到站点的 `themes/hugo-theme-aftermind/`，并在站点 `hugo.toml` 中配置：
+Place this repository at `themes/hugo-theme-aftermind/` (or add it as a Git submodule / Hugo Module), then configure your site `hugo.toml`:
 
 ```toml
 theme = 'hugo-theme-aftermind'
-defaultContentLanguage = 'zh-cn' # 支持 'zh-cn' / 'zh-tw' (或 'zh-hant') / 'en' / 'ja' / 'de'
-hasCJKLanguage = true
+defaultContentLanguage = 'en' # Supports 'en' / 'zh-cn' / 'zh-tw' / 'zh-hant' / 'ja' / 'de'
+hasCJKLanguage = false
 title = 'Aftermind'
 
 [pagination]
-  pagerSize = 20 # 归档与标签页每页条数
+  pagerSize = 20
 
 [params]
-  description = '智能之后 · 写给没有“人”看的东西'
+  description = 'Aftermind · Notes written for nobody in particular'
   mainSections = ['posts']
 
 [params.home]
-  subtitle = '智能之后 · 写给没有“人”看的东西' # 首页副标题（默认回退到 description，设为空字符串可隐藏）
+  subtitle = 'Aftermind · Notes written for nobody in particular'
 
 [params.footer]
-  text = '© 2026 Aftermind · 仅保留文字与时间' # 省略时使用多语言默认文案，留空可隐藏
-  github = 'https://github.com/wayjam/hugo-theme-aftermind' # 可选：页脚 GitHub 链接
-  showThemeCredit = true                           # 是否显示 Hugo · Aftermind 署名
+  text = '© 2026 Aftermind · Text and time only'
+  github = 'https://github.com/wayjam/hugo-theme-aftermind'
+  showThemeCredit = true
 
 [menus]
   [[menus.main]]
-    name = '首页'
+    name = 'Home'
     pageRef = '/'
     weight = 10
   [[menus.main]]
-    name = '归档'
+    name = 'Archives'
     pageRef = '/posts'
     weight = 20
   [[menus.main]]
-    name = '标签'
+    name = 'Tags'
     pageRef = '/tags'
     weight = 30
 
@@ -86,71 +87,61 @@ title = 'Aftermind'
   guessSyntax = true
 ```
 
-完整的示例站点与演示文章见 `exampleSite/` 目录。
+Menu items can reference any SVG icon name from `assets/icons/` via `params.icon` (without `.svg`), and theme-default menus also support `params.i18n` for automatic locale matching.
 
-菜单项可通过 `params.icon` 引用 `assets/icons/` 中的 SVG 文件名，无需填写 `.svg` 后缀；主题默认根配置亦支持通过 `params.i18n` 为内置菜单项自动匹配当前站点语言。
+## Homepage Plate
 
-## 首页图面
-
-默认随外观切换两幅内置 SVG 版画：亮色为「无人认领的走纸」，暗色为「阵列中的孤窗」。设置 `showPlate = false` 会隐藏图面。此时 `768px` 及以上视口左侧是站名字标，右侧是首篇文章，手机端按阅读顺序上下排列。
+By default, the homepage displays the built-in theme-aware SVG plate (`10:7`). Set `showPlate = false` to hide it and show the wordmark beside the latest entry on `≥ 768px` screens.
 
 ```toml
 [params.home]
   showPlate = true
-  image = 'images/archive.svg'
-  imageAlt = '描述图中的主要内容'
-  caption = '档案图注' # 可选
+  image = 'images/archive.svg' # Optional custom image/SVG (assets/images/, static/images/, or HTTPS URL)
+  imageAlt = 'Description of the plate'
+  caption = 'Archive plate caption' # Optional
 ```
 
-`image` 留空时使用内置图。自定义图片可放在站点的 `assets/images/` 或 `static/images/` 下，配置填 `images/文件名`，也可以使用完整的 HTTPS 图片地址。支持浏览器可显示的 WebP、JPEG、PNG、SVG 等格式。
+Recommended aspect ratio is **10:7** (`1440 × 1008 px` for rasters or `viewBox="0 0 720 504"` for SVGs).
 
-推荐图面比例为 **10∶7**，位图可导出为 **1440 × 1008 px**，SVG 可使用 `viewBox="0 0 720 504"`。其他比例会在画框内等比缩放，较短的一边会留白。自定义 SVG 作为独立图片加载，配色由 SVG 文件自身控制。信息性图片请填写 `imageAlt`，纯装饰图片可设为空字符串。已有的 `params.homeImageAlt` 也可继续用作替代文本。
+## Social Metadata
 
-## 分享预览
-
-主题输出 canonical、Open Graph 和 Twitter Card 元数据。文章的 `cover` 优先用作分享图。可在站点配置中设置通用图片及替代文字：
+Aftermind outputs canonical, Open Graph, and Twitter Card tags. An article's `cover` image takes precedence; site-wide fallback defaults can be set with:
 
 ```toml
 [params]
   socialImage = 'images/share.jpg'
-  socialImageAlt = 'Aftermind 档案封面'
+  socialImageAlt = 'Aftermind archive cover'
 ```
 
-`socialImage` 可以指向 `assets/` 或 `static/` 下的站点相对路径，也可以填写完整的 HTTPS 地址。
+## Search
 
-## 站内搜索
-
-主题默认提供搜索入口。Hugo 在构建时生成当前语言的文章索引，可搜索标题、摘要、标签和归档编号。可在文章 Front Matter 中设置 `searchHidden = true` 或 `search = false`，将该文章从两种索引中排除。
+Search is enabled by default via a build-time JSON index (`title`, `summary`, `tags`, `archiveId`). Exclude individual entries by setting `searchHidden = true` or `search = false` in front matter.
 
 ```toml
 [params.search]
-  provider = 'json' # 'pagefind' 为正文检索，'none' 为关闭搜索
+  provider = 'json' # 'json' | 'pagefind' | 'none'
 ```
 
-使用 Pagefind 时，搜索还会匹配正文并显示命中片段。在 Hugo **构建完成后**生成索引，并将生成的 `pagefind/` 随站点一起发布：
+When using `'pagefind'`, index the built output **after** running Hugo:
 
 ```sh
 hugo --minify
 npx --yes pagefind@1.6.0 --site public --root-selector 'html[data-aftermind-pagefind]'
 ```
 
-可以用 Pagefind 命令行二进制替代 `npx`。中文正文检索请使用 Pagefind Extended 版，`npx` 默认使用该版本。未生成 Pagefind 索引时，搜索页会提示，并继续支持标题、摘要、标签和编号查询。普通 `hugo server` 可直接预览 JSON 模式，全文搜索需预览生成后的静态站点。
+## Images, Math & Diagrams
 
-## 图片、公式与图表
-
-文章封面和正文中未加链接的图片可用键盘或鼠标打开大图。已链接到其他地址的图片保留作者指定的跳转。
-
-在文章 Front Matter 中独立启用公式和图表：
+Unlinked cover and body images open in an accessible `<dialog>` lightbox. Enable math or diagrams per article in front matter:
 
 ```toml
 math = true
 diagrams = true
 ```
 
-- **公式**：行内使用 `\(a_b + c_d\)`，块级使用 `\[ ... \]` 或 `$$ ... $$`。
-- **图表**：使用标为 `mermaid` 的 Markdown 代码围栏。渲染失败会保留源码。
+- **Math**: Inline `\(a_b + c_d\)`, block `\[ ... \]` or `$$ ... $$` (loads pinned KaTeX from jsDelivr when enabled).
+- **Diagrams**: Fenced `mermaid` code blocks (loads pinned Mermaid from jsDelivr when enabled; falls back to source if rendering fails).
 
-启用后，页面分别从 jsDelivr 加载固定版本的 KaTeX 和 Mermaid。将 Aftermind 安装为主题时，请在**站点**的 `hugo.toml` 中加入以下 Goldmark 配置，让 Hugo 保留行内与块级 TeX 定界符：
+Add Goldmark passthrough delimiters to your site `hugo.toml` when using TeX math:
 
 ```toml
 [markup.goldmark.extensions.passthrough]
@@ -160,57 +151,45 @@ diagrams = true
     inline = [['\(', '\)']]
 ```
 
-## 短代码与文章字段
+## Shortcodes & Front Matter
 
-### 旁注留痕 `note`
+- **Margin Note (`note`)**: Floats to the right rail on `≥ 1200px` screens with bidirectional hover/focus highlights; toggles inline on narrower screens and remains readable without JS:
+  ```markdown
+  The corridor chime still rang twice.{{</* note */>}}The schedule had not been edited since last October.{{</* /note */>}}
+  ```
+- **Redaction (`redact`)**: Keeps the struck-through original beside the revision:
+  ```markdown
+  Confirmed I {{</* redact "finished something meaningful" "sat at the desk for four hours" */>}} today.
+  ```
+- **Optional Front Matter**: `archiveId`, `cover`, `coverAlt`, `coverCaption`, `toc = false`, `comments = false`.
 
-宽屏自动浮于正文右轨并与正文编号双向联动，窄屏点击编号展开，无 JS 时直接内联显示：
+## Third-Party Comments
 
-```markdown
-走廊尽头的广播照旧响了两遍。{{</* note */>}}后来查了排程表，那段录音从去年十月起就没人改过。{{</* /note */>}}
-```
+Comments are disabled by default. To integrate a provider, enable `params.comments.enabled = true` and place your snippet in `layouts/_partials/comments/provider.html` in your site.
 
-### 涂改留痕 `redact`
+## Repository Structure
 
-保留删除线原文并在旁侧给出更正：
+- `archetypes/`: Front matter archetypes.
+- `assets/css/`, `assets/js/`: Stylesheets and lightweight scripts processed by Hugo Pipes.
+- `assets/icons/`: Bundled Tabler Icons Outline SVGs rendered via `layouts/_partials/icon.html`.
+- `content/search/`: Content adapter (`_content.gotmpl`) that mounts `/search/` automatically.
+- `exampleSite/`: Complete demo site and showcase posts.
+- `i18n/`: Locale files (`en.toml`, `zh-cn.toml`, `zh-tw.toml`, `zh-hant.toml`, `ja.toml`, `de.toml`).
+- `layouts/`: Theme templates, partials, shortcodes, and Mermaid render hook.
+- `static/`: Self-hosted `Barlow Condensed` & `IBM Plex Serif` WOFF2 fonts, `paper-grain.png`, and adaptive SVG/ICO favicons.
 
-```markdown
-确认今天确实{{</* redact "做完了点什么" "在这里待过几个小时" */>}}。
-```
+For the full visual specification, see [design.md](design.md).
 
-### 可选 Front Matter 字段
+## Third-Party Assets & Licenses
 
-- `archiveId`：自定义归档编号（如 `"#014"`）；不填时按发布顺序自动生成 `#001`、`#002`…
-- `cover` / `coverAlt` / `coverCaption`：Page Bundle 内的文章封面图片路径、替代文本与图注。
-- `toc = false` 可关闭单篇文章的目录。目录至少有两个条目时默认显示。宽屏置于左侧档案栏，窄屏在正文前折叠，右侧箭头随展开状态转向。
-- `comments = false`：站点启用评论后，为单篇关闭评论。
+- **Fonts** (`static/fonts/`):
+  - [Barlow Condensed](https://github.com/jpt/barlow) (700) — SIL Open Font License 1.1 (`OFL-1.1`).
+  - [IBM Plex Serif](https://github.com/IBM/plex) (400, 400 Italic, 600) — SIL Open Font License 1.1 (`OFL-1.1`).
+- **Icons** (`assets/icons/`):
+  - [Tabler Icons](https://github.com/tabler/tabler-icons) — MIT License.
+- **Optional On-Demand Libraries**:
+  - [KaTeX](https://katex.org/) & [Mermaid](https://mermaid.js.org/) (loaded from jsDelivr only on pages with `math = true` / `diagrams = true`) — MIT License.
 
-支持灯箱的封面和独立配图右下角会显示放大镜，点击图片即可查看大图。
-
-## 第三方评论
-
-评论默认关闭。要接入评论系统，在站点配置中启用评论，并在**站点**的 `layouts/_partials/comments/provider.html` 放入服务商提供的嵌入代码：
-
-```toml
-[params.comments]
-  enabled = true
-```
-
-主题在 `mainSections` 中的文章底部调用该 partial，参数为当前文章，可通过 `{{ .Permalink }}` 取得文章地址，也可通过 `{{ site.Params.comments }}` 读取服务专用配置。移除 partial 或关闭开关即可停用。供应商的站点标识、页面映射和亮暗模式同步均可在该 partial 中配置。
-
-## 目录约定
-
-- `archetypes/`：新内容的 front matter 模板。
-- `assets/css/`、`assets/js/`：通过 Hugo Pipes 处理的样式与轻量交互脚本。
-- `assets/icons/`：随主题打包的 Tabler Outline SVG 图标（由 `layouts/_partials/icon.html` 输出）。
-- `content/search/`：主题内置的搜索页内容适配器（`_content.gotmpl`），建站时自动挂载，无需手动创建搜索页。
-- `exampleSite/`：完整的示例站点配置、独立页面与演示文章（运行 `./run_example.sh` 即可预览）。
-- `i18n/`：多语言界面文案（`zh-cn.toml`、`zh-tw.toml`、`zh-hant.toml`、`en.toml`、`ja.toml`、`de.toml`）。
-- `layouts/`：现行 Hugo 模板结构（`baseof.html`、`home.html`、`page.html`、`section.html`、`taxonomy.html`、`term.html`、`404.html`、`_partials/`、`_shortcodes/`）。
-- `static/`：自托管字标字体与自适应亮暗 SVG/ICO favicon。
-
-详细设计规范见 [design.md](design.md)。
-
-## 开源协议
+## License
 
 [MIT License](LICENSE) © 2026 WayJam So
