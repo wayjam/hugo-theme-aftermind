@@ -14,7 +14,7 @@
 - **双材质亮暗模式**：亮色交接纸与暗色档案室共用静态纸纹贴图，支持三段式外观切换（`自动 / 亮 / 暗`，含键盘方向键与防闪色内联脚本）。
 - **零外部依赖图标与 Favicon**：内联打包 Tabler Icons Outline SVG（`layouts/_partials/icon.html`），并附自适应亮暗模式的交接簿 SVG favicon 与 `.ico` 回退。
 - **内置站内搜索**：默认零构建 JSON 索引检索（`provider = 'json'`），可选 Pagefind 全文检索（`provider = 'pagefind'`）或 `'none'`。
-- **原生 CSS 动效与无障碍**：支持原生跨页视图过渡（`@view-transition`）、滚动驱动进度线（`animation-timeline: scroll(root)`）、`prefers-reduced-motion` 完整降级与多语言 `i18n`（简体中文、繁体中文、英文、日文、德语）。
+- **原生 CSS 动效、多语言与无障碍**：支持原生跨页视图过渡（`@view-transition`）、滚动驱动进度线（`animation-timeline: scroll(root)`）、`prefers-reduced-motion` 完整降级、多语言站点页脚语言切换与 `hreflang` 输出，内置 6 套界面语言（`en`、`zh-cn`、`zh-tw`、`zh-hant`、`ja`、`de`）。
 
 ## 环境要求
 
@@ -40,9 +40,7 @@ hugo server --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. 
 hugo --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --minify --cleanDestinationDir
 ```
 
-构建结果位于 `exampleSite/public/`。完整示例配置见 [exampleSite/hugo.toml](exampleSite/hugo.toml)。
-
-示例站的归档每页显示 5 篇文章，打开 `/posts/` 即可体验翻页。示例文章涵盖中文随笔、英文长读、Markdown、KaTeX、Mermaid、富文本和代码高亮。
+示例站已配置为中英双语（`en` + `zh-cn`）演示站，归档每页显示 5 篇文章，打开 `/posts/` 即可体验翻页。示例文章涵盖中英双语随笔、Markdown、KaTeX、Mermaid、富文本与代码高亮。
 
 ## 在站点中使用
 
@@ -207,7 +205,7 @@ diagrams = true
 - `assets/css/`、`assets/js/`：通过 Hugo Pipes 处理的样式与轻量交互脚本。
 - `assets/icons/`：随主题打包的 Tabler Outline SVG 图标（由 `layouts/_partials/icon.html` 输出）。
 - `content/search/`：主题内置的搜索页内容适配器（`_content.gotmpl`），建站时自动挂载，无需手动创建搜索页。
-- `exampleSite/`：完整的示例站点配置、独立页面与演示文章（运行 `./run_example.sh` 即可预览）。
+- `exampleSite/`：中英双语（`en` + `zh-cn`）示例站点配置、独立页面与演示文章（运行 `./run_example.sh` 即可预览）。
 - `i18n/`：多语言界面文案（`zh-cn.toml`、`zh-tw.toml`、`zh-hant.toml`、`en.toml`、`ja.toml`、`de.toml`）。
 - `layouts/`：现行 Hugo 模板结构（`baseof.html`、`home.html`、`page.html`、`section.html`、`taxonomy.html`、`term.html`、`404.html`、`_partials/`、`_shortcodes/`）。
 - `static/`：自托管 `Barlow Condensed` 与 `IBM Plex Serif` 字体、`paper-grain.png` 纸纹贴图以及自适应亮暗 SVG/ICO favicon。
@@ -215,7 +213,6 @@ diagrams = true
 详细设计规范见 [design.md](design.md)。
 
 ## 第三方资源与开源许可
-
 - **自托管字体**（`static/fonts/`）：
   - [Barlow Condensed](https://github.com/jpt/barlow)（700）— SIL Open Font License 1.1（`OFL-1.1`）。
   - [IBM Plex Serif](https://github.com/IBM/plex)（400、400 Italic、600）— SIL Open Font License 1.1（`OFL-1.1`）。

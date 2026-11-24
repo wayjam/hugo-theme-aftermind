@@ -23,6 +23,30 @@
     {{- end }}
   </div>
   <div class="site-footer-links">
+    {{- if hugo.IsMultilingual }}
+      <nav class="footer-lang-switch" aria-label="{{ i18n `lang_label` | default `Languages` }}" translate="no">
+        {{- $page := . -}}
+        {{- range hugo.Sites }}
+          {{- $lang := .Language -}}
+          {{- $target := $lang.Lang | relLangURL -}}
+          {{- if eq $lang.Lang site.Language.Lang -}}
+            {{- $target = $page.RelPermalink -}}
+          {{- else -}}
+            {{- range $page.Translations -}}
+              {{- if eq .Lang $lang.Lang -}}
+                {{- $target = .RelPermalink -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+          <a class="footer-lang-link{{ if eq $lang.Lang site.Language.Lang }} is-active{{ end }}"
+             href="{{ $target }}"
+             lang="{{ or $lang.LanguageCode $lang.Lang }}"
+             hreflang="{{ or $lang.LanguageCode $lang.Lang }}"
+             {{- if eq $lang.Lang site.Language.Lang }} aria-current="page"{{ end -}}
+          >{{ or $lang.LanguageName $lang.Lang }}</a>
+        {{- end }}
+      </nav>
+    {{- end }}
     {{- with $footer.github }}
       <a class="footer-icon-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "icon.html" (dict "name" "brand-github" "class" "ui-icon ui-icon--sm") }}<span translate="no">GitHub</span></a>
     {{- end }}

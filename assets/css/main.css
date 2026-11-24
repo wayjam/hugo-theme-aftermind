@@ -2129,6 +2129,21 @@ a:hover {
   color: var(--accent);
 }
 
+.footer-lang-switch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem var(--s-2);
+  padding-inline-end: var(--s-1);
+}
+
+.footer-lang-link.is-active {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.28em;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

@@ -9,6 +9,11 @@
 {{- with .OutputFormats.Get "rss" }}
   {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
 {{- end }}
+{{- if .IsTranslated }}
+  {{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ or .Language.LanguageCode .Lang }}" href="{{ .Permalink }}">
+  {{- end }}
+{{- end }}
 <script>
 (function(){
   var r = document.documentElement;

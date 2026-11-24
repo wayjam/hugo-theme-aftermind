@@ -70,3 +70,4 @@ search_requires_js = "検索には JavaScript が必要です。アーカイブ�
 search_results = "検索結果"
 search_more = "さらに結果を表示"
 back_to_top = "先頭へ"
+lang_label = "言語"

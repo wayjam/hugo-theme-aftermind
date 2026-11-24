@@ -70,3 +70,4 @@ search_requires_js = "Für die Suche ist JavaScript erforderlich. Das Archiv lä
 search_results = "Suchergebnisse"
 search_more = "Weitere Ergebnisse anzeigen"
 back_to_top = "Nach oben"
+lang_label = "Sprache"

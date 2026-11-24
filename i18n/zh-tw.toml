@@ -70,3 +70,4 @@ search_requires_js = "搜尋功能需要 JavaScript。您也可以直接瀏覽�
 search_results = "搜尋結果"
 search_more = "顯示更多結果"
 back_to_top = "返回頂部"
+lang_label = "語言"

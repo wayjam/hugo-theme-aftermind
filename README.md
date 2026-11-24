@@ -14,7 +14,7 @@ English | [简体中文](README.zh-cn.md)
 - **Dual-Surface Light & Dark Modes**: Faded handover paper (`#E9E6DD`) and slate darkroom (`#24232B`) share a static paper-grain texture, controlled by a three-state segmented switch (`Auto / Light / Dark`) with keyboard navigation, anti-flash inline init, and optical light-switch transition.
 - **Zero-Dependency Icons & Adaptive Favicon**: Inline Tabler Icons Outline SVGs (`layouts/_partials/icon.html`) plus a theme-adaptive handover ledger SVG favicon with `.ico` fallback.
 - **Built-in Client Search**: Ships with zero-build JSON metadata search (`provider = 'json'`), optional full-text Pagefind integration (`provider = 'pagefind'`), or `'none'`.
-- **Native CSS Motion & i18n**: Supports `@view-transition`, scroll-driven progress rules, full `prefers-reduced-motion` support, and 6 built-in locales (`en`, `zh-cn`, `zh-tw`, `zh-hant`, `ja`, `de`).
+- **Native CSS Motion, Multilingual & i18n**: Supports `@view-transition`, scroll-driven progress rules, full `prefers-reduced-motion` support, automatic footer language links & `hreflang` tags on multilingual sites, and 6 built-in locales (`en`, `zh-cn`, `zh-tw`, `zh-hant`, `ja`, `de`).
 
 ## Requirements
 
@@ -40,7 +40,7 @@ Production build:
 hugo --source exampleSite --theme hugo-theme-aftermind --themesDir ../.. --minify --cleanDestinationDir
 ```
 
-Output goes to `exampleSite/public/`. See [exampleSite/hugo.toml](exampleSite/hugo.toml) for a complete reference configuration.
+Output goes to `exampleSite/public/`. The example site is configured as a bilingual (`en` + `zh-cn`) showcase; see [exampleSite/hugo.toml](exampleSite/hugo.toml) for a complete reference configuration.
 
 ## Installation & Configuration
 
@@ -173,7 +173,7 @@ Comments are disabled by default. To integrate a provider, enable `params.commen
 - `assets/css/`, `assets/js/`: Stylesheets and lightweight scripts processed by Hugo Pipes.
 - `assets/icons/`: Bundled Tabler Icons Outline SVGs rendered via `layouts/_partials/icon.html`.
 - `content/search/`: Content adapter (`_content.gotmpl`) that mounts `/search/` automatically.
-- `exampleSite/`: Complete demo site and showcase posts.
+- `exampleSite/`: Bilingual (`en` + `zh-cn`) demo site and showcase posts.
 - `i18n/`: Locale files (`en.toml`, `zh-cn.toml`, `zh-tw.toml`, `zh-hant.toml`, `ja.toml`, `de.toml`).
 - `layouts/`: Theme templates, partials, shortcodes, and Mermaid render hook.
 - `static/`: Self-hosted `Barlow Condensed` & `IBM Plex Serif` WOFF2 fonts, `paper-grain.png`, and adaptive SVG/ICO favicons.
@@ -181,7 +181,6 @@ Comments are disabled by default. To integrate a provider, enable `params.commen
 For the full visual specification, see [design.md](design.md).
 
 ## Third-Party Assets & Licenses
-
 - **Fonts** (`static/fonts/`):
   - [Barlow Condensed](https://github.com/jpt/barlow) (700) — SIL Open Font License 1.1 (`OFL-1.1`).
   - [IBM Plex Serif](https://github.com/IBM/plex) (400, 400 Italic, 600) — SIL Open Font License 1.1 (`OFL-1.1`).
