@@ -4,7 +4,7 @@
 
 A minimalist, postmodern archival Hugo theme for personal blogs, essays, and technical notes. Built around the idea of *human echoes inside a decommissioned handover archive*, Aftermind juxtaposes tabular monospace system records with serif human prose — requiring neither Hugo Extended nor Node.js.
 
-English | [简体中文](README.zh-cn.md)
+English | [简体中文](README.zh-cn.md) · [Live Demo](https://wayjam.github.io/hugo-theme-aftermind/)
 
 ## Features
 

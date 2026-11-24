@@ -4,7 +4,7 @@
 
 面向个人博客、随笔与技术札记的 Hugo 主题。围绕「停用交接档案里的人类余响」设计，以等宽系统记录与衬线人类正文的双声道并置呈现内容，无需 Hugo Extended 版或 Node.js 运行时。
 
-[English](README.md) | 简体中文
+[English](README.md) | 简体中文 · [在线预览](https://wayjam.github.io/hugo-theme-aftermind/)
 
 ## 特性
 
