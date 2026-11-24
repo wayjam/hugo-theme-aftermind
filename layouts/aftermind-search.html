@@ -5,6 +5,13 @@
   {{- if $pagefind -}}
     {{- $hint = i18n "search_pagefind_hint" | default "Search titles, article text, summaries, tags, or archive IDs." -}}
   {{- end -}}
+  {{- $sections := site.Params.mainSections | default (slice "posts") -}}
+  {{- $eligibleCount := 0 -}}
+  {{- range (where site.RegularPages "Section" "in" $sections) -}}
+    {{- if partial "search/eligible.html" . -}}
+      {{- $eligibleCount = add $eligibleCount 1 -}}
+    {{- end -}}
+  {{- end -}}
   {{- $index := partial "search/index.html" . -}}
   {{- $stylesheet := resources.Get "css/search.css" -}}
   {{- $script := resources.Get "js/search.js" -}}
@@ -24,30 +31,58 @@
     data-result-count="{{ i18n `search_result_count` | default `{count} shown` }}"
     data-pagefind-fallback="{{ i18n `search_pagefind_fallback` | default `Full-text search is unavailable. You can still search titles, summaries, tags, and archive IDs.` }}">
     <header class="page-head">
-      <h1>{{ i18n "search_title" | default .Title }}</h1>
+      <div class="page-head-main">
+        <h1>{{ i18n "search_title" | default .Title }}</h1>
+      </div>
+      {{- if gt $eligibleCount 0 }}
+        <div class="page-head-meta" translate="no">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>{{ printf (i18n "entries_count" | default "%d entries") $eligibleCount }}</span>
+        </div>
+      {{- end }}
     </header>
     <div class="search-body">
       <form class="search-form" role="search" action="{{ .RelPermalink }}" method="get" hidden>
-        <label for="search-query">{{ i18n "search_query" | default "Search the archives" }}</label>
+        <label class="search-label" for="search-query">{{ i18n "search_query" | default "Search the archives" }}</label>
         <div class="search-controls">
-          <input id="search-query" name="q" type="search" aria-describedby="search-hint" autocomplete="off">
-          <button type="submit">{{ partial "icon.html" (dict "name" "search" "class" "ui-icon ui-icon--sm") }}<span>{{ i18n "search_title" | default .Title }}</span></button>
+          <div class="search-field">
+            {{ partial "icon.html" (dict "name" "search" "class" "ui-icon ui-icon--sm search-field-icon") }}
+            <input id="search-query" name="q" type="search" placeholder="#001…" aria-describedby="search-hint" autocomplete="off" spellcheck="false">
+          </div>
+          <button class="search-submit" type="submit">
+            <span>{{ i18n "search_title" | default .Title }}</span>
+          </button>
         </div>
         <p class="search-hint" id="search-hint">{{ $hint }}</p>
       </form>
-      <p class="search-status" data-search-unavailable>{{ i18n "search_requires_js" | default "Search requires JavaScript. You can still browse the archives." }}</p>
-      <p class="search-status" data-search-notice role="status" hidden></p>
+      <p class="search-notice" data-search-unavailable>{{ i18n "search_requires_js" | default "Search requires JavaScript. You can still browse the archives." }}</p>
+      <p class="search-notice" data-search-notice role="status" hidden></p>
       <p class="search-status" data-search-status role="status"></p>
       <ol class="search-results" aria-label="{{ i18n `search_results` | default `Search results` }}"></ol>
-      <button class="search-more" type="button" hidden>{{ i18n "search_more" | default "Show more results" }}</button>
+      <div class="search-more-wrap">
+        <button class="search-more" type="button" hidden>
+          <span>{{ i18n "search_more" | default "Show more results" }}</span>
+          {{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}
+        </button>
+      </div>
       {{- $browse := site.Home -}}
-      {{- range site.Params.mainSections | default (slice "posts") -}}
+      {{- range $sections -}}
         {{- with site.GetPage . -}}
           {{- $browse = . -}}
           {{- break -}}
         {{- end -}}
       {{- end }}
-      <p class="search-browse"><a href="{{ $browse.RelPermalink }}">{{ if $browse.IsHome }}{{ i18n "back_home" | default "Return Home" }}{{ else }}{{ i18n "all_posts" | default "Browse archives" }}{{ end }}</a></p>
+      <div class="search-browse">
+        <a class="search-browse-link" href="{{ $browse.RelPermalink }}">
+          {{- if $browse.IsHome }}
+            {{ partial "icon.html" (dict "name" "arrow-left" "class" "ui-icon ui-icon--sm") }}
+            <span>{{ i18n "back_home" | default "Return Home" }}</span>
+          {{- else }}
+            <span>{{ i18n "all_posts" | default "Browse archives" }}</span>
+            {{ partial "icon.html" (dict "name" "arrow-right" "class" "ui-icon ui-icon--sm") }}
+          {{- end }}
+        </a>
+      </div>
     </div>
   </div>
 {{ end }}

@@ -10,7 +10,7 @@ const { indexUrl, pagefindUrl, loading, empty, noEntries, error, resultCount, pa
 let catalog;
 let pagefind;
 let current;
-
+let debounceTimer = 0;
 function normalize(value) {
   return value.normalize("NFKC").toLowerCase().trim();
 }
@@ -111,29 +111,25 @@ async function* searchResults(state, entries, query) {
 function resultRow(record) {
   const row = document.createElement("li");
   row.className = "search-result";
-  const head = document.createElement("div");
-  head.className = "search-result-head";
+
+  const dateCol = document.createElement("div");
+  dateCol.className = "search-result-date-col";
+  dateCol.translate = false;
+  const date = document.createElement("time");
+  date.className = "search-result-date";
+  date.dateTime = record.date;
+  date.textContent = record.date;
+  dateCol.append(date);
+
+  const body = document.createElement("div");
+  body.className = "search-result-body";
   const title = document.createElement("h2");
   title.className = "search-result-title";
   const link = document.createElement("a");
   link.href = record.url;
   link.textContent = record.title;
   title.append(link);
-
-  const meta = document.createElement("div");
-  meta.className = "search-result-meta";
-  meta.translate = false;
-  const date = document.createElement("time");
-  date.dateTime = record.date;
-  date.textContent = record.date;
-  meta.append(date);
-  if (record.archiveId) {
-    const id = document.createElement("span");
-    id.textContent = record.archiveId;
-    meta.append(id);
-  }
-  head.append(title, meta);
-  row.append(head);
+  body.append(title);
 
   if (record.excerpt || record.summary) {
     const summary = document.createElement("p");
@@ -144,60 +140,98 @@ function resultRow(record) {
     } else {
       summary.textContent = record.summary;
     }
-    row.append(summary);
+    body.append(summary);
   }
+
   if (record.tags.length) {
     const tags = document.createElement("p");
     tags.className = "search-result-tags";
-    tags.textContent = record.tags.join(" · ");
-    row.append(tags);
+    record.tags.forEach((tag, idx) => {
+      if (idx > 0) {
+        const sep = document.createElement("span");
+        sep.className = "search-result-tag-sep";
+        sep.setAttribute("aria-hidden", "true");
+        sep.textContent = "·";
+        tags.append(sep);
+      }
+      const item = document.createElement("span");
+      item.textContent = tag;
+      tags.append(item);
+    });
+    body.append(tags);
+  }
+
+  row.append(dateCol, body);
+  if (record.archiveId) {
+    const id = document.createElement("span");
+    id.className = "search-result-id";
+    id.translate = false;
+    id.textContent = record.archiveId;
+    row.append(id);
   }
   return row;
 }
 
 async function showMore(state, focusFirst = false) {
-  if (state.busy) return;
+  if (!state?.rows || state.busy || state.next?.done) return;
   state.busy = true;
   list.setAttribute("aria-busy", "true");
   more.setAttribute("aria-disabled", "true");
   status.textContent = loading;
-  const batch = document.createDocumentFragment();
-  state.next ??= await state.rows.next();
-  for (let count = 0; count < pageSize && !state.next.done && current === state; count++) {
-    batch.append(resultRow(state.next.value));
-    state.next = await state.rows.next();
+  try {
+    const batch = document.createDocumentFragment();
+    state.next ??= await state.rows.next();
+    for (let count = 0; count < pageSize && !state.next.done && current === state; count++) {
+      batch.append(resultRow(state.next.value));
+      state.next = await state.rows.next();
+    }
+    if (current !== state) return;
+    const firstLink = batch.querySelector("a");
+    list.append(batch);
+    list.removeAttribute("aria-busy");
+    const isEmpty = list.children.length === 0;
+    status.dataset.state = isEmpty ? "empty" : "ready";
+    status.textContent = isEmpty
+      ? empty
+      : resultCount.replace("{count}", String(list.children.length));
+    more.hidden = state.next.done;
+    more.removeAttribute("aria-disabled");
+    state.busy = false;
+    notice.hidden = !state.pagefindUnavailable;
+    if (focusFirst) firstLink?.focus();
+  } catch {
+    if (current !== state) return;
+    list.removeAttribute("aria-busy");
+    more.hidden = true;
+    more.removeAttribute("aria-disabled");
+    state.busy = false;
+    status.dataset.state = "error";
+    status.textContent = error;
   }
-  if (current !== state) return;
-  const firstLink = batch.querySelector("a");
-  list.append(batch);
-  list.removeAttribute("aria-busy");
-  more.hidden = state.next.done;
-  more.removeAttribute("aria-disabled");
-  state.busy = false;
-  status.textContent = list.children.length
-    ? resultCount.replace("{count}", String(list.children.length))
-    : empty;
-  notice.hidden = !state.pagefindUnavailable;
-  if (focusFirst) firstLink?.focus();
 }
 
-async function update() {
+async function update(syncInput = true) {
+  window.clearTimeout(debounceTimer);
   const query = (new URLSearchParams(window.location.search).get("q") ?? "").trim();
   const state = {};
   current = state;
-  input.value = query;
+  if (syncInput) input.value = query;
   list.replaceChildren();
   list.removeAttribute("aria-busy");
   more.hidden = true;
+  more.removeAttribute("aria-disabled");
   notice.hidden = true;
+  delete status.dataset.state;
   status.textContent = "";
   if (!query) return;
 
+  status.dataset.state = "loading";
   status.textContent = loading;
   try {
     const entries = await loadCatalog();
     if (current !== state) return;
     if (!entries.length) {
+      status.dataset.state = "empty";
       status.textContent = noEntries;
       return;
     }
@@ -206,22 +240,42 @@ async function update() {
   } catch {
     if (current !== state) return;
     list.removeAttribute("aria-busy");
+    status.dataset.state = "error";
     status.textContent = error;
   }
 }
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const query = input.value.trim();
+function commitQuery(raw, pushHistory) {
+  const query = raw.trim();
   const url = new URL(window.location.href);
   if (query) url.searchParams.set("q", query);
   else url.searchParams.delete("q");
-  if (url.href !== window.location.href) history.pushState(null, "", url);
-  update();
+  if (url.href !== window.location.href) {
+    if (pushHistory) history.pushState(null, "", url);
+    else history.replaceState(null, "", url);
+  }
+  update(pushHistory);
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  commitQuery(input.value, true);
 });
-more.addEventListener("click", () => showMore(current, document.activeElement === more));
-window.addEventListener("popstate", update);
+
+input.addEventListener("input", () => {
+  window.clearTimeout(debounceTimer);
+  if (!input.value.trim()) {
+    commitQuery("", false);
+    return;
+  }
+  debounceTimer = window.setTimeout(() => commitQuery(input.value, false), 160);
+});
+
+more.addEventListener("click", () => {
+  if (current?.rows) showMore(current, document.activeElement === more);
+});
+window.addEventListener("popstate", () => update(true));
 notice.textContent = pagefindFallback;
 root.querySelector("[data-search-unavailable]").hidden = true;
 form.hidden = false;
-update();
+update(true);
