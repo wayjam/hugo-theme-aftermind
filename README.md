@@ -60,6 +60,7 @@ title = 'Aftermind'
   mainSections = ['posts']
 
 [params.home]
+  # title = 'Aftermind' # Custom homepage wordmark (defaults to site.Title)
   subtitle = 'Thought delegated, an echo lingers here.'
 
 [params.footer]

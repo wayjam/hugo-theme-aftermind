@@ -60,6 +60,7 @@ title = 'Aftermind'
   mainSections = ['posts']
 
 [params.home]
+  # title = 'Aftermind' # 自定义首页字标（默认使用站点 title）
   subtitle = '万事机衡，此间尚有回响' # 首页副标题（默认回退到 description，设为空字符串可隐藏）
 
 [params.footer]

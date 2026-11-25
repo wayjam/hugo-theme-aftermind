@@ -15,6 +15,7 @@ enableRobotsTXT = true
   # socialImageAlt = 'Aftermind archive cover'
 
 [params.home]
+  # title = 'Aftermind' # Custom homepage wordmark (defaults to site.Title)
   # showPlate = false # Hide plate and place wordmark beside the lead entry on wide screens
   # image = 'images/archive.svg' # Custom image or SVG (10:7 recommended)
   # imageAlt = 'Describe the plate contents'

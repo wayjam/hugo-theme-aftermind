@@ -15,9 +15,13 @@
   <section class="home-hero{{ if not $showPlate }} home-hero--text{{ end }}" aria-labelledby="site-wordmark">
     <div class="home-hero-side">
       <div class="home-mast">
+        {{- $wordmark := site.Title -}}
+        {{- with strings.TrimSpace ($home.title | default "") -}}
+          {{- $wordmark = . -}}
+        {{- end -}}
         <h1 id="site-wordmark" class="wordmark" translate="no">
-          {{ site.Title }}
-          <span class="wordmark-echo" aria-hidden="true">{{ site.Title }}</span>
+          {{ $wordmark }}
+          <span class="wordmark-echo" aria-hidden="true">{{ $wordmark }}</span>
         </h1>
         {{- $tagline := site.Params.description | default "" -}}
         {{- if isset $home "subtitle" -}}
