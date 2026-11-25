@@ -41,11 +41,11 @@ enableRobotsTXT = true
     languageCode = 'en-US'
     weight = 1
     [languages.en.params]
-      description = 'After intelligence · Notes written for nobody in particular'
+      description = 'Thought delegated, an echo lingers here.'
       [languages.en.params.home]
-        subtitle = 'After intelligence · Notes written for nobody in particular'
+        subtitle = 'Thought delegated, an echo lingers here.'
       [languages.en.params.footer]
-        text = '© 2026 Aftermind · Text and time only'
+        text = '© 2026 Aftermind · Words and time alone'
     [languages.en.menus]
       [[languages.en.menus.main]]
         name = 'Home'
@@ -71,11 +71,11 @@ enableRobotsTXT = true
     hasCJKLanguage = true
     weight = 2
     [languages.zh-cn.params]
-      description = '智能之后 · 写给没有“人”看的东西'
+      description = '万事机衡，此间尚有回响'
       [languages.zh-cn.params.home]
-        subtitle = '智能之后 · 写给没有“人”看的东西'
+        subtitle = '万事机衡，此间尚有回响'
       [languages.zh-cn.params.footer]
-        text = '© 2026 Aftermind · 智能之后 · 仅保留文字与时间'
+        text = '© 2026 Aftermind · 唯余文字与时间'
     [languages.zh-cn.menus]
       [[languages.zh-cn.menus.main]]
         name = '首页'

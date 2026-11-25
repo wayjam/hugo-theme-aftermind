@@ -56,14 +56,14 @@ title = 'Aftermind'
   pagerSize = 20
 
 [params]
-  description = 'Aftermind · Notes written for nobody in particular'
+  description = 'Thought delegated, an echo lingers here.'
   mainSections = ['posts']
 
 [params.home]
-  subtitle = 'Aftermind · Notes written for nobody in particular'
+  subtitle = 'Thought delegated, an echo lingers here.'
 
 [params.footer]
-  text = '© 2026 Aftermind · Text and time only'
+  text = '© 2026 Aftermind · Words and time alone'
   github = 'https://github.com/wayjam/hugo-theme-aftermind'
   showThemeCredit = true
 

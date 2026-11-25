@@ -56,14 +56,14 @@ title = 'Aftermind'
   pagerSize = 20 # 归档与标签页每页条数
 
 [params]
-  description = '智能之后 · 写给没有“人”看的东西'
+  description = '万事机衡，此间尚有回响'
   mainSections = ['posts']
 
 [params.home]
-  subtitle = '智能之后 · 写给没有“人”看的东西' # 首页副标题（默认回退到 description，设为空字符串可隐藏）
+  subtitle = '万事机衡，此间尚有回响' # 首页副标题（默认回退到 description，设为空字符串可隐藏）
 
 [params.footer]
-  text = '© 2026 Aftermind · 仅保留文字与时间' # 省略时使用多语言默认文案，留空可隐藏
+  text = '© 2026 Aftermind · 唯余文字与时间' # 省略时使用多语言默认文案，留空可隐藏
   github = 'https://github.com/wayjam/hugo-theme-aftermind' # 可选：页脚 GitHub 链接
   showThemeCredit = true                           # 是否显示 Hugo · Aftermind 署名
 
