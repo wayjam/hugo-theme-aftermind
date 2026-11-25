@@ -21,6 +21,12 @@ enableRobotsTXT = true
   # imageAlt = 'Describe the plate contents'
   # caption = 'Archive plate caption'
 
+[params.article]
+  # Note display style: 'auto' (default: 3-rail when {{< note >}} is used, 2-rail otherwise),
+  # 'margin' (always 3-rail), 'inline' (2-rail + inline toggle), 'popover' (2-rail + floating card), 'none' (disabled)
+  # noteStyle = 'auto'
+  # wideMedia = true # In 2-rail mode, let code blocks, tables, figures, and diagrams expand beyond prose measure
+
 [params.footer]
   # Optional GitHub icon link in footer (omit to hide)
   github = 'https://github.com/wayjam/hugo-theme-aftermind'

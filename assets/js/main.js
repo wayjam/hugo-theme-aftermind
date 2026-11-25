@@ -289,8 +289,46 @@
     wrapper.append(bar, pre);
   });
 
-  // Bidirectional margin note highlight & narrow-screen toggle
-  const noteButtons = document.querySelectorAll(".note-ref-btn[data-note-id]");
+  // Note shortcode interactions across margin, inline, and popover modes
+  const articleLayout = document.querySelector(".article-layout");
+  const noteStyle = articleLayout?.dataset.noteStyle || "margin";
+  const noteButtons = Array.from(document.querySelectorAll(".note-ref-btn[data-note-id]"));
+
+  function closePopover(exceptBtn = null) {
+    noteButtons.forEach((btn) => {
+      if (btn === exceptBtn) return;
+      const note = document.getElementById(btn.dataset.noteId);
+      if (!note) return;
+      note.classList.remove("is-open", "is-active");
+      btn.classList.remove("is-active");
+      btn.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  function positionPopover(btn, note) {
+    const btnRect = btn.getBoundingClientRect();
+    const noteRect = note.getBoundingClientRect();
+    const pad = 16;
+    const gap = 8;
+    let left = btnRect.left;
+    if (left + noteRect.width > window.innerWidth - pad) {
+      left = window.innerWidth - pad - noteRect.width;
+    }
+    if (left < pad) left = pad;
+
+    let top = btnRect.bottom + gap;
+    if (top + noteRect.height > window.innerHeight - pad) {
+      const above = btnRect.top - gap - noteRect.height;
+      if (above >= pad) {
+        top = above;
+      } else {
+        top = Math.max(pad, window.innerHeight - pad - noteRect.height);
+      }
+    }
+    note.style.setProperty("--popover-left", `${Math.round(left)}px`);
+    note.style.setProperty("--popover-top", `${Math.round(top)}px`);
+  }
+
   noteButtons.forEach((btn) => {
     const id = btn.dataset.noteId;
     const note = document.getElementById(id);
@@ -301,6 +339,7 @@
       note.classList.add("is-active");
     };
     const deactivate = () => {
+      if (noteStyle === "popover" && note.classList.contains("is-open")) return;
       btn.classList.remove("is-active");
       note.classList.remove("is-active");
     };
@@ -314,8 +353,22 @@
     note.addEventListener("mouseleave", deactivate);
     note.addEventListener("focusin", activate);
     note.addEventListener("focusout", deactivate);
-    btn.addEventListener("click", () => {
-      if (window.innerWidth < 1200) {
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (noteStyle === "popover") {
+        const willOpen = !note.classList.contains("is-open");
+        closePopover(willOpen ? btn : null);
+        note.classList.toggle("is-open", willOpen);
+        btn.classList.toggle("is-active", willOpen);
+        note.classList.toggle("is-active", willOpen);
+        btn.setAttribute("aria-expanded", String(willOpen));
+        if (willOpen) {
+          positionPopover(btn, note);
+        }
+        return;
+      }
+      if (noteStyle === "inline" || window.innerWidth < 1200) {
         const open = note.classList.toggle("is-open");
         btn.setAttribute("aria-expanded", String(open));
       } else {
@@ -323,4 +376,25 @@
       }
     });
   });
+
+  if (noteStyle === "popover" && noteButtons.length) {
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".note-ref, .note")) return;
+      closePopover();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const openBtn = noteButtons.find((b) => b.getAttribute("aria-expanded") === "true");
+      closePopover();
+      if (openBtn) openBtn.focus();
+    });
+    const syncOpenPopover = () => {
+      const openBtn = noteButtons.find((b) => b.getAttribute("aria-expanded") === "true");
+      if (!openBtn) return;
+      const openNote = document.getElementById(openBtn.dataset.noteId);
+      if (openNote) positionPopover(openBtn, openNote);
+    };
+    window.addEventListener("resize", syncOpenPopover);
+    window.addEventListener("scroll", syncOpenPopover, { passive: true });
+  }
 })();

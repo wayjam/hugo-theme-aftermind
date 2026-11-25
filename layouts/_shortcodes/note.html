@@ -1,11 +1,14 @@
-{{- $ordKey := printf "ord-%d" .Ordinal -}}
-{{- $map := .Page.Scratch.Get "aftermind_note_map" | default dict -}}
-{{- $count := index $map $ordKey -}}
-{{- if not $count -}}
-  {{- $count = add (len $map) 1 -}}
-  {{- $map = merge $map (dict $ordKey $count) -}}
-  {{- .Page.Scratch.Set "aftermind_note_map" $map -}}
+{{- $mode := partial "note-mode.html" .Page -}}
+{{- if ne $mode "none" -}}
+  {{- $ordKey := printf "ord-%d" .Ordinal -}}
+  {{- $map := .Page.Scratch.Get "aftermind_note_map" | default dict -}}
+  {{- $count := index $map $ordKey -}}
+  {{- if not $count -}}
+    {{- $count = add (len $map) 1 -}}
+    {{- $map = merge $map (dict $ordKey $count) -}}
+    {{- .Page.Scratch.Set "aftermind_note_map" $map -}}
+  {{- end -}}
+  {{- $id := printf "mn-%d" $count -}}
+  {{- $label := printf "%s %d" (i18n "note_prefix" | default "Note") $count -}}
+  <sup class="note-ref"><button type="button" class="note-ref-btn" data-note-id="{{ $id }}" aria-controls="{{ $id }}" aria-expanded="false" aria-label="{{ $label }}">[{{ $count }}]</button></sup><span id="{{ $id }}" class="note note--{{ $mode }}" role="note" data-note-label="{{ $label }}"><span class="note-index" aria-hidden="true">[{{ $label }}]</span><span class="note-text">{{ .Inner | markdownify }}</span></span>{{- "" -}}
 {{- end -}}
-{{- $id := printf "mn-%d" $count -}}
-{{- $label := printf "%s %d" (i18n "note_prefix" | default "Note") $count -}}
-<sup class="note-ref"><button type="button" class="note-ref-btn" data-note-id="{{ $id }}" aria-controls="{{ $id }}" aria-expanded="false" aria-label="{{ $label }}">[{{ $count }}]</button></sup><span id="{{ $id }}" class="margin-note" role="note" data-note-label="{{ $label }}"><span class="margin-note-index" aria-hidden="true">[{{ $label }}]</span><span class="margin-note-text">{{ .Inner | markdownify }}</span></span>{{- "" -}}

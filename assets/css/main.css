@@ -1282,13 +1282,17 @@ a:hover {
 }
 
 /* ===========================
-   ARTICLE: 3-RAIL LAYOUT
+   ARTICLE: 3-RAIL & 2-RAIL LAYOUT
    =========================== */
 .article-layout {
   display: grid;
   grid-template-columns: 11.25rem minmax(0, 1fr) 13.75rem;
   column-gap: clamp(1.5rem, 3.2vw, 3.25rem);
   align-items: start;
+}
+
+.article-layout--2rail {
+  grid-template-columns: 11.25rem minmax(0, 1fr);
 }
 
 /* Left Rail: System Record (Archival Plate) */
@@ -1532,6 +1536,31 @@ a:hover {
   width: 100%;
   justify-self: center;
   position: relative;
+}
+
+.article-layout--2rail .article-main {
+  max-width: none;
+  justify-self: stretch;
+}
+
+.article-layout--2rail .article-header,
+.article-layout--2rail .article-toc--inline,
+.article-layout--2rail .article-footer,
+.article-layout--2rail .article-comments,
+.article-layout--2rail .prose > * {
+  max-width: min(100%, 44rem);
+}
+
+.article-layout--2rail[data-wide-media="true"] .article-cover,
+.article-layout--2rail[data-wide-media="true"] .prose > .code-block,
+.article-layout--2rail[data-wide-media="true"] .prose > .highlight,
+.article-layout--2rail[data-wide-media="true"] .prose > pre,
+.article-layout--2rail[data-wide-media="true"] .prose > table,
+.article-layout--2rail[data-wide-media="true"] .prose > figure,
+.article-layout--2rail[data-wide-media="true"] .prose > .article-diagram,
+.article-layout--2rail[data-wide-media="true"] .prose > p:has(> img:only-child),
+.article-layout--2rail[data-wide-media="true"] .prose > p:has(> .lightbox-trigger:only-child) {
+  max-width: none;
 }
 
 .article-header {
@@ -1831,7 +1860,7 @@ a:hover {
   text-decoration: none;
 }
 
-/* Margin Note shortcode (Right rail on >=1200px, inline reveal on <1200px) */
+/* Note shortcode (.note--margin | .note--inline | .note--popover) */
 .note-ref {
   display: inline;
   font-family: var(--font-mono);
@@ -1860,16 +1889,8 @@ a:hover {
   background-color: var(--bg-subtle);
 }
 
-.margin-note {
+.note {
   position: relative;
-  float: right;
-  clear: right;
-  width: 13.75rem;
-  margin-right: calc(-13.75rem - clamp(1.5rem, 3.2vw, 3.25rem));
-  margin-bottom: var(--s-2);
-  padding-left: var(--s-2);
-  border-inline-start: 1px solid color-mix(in srgb, var(--rule) 62%, transparent);
-  background-color: transparent;
   font-family: var(--font-serif);
   font-size: 0.84375rem;
   line-height: 1.68;
@@ -1879,7 +1900,31 @@ a:hover {
               transform var(--dur-hover) var(--ease-out);
 }
 
-.margin-note::before {
+.note-index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  margin-right: 0.375rem;
+}
+
+.note-text {
+  display: inline;
+}
+
+/* Margin mode: right rail on >=1200px */
+.note--margin {
+  float: right;
+  clear: right;
+  width: 13.75rem;
+  margin-right: calc(-13.75rem - clamp(1.5rem, 3.2vw, 3.25rem));
+  margin-bottom: var(--s-2);
+  padding-left: var(--s-2);
+  border-inline-start: 1px solid color-mix(in srgb, var(--rule) 62%, transparent);
+  background-color: transparent;
+}
+
+.note--margin::before {
   content: "";
   position: absolute;
   top: 0.72em;
@@ -1890,32 +1935,73 @@ a:hover {
   transition: background-color var(--dur-hover) var(--ease-out);
 }
 
-.margin-note.is-active::before,
-.margin-note:hover::before,
-.margin-note:focus-within::before {
+.note--margin.is-active::before,
+.note--margin:hover::before,
+.note--margin:focus-within::before {
   background-color: var(--accent);
 }
 
-.margin-note-index {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--accent);
-  margin-right: 0.375rem;
-}
-
-.margin-note-text {
-  display: inline;
-}
-
-.margin-note.is-active,
-.margin-note:hover,
-.margin-note:focus-within {
+.note--margin.is-active,
+.note--margin:hover,
+.note--margin:focus-within {
   color: var(--fg);
   border-inline-start-color: var(--accent);
   transform: translateX(-2px);
 }
 
+/* Inline mode: expandable block beneath paragraph */
+.note--inline {
+  display: none;
+  margin: var(--s-2) 0;
+  padding: var(--s-1) var(--s-2);
+  border-inline-start: 2px solid var(--rule);
+  background-color: var(--bg-subtle);
+}
+
+.note--inline.is-open {
+  display: block;
+}
+
+.note--inline.is-active,
+.note--inline:hover,
+.note--inline:focus-within {
+  color: var(--fg);
+  border-inline-start-color: var(--accent);
+}
+
+html:not(.js) .note--inline {
+  display: block;
+}
+
+/* Popover mode: floating archival slip anchored to inline reference */
+.note--popover {
+  display: none;
+  position: fixed;
+  top: var(--popover-top, 0px);
+  left: var(--popover-left, 0px);
+  z-index: 60;
+  width: min(20rem, calc(100vw - 2rem));
+  margin: 0;
+  padding: var(--s-2);
+  border: 1px solid var(--rule);
+  border-inline-start: 2px solid var(--accent);
+  background-color: var(--bg-subtle);
+  color: var(--fg);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.note--popover.is-open {
+  display: block;
+}
+
+html:not(.js) .note--popover {
+  display: block;
+  position: static;
+  width: auto;
+  margin: var(--s-2) 0;
+  padding: var(--s-1) var(--s-2);
+}
 /* Article footer: tags + signal sequence */
 .article-footer {
   margin-top: var(--s-6);
@@ -2165,6 +2251,10 @@ a:hover {
     row-gap: var(--s-3);
   }
 
+  .article-layout--2rail .article-main {
+    max-width: var(--measure);
+    justify-self: center;
+  }
   .system-rail {
     position: static;
     max-width: var(--measure);
@@ -2230,7 +2320,7 @@ a:hover {
     line-height: 1;
   }
 
-  .margin-note {
+  .note--margin {
     display: none;
     float: none;
     clear: none;
@@ -2241,20 +2331,20 @@ a:hover {
     transform: none;
   }
 
-  .margin-note::before {
+  .note--margin::before {
     display: none;
   }
 
-  .margin-note.is-open {
+  .note--margin.is-open {
     display: block;
   }
 
-  html:not(.js) .margin-note {
+  html:not(.js) .note--margin {
     display: block;
   }
 
-  .margin-note:hover,
-  .margin-note.is-active {
+  .note--margin:hover,
+  .note--margin.is-active {
     transform: none;
   }
 }
@@ -2421,8 +2511,8 @@ a:hover {
   .home-lead-action:hover .ui-icon,
   .home-more-link:hover .ui-icon,
   .archive-row:hover .archive-row-title a,
-  .margin-note:hover,
-  .margin-note.is-active,
+  .note--margin:hover,
+  .note--margin.is-active,
   .signal-link:hover .signal-title {
     transform: none;
   }

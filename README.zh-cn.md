@@ -166,12 +166,19 @@ diagrams = true
 
 ### 旁注留痕 `note`
 
-宽屏自动浮于正文右轨并与正文编号双向联动，窄屏点击编号展开，无 JS 时直接内联显示：
+支持通过站点 `params.article.noteStyle` 或单篇文章 Front Matter 的 `noteStyle` 切换呈现模式（默认 `auto`）：
+
+- `auto`（默认）：文章使用 `{{</* note */>}}` 时启用三轨右栏旁注；不含旁注时自动退回两轨，不空占右侧栏位。
+- `margin`：宽屏（`≥ 1200px`）始终保留右轨旁注，窄屏点击编号在行内展开。
+- `inline`：全尺寸均采用两轨布局，点击编号在段落下方原地展开批注。
+- `popover`：两轨布局，点击编号在旁侧弹出直角档案卡片（支持 `Esc` / 空白处关闭）。
+- `none`（或 `off`）：完全关闭 `note` 渲染并采用两轨布局。
+
+在两轨布局下，默认开启 `params.article.wideMedia = true`：文字段落保持舒适行宽，而代码块、表格、图片与 Mermaid 图表可自然展开利用右侧空间（可按全局或单篇 `wideMedia = false` 关闭）。
 
 ```markdown
 走廊尽头的广播照旧响了两遍。{{</* note */>}}后来查了排程表，那段录音从去年十月起就没人改过。{{</* /note */>}}
 ```
-
 ### 涂改留痕 `redact`
 
 保留删除线原文并在旁侧给出更正：
@@ -186,6 +193,7 @@ diagrams = true
 - `cover` / `coverAlt` / `coverCaption`：Page Bundle 内的文章封面图片路径、替代文本与图注。
 - `toc = false` 可关闭单篇文章的目录。目录至少有两个条目时默认显示。宽屏置于左侧档案栏，窄屏在正文前折叠，右侧箭头随展开状态转向。
 - `comments = false`：站点启用评论后，为单篇关闭评论。
+- `noteStyle` / `wideMedia`：按单篇文章覆盖全局的 `noteStyle` 与 `wideMedia` 设置。
 
 支持灯箱的封面和独立配图右下角会显示放大镜，点击图片即可查看大图。
 

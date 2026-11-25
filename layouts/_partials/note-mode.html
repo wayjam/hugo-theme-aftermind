@@ -1,0 +1,36 @@
+{{- $articleCfg := site.Params.article | default dict -}}
+{{- $raw := "" -}}
+{{- with .Params.noteStyle -}}
+  {{- $raw = string . -}}
+{{- else -}}
+  {{- with .Params.notestyle -}}
+    {{- $raw = string . -}}
+  {{- else -}}
+    {{- with ($articleCfg.notestyle | default $articleCfg.noteStyle) -}}
+      {{- $raw = string . -}}
+    {{- else -}}
+      {{- with site.Params.noteStyle -}}
+        {{- $raw = string . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $mode := lower (strings.TrimSpace $raw) -}}
+{{- if not $mode -}}
+  {{- $mode = "auto" -}}
+{{- end -}}
+{{- $valid := slice "auto" "margin" "inline" "popover" "none" "off" -}}
+{{- if not (in $valid $mode) -}}
+  {{- errorf "Aftermind noteStyle: expected one of auto, margin, inline, popover, none (got %q)" $mode -}}
+{{- end -}}
+{{- if eq $mode "off" -}}
+  {{- $mode = "none" -}}
+{{- end -}}
+{{- if eq $mode "auto" -}}
+  {{- if .HasShortcode "note" -}}
+    {{- $mode = "margin" -}}
+  {{- else -}}
+    {{- $mode = "none" -}}
+  {{- end -}}
+{{- end -}}
+{{- return $mode -}}

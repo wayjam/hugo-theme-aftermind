@@ -154,7 +154,13 @@ Add Goldmark passthrough delimiters to your site `hugo.toml` when using TeX math
 
 ## Shortcodes & Front Matter
 
-- **Margin Note (`note`)**: Floats to the right rail on `≥ 1200px` screens with bidirectional hover/focus highlights; toggles inline on narrower screens and remains readable without JS:
+- **Margin Note (`note`)**: Configurable via `params.article.noteStyle` (or per-page `noteStyle` front matter):
+  - `auto` *(default)*: 3-rail margin notes on pages containing `{{</* note */>}}`, 2-rail layout otherwise.
+  - `margin`: Always reserve the right rail on `≥ 1200px` screens (toggles inline on narrower viewports).
+  - `inline`: 2-rail layout; notes expand cleanly inline beneath the reference on all viewports.
+  - `popover`: 2-rail layout; notes open as floating archival cards anchored to the reference.
+  - `none` *(or `off`)*: Disable `note` rendering completely and use the 2-rail layout.
+  - In 2-rail layouts, `params.article.wideMedia = true` (default) lets code blocks, tables, figures, and diagrams expand across the wider content column while keeping prose paragraphs at a comfortable reading measure.
   ```markdown
   The corridor chime still rang twice.{{</* note */>}}The schedule had not been edited since last October.{{</* /note */>}}
   ```
@@ -162,7 +168,7 @@ Add Goldmark passthrough delimiters to your site `hugo.toml` when using TeX math
   ```markdown
   Confirmed I {{</* redact "finished something meaningful" "sat at the desk for four hours" */>}} today.
   ```
-- **Optional Front Matter**: `archiveId`, `cover`, `coverAlt`, `coverCaption`, `toc = false`, `comments = false`.
+- **Optional Front Matter**: `archiveId`, `cover`, `coverAlt`, `coverCaption`, `toc = false`, `comments = false`, `noteStyle`, `wideMedia`.
 
 ## Third-Party Comments
 

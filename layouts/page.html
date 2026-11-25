@@ -7,9 +7,23 @@
 {{- $toc = replace $toc `id="TableOfContents"` (printf `aria-label="%s"` (i18n `article_toc` | htmlEscape)) | safeHTML -}}
 {{- $search := site.Params.search | default dict -}}
 {{- $indexArticle := and (eq (lower ($search.provider | default `json`)) `pagefind`) (partial `search/eligible.html` .) -}}
+{{- $noteStyle := partial "note-mode.html" . -}}
+{{- $articleCfg := site.Params.article | default dict -}}
+{{- $wideMedia := true -}}
+{{- if isset $articleCfg "widemedia" -}}
+  {{- $wideMedia = $articleCfg.widemedia -}}
+{{- else if isset $articleCfg "wideMedia" -}}
+  {{- $wideMedia = $articleCfg.wideMedia -}}
+{{- end -}}
+{{- if isset .Params "widemedia" -}}
+  {{- $wideMedia = .Params.widemedia -}}
+{{- else if isset .Params "wideMedia" -}}
+  {{- $wideMedia = .Params.wideMedia -}}
+{{- end -}}
 
+{{- $hasMarginRail := eq $noteStyle "margin" -}}
 <div class="shell">
-  <div class="article-layout">
+  <div class="article-layout {{ if $hasMarginRail }}article-layout--3rail{{ else }}article-layout--2rail{{ end }}" data-note-style="{{ $noteStyle }}" data-wide-media="{{ cond (ne $wideMedia false) `true` `false` }}">
     <aside class="system-rail" aria-label="{{ i18n `index_prefix` | default `INDEX` }}">
       {{- with $archId }}
         <div class="system-rail-head" translate="no">
