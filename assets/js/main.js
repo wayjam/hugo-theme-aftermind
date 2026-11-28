@@ -183,13 +183,34 @@
   }
 
   // Init 3-state theme switcher
+  const themeControl = document.querySelector(".theme-control");
   const themeBtns = Array.from(document.querySelectorAll("[data-theme-btn]"));
+  function syncThemeThumb(animate = true) {
+    if (!themeControl) return;
+    const activeBtn = themeBtns.find((b) => b.getAttribute("aria-checked") === "true");
+    const label = activeBtn?.querySelector(".theme-btn-label");
+    if (!label) return;
+    const ctrlRect = themeControl.getBoundingClientRect();
+    const labelRect = label.getBoundingClientRect();
+    if (!ctrlRect.width || !labelRect.width) return;
+    if (!animate) themeControl.classList.remove("is-thumb-ready");
+    themeControl.style.setProperty("--thumb-x", `${(labelRect.left - ctrlRect.left).toFixed(2)}px`);
+    themeControl.style.setProperty("--thumb-w", `${labelRect.width.toFixed(2)}px`);
+    themeControl.style.setProperty("--thumb-h", `${labelRect.height.toFixed(2)}px`);
+    themeControl.classList.add("has-thumb");
+    if (!animate) {
+      requestAnimationFrame(() => {
+        themeControl.classList.add("is-thumb-ready");
+      });
+    }
+  }
   function syncThemeButtons(mode) {
     themeBtns.forEach((btn) => {
       const active = btn.dataset.themeBtn === mode;
       btn.setAttribute("aria-checked", active ? "true" : "false");
       btn.tabIndex = active ? 0 : -1;
     });
+    syncThemeThumb(themeControl?.classList.contains("is-thumb-ready"));
   }
 
   if (themeBtns.length) {
@@ -213,6 +234,10 @@
   media.addEventListener("change", () => {
     if (getStored() === "system") applyTheme("system");
   });
+  window.addEventListener("resize", () => syncThemeThumb(false), { passive: true });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => syncThemeThumb(false)).catch(() => {});
+  }
 
   // Live region for unobtrusive status announcements
   const liveRegion = document.getElementById("a11y-live");

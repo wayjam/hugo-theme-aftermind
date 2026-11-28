@@ -377,6 +377,7 @@ a:hover {
   height: 5px;
   background-color: var(--accent);
   display: inline-block;
+  view-transition-name: nav-marker;
 }
 
 /* Appearance selector. The inset track leaves room for full-height targets. */
@@ -396,10 +397,33 @@ a:hover {
   content: "";
   position: absolute;
   inset: 8px 0;
-  z-index: -1;
+  z-index: -2;
   border: 1px solid var(--rule);
   background-color: var(--bg-subtle);
   pointer-events: none;
+}
+
+.theme-control::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  z-index: -1;
+  width: var(--thumb-w, 0px);
+  height: var(--thumb-h, 24px);
+  background-color: var(--selection-bg);
+  transform: translate3d(var(--thumb-x, 0px), -50%, 0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-control.has-thumb::after {
+  opacity: 1;
+}
+
+.theme-control.is-thumb-ready::after {
+  transition: transform var(--dur-hover) var(--ease-out),
+              width var(--dur-hover) var(--ease-out);
 }
 
 .theme-btn {
@@ -427,7 +451,7 @@ a:hover {
               background-color var(--dur-hover) var(--ease-out);
 }
 
-.theme-btn:hover .theme-btn-label {
+.theme-btn:not([aria-checked="true"]):hover .theme-btn-label {
   color: var(--fg);
   background-color: var(--bg);
 }
@@ -435,6 +459,10 @@ a:hover {
 .theme-btn[aria-checked="true"] .theme-btn-label {
   color: var(--selection-fg);
   background-color: var(--selection-bg);
+}
+
+.theme-control.has-thumb .theme-btn[aria-checked="true"] .theme-btn-label {
+  background-color: transparent;
 }
 
 .theme-btn:focus-visible {
@@ -685,6 +713,12 @@ a:hover {
   background-color: var(--accent);
   display: inline-block;
   flex-shrink: 0;
+  animation: status-standby 3.6s ease-in-out infinite;
+}
+
+@keyframes status-standby {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.42; }
 }
 
 .wordmark {
@@ -1203,6 +1237,26 @@ a:hover {
   background:
     linear-gradient(var(--rule), var(--rule)) center / 1px 100% no-repeat,
     repeating-linear-gradient(to bottom, var(--rule-faint) 0 1px, transparent 1px 8px) center / 0.25rem calc(100% - 0.5rem) no-repeat;
+  transform-origin: top center;
+}
+
+@supports (animation-timeline: view()) {
+  .archive-gap-line {
+    animation: gap-line-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  @keyframes gap-line-draw {
+    from {
+      transform: scaleY(0.15);
+      opacity: 0.35;
+    }
+    to {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
 }
 
 .archive-gap-line::before,
@@ -1455,6 +1509,28 @@ a:hover {
 .article-toc--inline[open] summary .ui-icon {
   color: var(--accent);
   transform: rotate(90deg);
+}
+
+.article-toc--inline::details-content,
+.prose details::details-content {
+  transition: opacity var(--dur-hover) var(--ease-out),
+              transform var(--dur-hover) var(--ease-out);
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.article-toc--inline[open]::details-content,
+.prose details[open]::details-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@starting-style {
+  .article-toc--inline[open]::details-content,
+  .prose details[open]::details-content {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
 
 .article-toc--inline nav {
@@ -1773,6 +1849,22 @@ a:hover {
   color: var(--accent);
 }
 
+.code-copy-btn.is-copied .ui-icon,
+.code-copy-btn.is-copied span {
+  animation: copy-settle 160ms var(--ease-out) both;
+}
+
+@keyframes copy-settle {
+  from {
+    opacity: 0.45;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .code-copy-btn:active {
   transform: scale(0.97);
 }
@@ -1956,10 +2048,26 @@ a:hover {
   padding: var(--s-1) var(--s-2);
   border-inline-start: 2px solid var(--rule);
   background-color: var(--bg-subtle);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--dur-hover) var(--ease-out),
+              transform var(--dur-hover) var(--ease-out),
+              color var(--dur-hover) var(--ease-out),
+              border-color var(--dur-hover) var(--ease-out),
+              display var(--dur-hover) allow-discrete;
 }
 
 .note--inline.is-open {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@starting-style {
+  .note--inline.is-open {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
 
 .note--inline.is-active,
@@ -1971,6 +2079,8 @@ a:hover {
 
 html:not(.js) .note--inline {
   display: block;
+  opacity: 1;
+  transform: none;
 }
 
 /* Popover mode: floating archival slip anchored to inline reference */
@@ -1989,10 +2099,24 @@ html:not(.js) .note--inline {
   color: var(--fg);
   font-size: 0.875rem;
   line-height: 1.65;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--dur-hover) var(--ease-out),
+              transform var(--dur-hover) var(--ease-out),
+              display var(--dur-hover) allow-discrete;
 }
 
 .note--popover.is-open {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@starting-style {
+  .note--popover.is-open {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
 
 html:not(.js) .note--popover {
@@ -2001,6 +2125,8 @@ html:not(.js) .note--popover {
   width: auto;
   margin: var(--s-2) 0;
   padding: var(--s-1) var(--s-2);
+  opacity: 1;
+  transform: none;
 }
 /* Article footer: tags + signal sequence */
 .article-footer {
@@ -2496,14 +2622,18 @@ html:not(.js) .note--popover {
     scroll-behavior: auto !important;
   }
 
-  .wordmark-echo {
+  .wordmark-echo,
+  .status-dot,
+  .archive-gap-line {
     animation: none !important;
   }
 
   .broken-rule-left,
   .broken-rule-right,
-  .paper-ruler-fill {
+  .paper-ruler-fill,
+  .archive-gap-line {
     transform: none;
+    opacity: 1;
   }
 
   .entry-item:hover .entry-title a,

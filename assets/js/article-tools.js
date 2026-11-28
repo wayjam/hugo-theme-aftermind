@@ -132,15 +132,19 @@
       return `FIG. ${pad(index + 1)} / ${pad(total)}`;
     }
 
-    function updateView(index, shouldAnnounce) {
+    function updateView(index, shouldAnnounce, direction = 0) {
       const total = items.length;
       currentIndex = ((index % total) + total) % total;
       const item = items[currentIndex];
       const src = item.img.currentSrc || item.img.getAttribute("src") || "";
 
+      imgEl.classList.remove("is-stepping-next", "is-stepping-prev");
+      if (direction !== 0) {
+        void imgEl.offsetWidth;
+        imgEl.classList.add(direction > 0 ? "is-stepping-next" : "is-stepping-prev");
+      }
       imgEl.src = src;
       imgEl.alt = item.alt;
-
       if (counterEl) {
         if (total > 1) {
           counterEl.textContent = formatCounter(currentIndex, total);
@@ -230,13 +234,13 @@
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
-        if (items.length > 1) updateView(currentIndex - 1, true);
+        if (items.length > 1) updateView(currentIndex - 1, true, -1);
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
-        if (items.length > 1) updateView(currentIndex + 1, true);
+        if (items.length > 1) updateView(currentIndex + 1, true, 1);
       });
     }
 
@@ -259,22 +263,22 @@
       if (items.length > 1) {
         if (e.key === "ArrowLeft") {
           e.preventDefault();
-          updateView(currentIndex - 1, true);
+          updateView(currentIndex - 1, true, -1);
           return;
         }
         if (e.key === "ArrowRight") {
           e.preventDefault();
-          updateView(currentIndex + 1, true);
+          updateView(currentIndex + 1, true, 1);
           return;
         }
         if (e.key === "Home") {
           e.preventDefault();
-          updateView(0, true);
+          updateView(0, true, -1);
           return;
         }
         if (e.key === "End") {
           e.preventDefault();
-          updateView(items.length - 1, true);
+          updateView(items.length - 1, true, 1);
           return;
         }
       }
