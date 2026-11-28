@@ -35,6 +35,12 @@
 }
 
 /* Light-switch theme transition (scoped only during active theme switch) */
+:root[data-theme-transition] *,
+:root[data-theme-transition] *::before,
+:root[data-theme-transition] *::after {
+  view-transition-name: none !important;
+}
+
 :root[data-theme-transition]::view-transition,
 :root[data-theme-transition]::view-transition-group(root),
 :root[data-theme-transition]::view-transition-image-pair(root),

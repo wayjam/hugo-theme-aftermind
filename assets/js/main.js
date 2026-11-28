@@ -119,6 +119,7 @@
       .then(() => {
         if (seq !== themeTransitionSeq) return;
         if (toLight) {
+          spawnLampHalo(x, y, true);
           root.animate(
             {
               clipPath: [
@@ -128,8 +129,8 @@
               filter: ["brightness(1.06)", "brightness(1)"],
             },
             {
-              duration: 500,
-              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+              duration: 420,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
               fill: "both",
               pseudoElement: "::view-transition-new(root)",
             }
@@ -137,7 +138,7 @@
           root.animate(
             { filter: ["brightness(1)", "brightness(0.92)"] },
             {
-              duration: 500,
+              duration: 420,
               easing: "cubic-bezier(0.22, 1, 0.36, 1)",
               fill: "both",
               pseudoElement: "::view-transition-old(root)",
@@ -150,20 +151,20 @@
                 `circle(${maxR}px at ${x}px ${y}px)`,
                 `circle(0px at ${x}px ${y}px)`,
               ],
-              filter: ["brightness(1)", "brightness(0.78)"],
+              filter: ["brightness(1)", "brightness(0.84)"],
             },
             {
-              duration: 440,
-              easing: "cubic-bezier(0.32, 0, 0.2, 1)",
+              duration: 360,
+              easing: "cubic-bezier(0.4, 0, 0.7, 1)",
               fill: "both",
               pseudoElement: "::view-transition-old(root)",
             }
           );
           root.animate(
-            { filter: ["brightness(0.9)", "brightness(1)"] },
+            { filter: ["brightness(0.92)", "brightness(1)"] },
             {
-              duration: 440,
-              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              duration: 360,
+              easing: "cubic-bezier(0.4, 0, 0.7, 1)",
               fill: "both",
               pseudoElement: "::view-transition-new(root)",
             }
@@ -178,7 +179,7 @@
       if (seq !== themeTransitionSeq) return;
       activeThemeTransition = null;
       root.removeAttribute("data-theme-transition");
-      spawnLampHalo(x, y, toLight);
+      if (!toLight) spawnLampHalo(x, y, false);
     });
   }
 
