@@ -228,6 +228,12 @@ html {
   scrollbar-width: thin;
 }
 
+@media (pointer: fine) {
+  html {
+    overscroll-behavior: none;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100svh;
@@ -2637,7 +2643,11 @@ html:not(.js) .note--popover {
   .broken-rule-left,
   .broken-rule-right,
   .paper-ruler-fill,
-  .archive-gap-line {
+  .archive-gap-line,
+  .note--inline,
+  .note--popover,
+  .article-toc--inline::details-content,
+  .prose details::details-content {
     transform: none;
     opacity: 1;
   }

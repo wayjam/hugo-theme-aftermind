@@ -230,6 +230,7 @@ html.has-lightbox-open {
   padding: var(--s-3);
   background-color: var(--bg-subtle);
   overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .article-lightbox-img {
@@ -408,7 +409,9 @@ html.has-lightbox-open {
 
 @media (prefers-reduced-motion: reduce) {
   .article-lightbox[open],
-  .article-lightbox::backdrop {
+  .article-lightbox::backdrop,
+  .article-lightbox-img.is-stepping-next,
+  .article-lightbox-img.is-stepping-prev {
     animation: none;
   }
 

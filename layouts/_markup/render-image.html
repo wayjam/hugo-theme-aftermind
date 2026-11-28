@@ -1,0 +1,16 @@
+{{- $dest := .Destination -}}
+{{- $res := .Page.Resources.GetMatch $dest -}}
+{{- if and (not $res) (not (urls.Parse $dest).IsAbs) -}}
+  {{- $res = resources.Get (strings.TrimPrefix "/" $dest) -}}
+{{- end -}}
+{{- $src := $dest | safeURL -}}
+{{- $w := 0 -}}
+{{- $h := 0 -}}
+{{- with $res -}}
+  {{- $src = .RelPermalink -}}
+  {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
+    {{- $w = .Width -}}
+    {{- $h = .Height -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src }}" alt="{{ .PlainText }}"{{- with .Title }} title="{{ . }}"{{ end }}{{- if and (gt $w 0) (gt $h 0) }} width="{{ $w }}" height="{{ $h }}"{{ end }} loading="lazy" decoding="async">
